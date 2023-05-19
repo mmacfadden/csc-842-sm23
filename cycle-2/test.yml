@@ -1,0 +1,53 @@
+top-level-domains:
+  - re
+  - ru
+  - xyz
+  - za
+
+domains-per-tld: 2
+
+frequency: month
+
+seed:
+  # weather:
+  #   lat: 52.52
+  #   lng: 13.41
+  #   metric: temperature_2m_max
+  stock:
+    symbol: AAPL
+
+domain:
+   random:
+     length: 10
+  #  words:
+  #    count: 4
+  #    dash-separator: true
+  #    word-list:
+  #      - extravagant
+  #      - gravitational
+  #      - idiomatic
+  #      - foundationalism
+  #      - polysyllabic
+  #      - subordinating
+  #      - goldenberries
+  #      - sycophantic
+  #      - metabolism
+  #      - ontological
+  #      - disestablishment
+  #      - jurisprudence
+  #      - fantastical
+  #      - expeditionary
+  #      - subliminal
+  #      - stratospheric
+  #      - conjunctions
+  #      - geothermal
+  #      - intergalactic
+  #      - supersonic
+
+outputs:
+  javascript:
+    minify: true
+    base64: true
+    eval: true
+  python:
+    minify: true
