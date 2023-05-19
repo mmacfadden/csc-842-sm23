@@ -3,11 +3,13 @@
 import argparse
 import yaml
 import importlib
+import os
 
 from codegen import CodeGenerator
 from date_codegen import DateCodeGenerator
 from utils_codegen import UtilsCodeGenerator
 from main_codegen import MainCodeGenerator
+
 
 parser = argparse.ArgumentParser(
                     prog='dga-gen',
@@ -17,6 +19,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument("config", help="foo")
 
+parser.add_argument("output", help="The directory to output files to.")
 
 args = parser.parse_args()
 
@@ -96,9 +99,9 @@ for code_gen in code_generators:
   js_code += code_gen.generate_js_code()
   py_code += code_gen.generate_py_code()
 
-
-with open("dga.js", "w") as js_output:
+os.makedirs(args.output, exist_ok=True)
+with open(os.path.join(args.output, "dga.js"), "w") as js_output:
    js_output.write(js_code)
 
-with open("dga.py", "w") as py_output:
+with open(os.path.join(args.output, "dga.py"), "w") as py_output:
    py_output.write(py_code)

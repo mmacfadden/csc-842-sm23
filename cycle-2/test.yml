@@ -46,8 +46,4 @@ domain:
 
 outputs:
   javascript:
-    minify: true
-    base64: true
-    eval: true
   python:
-    minify: true
