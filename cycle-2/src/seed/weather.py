@@ -5,29 +5,33 @@ class WeatherSeedCodeGenerator(CodeGenerator):
     
     def __init__(self, config) -> None:
         super().__init__()
-        self._config = config
+        self._lat = config["lat"]
+        self._lng = config["lng"]
+        self._metric = config["metric"]
 
     
     def generate_js_code(self) -> str:
-        lat = self._config["lat"]
-        lng = self._config["lng"]
-        metric = self._config["metric"]
-
         code = f'''
         async function getSeed(date) {{
           date = date.toISOString().split('T')[0]
-          const url = `https://archive-api.open-meteo.com/v1/archive?latitude={lat}&longitude={lng}&start_date=${{date}}&end_date=${{date}}&daily={metric}&timezone=America%2FLos_Angeles`;
-          console.log(url);
+          const url = `https://archive-api.open-meteo.com/v1/archive?latitude={self._lat}&longitude={self._lng}&start_date=${{date}}&end_date=${{date}}&daily={self._metric}&timezone=America%2FLos_Angeles`;
           const resp = await fetch(url);
           const respJson = await resp.json();
-          return respJson.daily["{metric}"][0];
+          return Math.floor(respJson.daily["{self._metric}"][0] * 10);
         }}
         '''
         return dedent(code)
     
-    def generate_py_code(config) -> str:
+    def generate_py_code(self) -> str:
         return dedent(
-            """"""
+          f"""
+          import urllib.request, json, math
+          def get_seed(date):
+            url = f"https://archive-api.open-meteo.com/v1/archive?latitude={self._lat}&longitude={self._lng}&start_date={{str(date)}}&end_date={{str(date)}}&daily={self._metric}&timezone=America%2FLos_Angeles"
+            response = urllib.request.urlopen(url)
+            data = json.loads(response.read())
+            return math.floor(data["daily"]["{self._metric}"][0] * 10)
+          """
         )
     
 def create_seed_generator(config):
