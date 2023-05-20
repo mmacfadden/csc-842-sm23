@@ -85,7 +85,15 @@ code_generators.append(domain_gen)
 ##
 domains_per_tld = config["domains-per-tld"]
 tlds = str(config["top-level-domains"])
-main_codegen = MainCodeGenerator(tlds, domains_per_tld)
+
+main_names = {}
+for lang, config in config.get("languages", {}).items():
+  function_name = config.get("function-name")
+  if function_name != None:
+    main_names[lang] = function_name
+  
+main_codegen = MainCodeGenerator(tlds, domains_per_tld, main_names)
+
 code_generators.append(main_codegen)
 
 

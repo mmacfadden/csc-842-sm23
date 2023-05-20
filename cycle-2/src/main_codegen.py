@@ -3,18 +3,20 @@ from textwrap import dedent;
 
 class MainCodeGenerator(CodeGenerator):
     
-    def __init__(self, tlds, domains_per_tld) -> None:
+    def __init__(self, tlds, domains_per_tld, main_names) -> None:
         super().__init__()
         self._tlds = tlds
         self._domains_per_tld = domains_per_tld
+        self._main_names: dict = main_names
 
     
     def generate_js_code(self) -> str:
+      main =  self._main_names.get("javascript", "generateDomains")
       return dedent(
         f"""
         const tlds = {self._tlds};
 
-        async function generateDomains() {{
+        async function {main}() {{
           const domains = [];
           let domainIdx = 0;
 
@@ -33,16 +35,18 @@ class MainCodeGenerator(CodeGenerator):
           return domains;
         }}
 
-        generateDomains().then(p => console.log(p)).catch(e => console.error(e));
+         {main}().then(p => console.log(p)).catch(e => console.error(e));
         """  
       )
     
     def generate_py_code(self) -> str:
+        main =  self._main_names.get("python", "generateDomains")
+
         return dedent(
             f"""
             tlds = {self._tlds}
 
-            def generate_domains():
+            def {main}():
               domains = []
               domain_idx = 0
 
@@ -59,6 +63,6 @@ class MainCodeGenerator(CodeGenerator):
               return domains
             
 
-            print(generate_domains())
+            print( {main}())
             """
         )

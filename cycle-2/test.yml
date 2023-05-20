@@ -44,6 +44,8 @@ domain:
        - intergalactic
        - supersonic
 
-outputs:
+languages:
   javascript:
+    function-name: generateDomains
   python:
+    function-name: generate_domains

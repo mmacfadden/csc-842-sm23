@@ -11,19 +11,9 @@ class RandomDomainGen(CodeGenerator):
     def generate_js_code(self) -> str:
         length = self._config["length"]
 
-        code = f'''    
-        const encodedChars = new Int32Array([
-          1630761265,  946745447,
-          2003596134,  879326315,
-           892941941, 1652193586,
-          1885628534,  929915759,
-          1915578981,        120
-        ]);
-
-        let validDomainChars = null;
-
+        code = f'''
         function generateDomain(domainIndex, seed) {{
-          validDomainChars = unpackString(encodedChars);
+          const valid_domain_chars = "1q3ag0n8fslwkti4u6952yzbvhdpocm7ej-rx";
 
           let i = 0;
           let idx = (seed + domainIndex) % validDomainChars.length;
