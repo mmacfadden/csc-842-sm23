@@ -2,6 +2,9 @@ from ..codegen import CodeGenerator;
 from textwrap import dedent
 
 class RandomDomainGen(CodeGenerator):
+    """
+    RandomDomainGen generates pseudorandom domain names of a specified length.
+    """
     
     def __init__(self, config) -> None:
         super().__init__()

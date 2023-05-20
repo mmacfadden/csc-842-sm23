@@ -2,6 +2,10 @@ from ..codegen import CodeGenerator;
 from textwrap import dedent
 
 class StockSeedCodeGenerator(CodeGenerator):
+    """
+    StockSeedCodeGenerator generates a random seed from the recent close
+    price of a specified stock.
+    """
     
     def __init__(self, config) -> None:
         super().__init__()

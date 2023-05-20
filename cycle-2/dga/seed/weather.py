@@ -2,6 +2,10 @@ from ..codegen import CodeGenerator;
 from textwrap import dedent
 
 class WeatherSeedCodeGenerator(CodeGenerator):
+    """
+    WeatherSeedCodeGenerator generates a random seed from historical weather
+    data.
+    """
     
     def __init__(self, config) -> None:
         super().__init__()

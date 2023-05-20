@@ -2,6 +2,9 @@ from ..codegen import CodeGenerator;
 from textwrap import dedent
 
 class WordListDomainGen(CodeGenerator):
+    """
+    WordListDomainGen generates domains based on a supplied list of words.
+    """
     
     def __init__(self, config) -> None:
         super().__init__()
