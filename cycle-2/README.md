@@ -1,4 +1,4 @@
-# Cycle 2: Domain Generation Algorithm Generator
+# Cycle 2: Domain Generation Algorithm Framework
 
 ## Requirements
 

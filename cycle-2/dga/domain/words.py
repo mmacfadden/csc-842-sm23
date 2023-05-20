@@ -1,4 +1,4 @@
-from codegen import CodeGenerator;
+from ..codegen import CodeGenerator;
 from textwrap import dedent
 
 class WordListDomainGen(CodeGenerator):

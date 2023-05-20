@@ -1,9 +1,23 @@
-from codegen import CodeGenerator;
+from .codegen import CodeGenerator;
 from textwrap import dedent;
 
 class MainCodeGenerator(CodeGenerator):
+    """
+    The MainCodeGenerator writes the main method that consumers will
+    call to generate the domains.
+    """
     
-    def __init__(self, tlds, domains_per_tld, main_names) -> None:
+    def __init__(self, tlds: list[str], domains_per_tld: int, main_names: dict[str, str]) -> None:
+        """
+        Parameters
+        ----------
+        tlds : list[str]
+            The list of top level domains to generate domains in.
+        domains_per_tld : int
+            The number of domains to generate per top level domain.
+        main_names : main_names: dict[str, str]
+            The names of the main method per language.
+        """
         super().__init__()
         self._tlds = tlds
         self._domains_per_tld = domains_per_tld

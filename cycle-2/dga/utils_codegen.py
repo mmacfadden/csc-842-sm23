@@ -1,4 +1,4 @@
-from codegen import CodeGenerator;
+from .codegen import CodeGenerator;
 
 class UtilsCodeGenerator(CodeGenerator):
     
@@ -8,8 +8,7 @@ class UtilsCodeGenerator(CodeGenerator):
     
     def generate_js_code(self):
        return ""
-            
-       
+
     
     def generate_py_code(config):
         return ""

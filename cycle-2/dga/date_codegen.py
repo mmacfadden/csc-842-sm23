@@ -1,7 +1,12 @@
-from codegen import CodeGenerator;
+from .codegen import CodeGenerator;
 from textwrap import dedent;
 
 class DateCodeGenerator(CodeGenerator):
+    """
+    The DateCodeGenerator class writes functions that generate
+    dates to use for time based seeds based on how frequently
+    the domains should change.
+    """
     
     def __init__(self, frequency) -> None:
         super().__init__()
@@ -23,6 +28,7 @@ class DateCodeGenerator(CodeGenerator):
               return [lastWeek, thisWeek];
             }
             """)
+        
         elif self._frequency == "month":
             return dedent("""
             function getDates() {
@@ -49,6 +55,7 @@ class DateCodeGenerator(CodeGenerator):
               last_week = this_week - datetime.timedelta(days=7)
               return [last_week, this_week]
             """)
+        
         elif self._frequency == "month":
             return dedent("""
             import datetime
@@ -61,6 +68,5 @@ class DateCodeGenerator(CodeGenerator):
               return [last_month, this_month]
             """)
         else:
-            raise Exception("unknown date type")
+            raise Exception(f"Unknown frequency type: {self._frequency}")
         
-        return ""
