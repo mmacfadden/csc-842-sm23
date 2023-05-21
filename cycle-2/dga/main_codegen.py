@@ -48,8 +48,6 @@ class MainCodeGenerator(CodeGenerator):
           
           return domains;
         }}
-
-         {main}().then(p => console.log(p)).catch(e => console.error(e));
         """  
       )
     
@@ -75,8 +73,5 @@ class MainCodeGenerator(CodeGenerator):
                     domains.append(domain + "." + tld)
                    
               return domains
-            
-
-            print("\\n".join({main}()))
             """
         )
