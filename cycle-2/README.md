@@ -7,16 +7,21 @@ The main requirements of the project that influenced the functionality and desig
   * The program must be able to generate DGAs in multiple languages.
   * The program must support a configuration file that specifies how the DGA will be built.
   * DGAs generated from the same configuration (in different languages) must compute the same domains.
+  * Multiple runs using the same configuration file should produce the same output.
   * DGAs must support changing the generated domains over time (time-based).
-  * DGAs must pseudorandom but be deterministic.
+  * DGAs must pseudorandom, but be deterministic.
   * The program must support generating an external random seed, to seed the pseudorandom algorithms.
   * The program must be modular and extendable and allow easy addition of:
     * New methods of obtaining a random seed.
     * New methods of generating random domain names.
     * Additional programming languages.
 
+A specific non-requirement was code obfuscation.  While DGA's are often obfuscated when included in malware, there are existing language-specific tools that perform obfuscation.
+
 ## Design
-The high-level architecture for the project is depicted below.
+The high-level architecture for the project is depicted below.  A [configuration file](#config-file) is fed to the main script ([dga-builder.py](dga-builder.py)).  The [DgaGenerator](dga/dga_generator.py) class provides the main logic for building DGAs.  The [CodeGenerator](dga/codegen.py) defines the interface for all modules that generate code and implementers must implement code generation methods for each supported language.
+
+The [seed](dga/seed) directory contains plugins that generate random seeds.  Modules added to this directory are automatically available to use via the configuration file without any other code changes.  Similarly, the [domain][dga/domain] directory contains plugins for generating domain names.
 
 ![Architecture](assets/architecture.png)
 

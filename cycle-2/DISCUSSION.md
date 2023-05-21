@@ -7,6 +7,11 @@
 
 # Future Directions
 
+  * More languages
+  * More modules
+  * Integrated obfuscation
+  * Better pseudorandom algorithm
+
 # Source Code
 The source code is located on GitHub here:
 
