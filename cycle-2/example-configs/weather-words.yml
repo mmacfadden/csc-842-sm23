@@ -6,19 +6,15 @@ top-level-domains:
 
 domains-per-tld: 2
 
-frequency: month
+frequency: week
 
 seed:
   weather:
     lat: 52.52
     lng: 13.41
     metric: temperature_2m_max
-  # stock:
-  #   symbol: AAPL
 
 domain:
-  #  random:
-  #    length: 10
    words:
      count: 4
      separator: true

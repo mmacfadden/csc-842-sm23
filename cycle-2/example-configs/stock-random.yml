@@ -1,0 +1,23 @@
+top-level-domains:
+  - re
+  - ru
+  - xyz
+  - za
+
+domains-per-tld: 2
+
+frequency: month
+
+seed:
+  stock:
+    symbol: AAPL
+
+domain:
+   random:
+     length: 10
+   
+languages:
+  javascript:
+    function-name: generateDomains
+  python:
+    function-name: generate_domains

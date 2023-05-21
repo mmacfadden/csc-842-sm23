@@ -24,6 +24,8 @@ class DgaGenerator():
 
 
   def generate(self, output: str) -> None:
+    print()
+    
     code_generators: list[CodeGenerator] = []
 
     code_generators.append(self._util_generator())
@@ -40,12 +42,17 @@ class DgaGenerator():
       py_code += code_gen.generate_py_code()
 
     os.makedirs(output, exist_ok=True)
-    with open(os.path.join(output, "dga.js"), "w") as js_output:
+    js_out_path = os.path.join(output, "dga.js")
+    with open(js_out_path, "w") as js_output:
        js_output.write(js_code)
+       print(f"JavaScript DGA output to: {js_out_path}")
 
-    with open(os.path.join(output, "dga.py"), "w") as py_output:
+    py_output_path = os.path.join(output, "dga.py")
+    with open(py_output_path, "w") as py_output:
        py_output.write(py_code)
+       print(f"Python DGA output to: {py_output_path}")
 
+    print()
 
   def _util_generator(self) -> CodeGenerator:
     utils_code_gen = UtilsCodeGenerator()
