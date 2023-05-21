@@ -25,11 +25,18 @@ The project has the following dependencies:
 * [Pip](https://pip.pypa.io/en/stable/): => 23.0
 
 ### Python Dependencies
-Install the python dependencies using the following command:
+Install the Python dependencies using the following command:
 
 ```bash
 pip install -r requirements.txt
 ```
+### Node Dependencies (Optional)
+If you want to use the convenience script to obfuscate the generated JavaScript code, you must install the node dependencies.
+
+```bash
+yarn install
+```
+
 
 ## Running
 The DGA Builder can be run by executing the [dga-builder.py](dga-builder.py) script.  The command line script takes a configuration file as an input as well as the directory to output generated DGAs to.
