@@ -16,6 +16,21 @@ A demonstration video can be found on YouTube here:
 http://youtube.com
 
 
+## Dependencies and Setup
+The project has the following dependencies:
+
+* [NodeJS](https://nodejs.org/en): >= 18.0
+* [Yarn](https://yarnpkg.com/): => 1.22.x
+* [Python 3](https://www.python.org/): => 3.11.x
+* [Pip](https://pip.pypa.io/en/stable/): => 23.0
+
+### Python Dependencies
+Install the python dependencies using the following command:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Running
 The DGA Builder can be run by executing the [dga-builder.py](dga-builder.py) script.  The command line script takes a configuration file as an input as well as the directory to output generated DGAs to.
 
