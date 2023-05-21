@@ -16,29 +16,30 @@ seed:
 
 domain:
    words:
-     count: 4
+     count: 7
      separator: true
      word-list:
-       - extravagant
-       - gravitational
-       - idiomatic
-       - foundationalism
-       - polysyllabic
-       - subordinating
-       - goldenberries
-       - sycophantic
-       - metabolism
-       - ontological
-       - disestablishment
-       - jurisprudence
-       - fantastical
-       - expeditionary
-       - subliminal
-       - stratospheric
-       - conjunctions
-       - geothermal
-       - intergalactic
-       - supersonic
+       - blue
+       - room
+       - orca
+       - base
+       - down
+       - fool
+       - gold
+       - grow
+       - tide
+       - ball
+       - lift
+       - ogre
+       - left
+       - self
+       - fire
+       - root
+       - fast
+       - slid
+       - four
+       - dirt
+       - pray
 
 languages:
   javascript:

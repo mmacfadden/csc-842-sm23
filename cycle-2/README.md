@@ -1,12 +1,22 @@
 # Cycle 2: Domain Generation Algorithm Builder
-This project provides a [Domain Generation Algorithm](https://en.wikipedia.org/wiki/Domain_generation_algorithm) (DGA) Builder.  DGAs are often used by malware to connect back to a command and control server.  The DGA Builder simplifies and automates building DGAs across multiple languages.  A configuration file specifies how the DGA should be constructed and the DGA Builder then generates code to implement a DGA using those options.
-
-The project was built using Python 3.11.
-
+This project provides a [Domain Generation Algorithm](https://en.wikipedia.org/wiki/Domain_generation_algorithm) (DGA) Builder.  DGAs are often used by malware to connect back to a command and control server.  The DGA Builder simplifies and automates building DGAs across multiple languages.  A configuration file specifies how the DGA should be constructed. Given a configuration file, the DGA Builder will generate code that implements the DGA in multiple languages.  The goal of the project was to make it easy to rapidly develop high-quality DGAs and to be able to update them quickly if the current DGA gets blocked. Another motivation for the project was cases where malware and the corresponding C2 infrastructure are developed in different languages. In order to automate domain registration it is useful to have the same DGA implemented in multiple languages.
 
 ## Requirements
+The main requirements of the project that influenced the functionality and design are as follows:
+
+  * The program must be able to generate DGAs in multiple languages.
+  * The program must support a configuration file that specifies how the DGA will be built.
+  * DGAs generated from the same configuration (in different languages) must compute the same domains.
+  * DGAs must support changing the generated domains over time (time-based).
+  * DGAs must pseudorandom but be deterministic.
+  * The program must support generating an external random seed, to seed the pseudorandom algorithms.
+  * The program must be modular and extendable and allow easy addition of:
+    * New methods of obtaining a random seed.
+    * New methods of generating random domain names.
+    * Additional programming languages.
 
 ## Design
+The high-level architecture for the project is depicted below.
 
 ![Architecture](assets/architecture.png)
 
@@ -116,30 +126,32 @@ domain:
     length: 10
 
   # Generates domains from a word list.
-  words:
-    count: 4
-    separator: true
-    word-list:
-      - extravagant
-      - gravitational
-      - idiomatic
-      - foundationalism
-      - polysyllabic
-      - subordinating
-      - goldenberries
-      - sycophantic
-      - metabolism
-      - ontological
-      - disestablishment
-      - jurisprudence
-      - fantastical
-      - expeditionary
-      - subliminal
-      - stratospheric
-      - conjunctions
-      - geothermal
-      - intergalactic
-      - supersonic
+  domain:
+   words:
+     count: 7
+     separator: true
+     word-list:
+       - blue
+       - room
+       - orca
+       - base
+       - down
+       - fool
+       - gold
+       - grow
+       - tide
+       - ball
+       - lift
+       - ogre
+       - left
+       - self
+       - fire
+       - root
+       - fast
+       - slid
+       - four
+       - dirt
+       - pray
 
 # Configures language specific options.
 languages:
