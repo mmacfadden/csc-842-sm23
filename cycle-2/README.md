@@ -82,6 +82,54 @@ Python DGA output to: out/dga.py
 
 ```
 
+### Printing Results
+Two helper script files have been included that will use the generated code and print out the domains produced by the DGAs.
+
+To test the Python DGA, use the [print-domains.js](print-domains.js) file and pass it the path to the generated JavaScript as an argument.
+
+```bash
+./print-domains.js out/dga.js
+o1t8z425be.re
+cdoapn09os.re
+m145yuttig.ru
+7yix4z5ha-.ru
+e7bm05ha-2.xyz
+j19pst4dq4.xyz
+-iqlns4pif.za
+rl02br4ois.za
+6h3v9ea1p6.re
+9crinklkkt.re
+5d1v2puzo9.ru
+2v5c3cgszm.ru
+yzvyhsyo5x.xyz
+zvyhsyo5xm.xyz
+bq6jkithiu.za
+vzp9qym5qh.za
+```
+
+To test the Python DGA, use the [print-domains.py](print-domains.py) file and pass it the path to the generated python file WITHOUT the `.py` extension as an argument.
+
+```bash
+./print-domains.py out/dga   
+o1t8z425be.re
+cdoapn09os.re
+m145yuttig.ru
+7yix4z5ha-.ru
+e7bm05ha-2.xyz
+j19pst4dq4.xyz
+-iqlns4pif.za
+rl02br4ois.za
+6h3v9ea1p6.re
+9crinklkkt.re
+5d1v2puzo9.ru
+2v5c3cgszm.ru
+yzvyhsyo5x.xyz
+zvyhsyo5xm.xyz
+bq6jkithiu.za
+vzp9qym5qh.za
+```
+
+
 ## Config File
 
 ```yaml
