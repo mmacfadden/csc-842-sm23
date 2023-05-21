@@ -1,5 +1,5 @@
 # Introduction
-
+For Cycle 2, I developed a [Domain Generation Algorithm](https://en.wikipedia.org/wiki/Domain_generation_algorithm) Builder (DGA Builder). DGAs produce a set of pseudorandom, but deterministic, set of DNS names.  DGAs are commonly used by malware to reach back to their C2 infrastructure. If malware were to use hardcoded IP addresses or domain names, then blocking by those addresses/names it would be trivial to block the C2 channel with a firewall.  DGAs solve this problem by providing a set of domains to be tried that usually change over time, preventing defenders from simply blocking a static set of names.  This project provides a command line utility that generates configurable DGA code in multiple languages.
 
 # Interest / Motivation
 Domain Generation Algorithms are a core part of malware command and control. Domain Generation Algorithms can be hard to craft, and hard to craft well.  They must be deterministic, but hard to predict.  They need to change quickly, but must allow enough time for authors to register domains. DGAs need to evolve over time, since malware researchers may develop methods (e.g. regex) that can identify the pattern associated with the DGA.  Thus the goal of this project was to provide a tool that could allow the easy generation of high quality DGAs.  This increases the maneuverability of offensive operations.  For example, it would become very easy to send out multiple variants of malware with different DGAs, such that if one DGA gets blocked, an entire bot net might not be taken down.
@@ -27,9 +27,9 @@ Given only about a week to work on the tool, there are a lot of opportunities fo
   * **Obfuscation Automation**: While the tool itself does not provide obfuscation of generated code, most languages have tools for obfuscation. It would be great if the DGA Builder could automate using the language-specific tools to optionally obfuscate the code.
 
 # Source Code
-The source code is located on GitHub here:
+The source code is located on GitHub hat the URL below.  The repository's README contains additional technical details about the project.:
 
-https://github.com/mmacfadden/csc-842-sm23
+https://github.com/mmacfadden/csc-842-sm23/tree/master/cycle-2/
 
 
 # Video

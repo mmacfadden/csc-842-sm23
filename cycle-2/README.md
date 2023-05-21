@@ -19,9 +19,9 @@ The main requirements of the project that influenced the functionality and desig
 A specific non-requirement was code obfuscation.  While DGA's are often obfuscated when included in malware, there are existing language-specific tools that perform obfuscation.
 
 ## Design
-The high-level architecture for the project is depicted below.  A [configuration file](#config-file) is fed to the main script ([dga-builder.py](dga-builder.py)).  The [DgaGenerator](dga/dga_generator.py) class provides the main logic for building DGAs.  The [CodeGenerator](dga/codegen.py) interface defines the interface for all modules that generate code and implementers must implement code generation methods for each supported language.
+The high-level architecture for the project is depicted below.  The project was implemented in Python because it does not require a build system and adding additional modules (plugins) is as easy as adding new source files in specific directories.
 
-The [seed](dga/seed) directory contains plugins that generate random seeds.  Modules added to this directory are automatically available to use via the configuration file without any other code changes.  Similarly, the [domain](dga/domain) directory contains plugins for generating domain names.
+A [configuration file](#config-file) is fed to the main script ([dga-builder.py](dga-builder.py)).  The [DgaGenerator](dga/dga_generator.py) class provides the main logic for building DGAs.  The [CodeGenerator](dga/codegen.py) interface defines the interface for all modules that generate code and implementers must implement code-generation methods for each supported language. The [seed](dga/seed) directory contains plugins that generate random seeds.  Modules added to this directory are automatically available to use via the configuration file without any other code changes.  Similarly, the [domain](dga/domain) directory contains plugins for generating domain names. The [DateCodeGenerator](dga/date_codegen.py) class generates code that computes dates that can be used by the seed generators.
 
 ![Architecture](assets/architecture.png)
 
