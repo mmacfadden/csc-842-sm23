@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
-from out.dga import generate_domains
+import importlib, sys
 
+dga_file = sys.argv[1]
+dga_mod_name = dga_file.replace("/", ".").replace("\\", ".")
 
-print("\n".join(generate_domains()))
+dga_mod = importlib.import_module(dga_mod_name, package = "dga")
+
+print("\n".join(dga_mod.generate_domains()))
