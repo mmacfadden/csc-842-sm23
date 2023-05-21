@@ -4,4 +4,6 @@
 
 ## Design
 
+[Architecture](assets/architecture.png)
+
 ## Video
