@@ -10,8 +10,8 @@ from dga.dga_generator import DgaGenerator
 ## Argument Processing
 ##
 parser = argparse.ArgumentParser(
-    prog='dga-gen',
-    description='A utility for creating Domain Generation Algorithms'
+    prog='dga-builder',
+    description='A utility for building Domain Generation Algorithms'
 )
 
 parser.add_argument("config", help="The config file that determines how the DGAs will be constructed.")
