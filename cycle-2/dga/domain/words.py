@@ -34,7 +34,7 @@ class WordListDomainGen(CodeGenerator):
             }}
                  
 
-            idx = (domain.length + i) % words.length;
+            idx = (idx + domainIndex + i) % words.length;
             i++;
           }}
           
@@ -62,7 +62,7 @@ class WordListDomainGen(CodeGenerator):
                 if i < count - 1 and {self._separator}:
                  domain += "-"
 
-                idx = len(domain) + i
+                idx = idx + domain_index + i
                 idx = idx % len(words)
                 i = i + 1
               

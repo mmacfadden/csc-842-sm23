@@ -35,7 +35,7 @@ class MainCodeGenerator(CodeGenerator):
           let domainIdx = 0;
 
           const dates = getDates();
-
+          
           for (d of dates) {{
             const seed = await getSeed(d);
             for (let tld of tlds) {{
@@ -65,7 +65,7 @@ class MainCodeGenerator(CodeGenerator):
               domain_idx = 0
 
               dates = get_dates()
-
+              
               for d in dates:
                 seed = get_seed(d)
                 for tld in tlds:
@@ -77,6 +77,6 @@ class MainCodeGenerator(CodeGenerator):
               return domains
             
 
-            print( {main}())
+            print("\\n".join({main}()))
             """
         )

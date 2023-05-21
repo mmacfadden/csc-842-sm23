@@ -16,7 +16,7 @@ class RandomDomainGen(CodeGenerator):
 
         code = f'''
         function generateDomain(domainIndex, seed) {{
-          const valid_domain_chars = "1q3ag0n8fslwkti4u6952yzbvhdpocm7ej-rx";
+          const validDomainChars = "1q3ag0n8fslwkti4u6952yzbvhdpocm7ej-rx";
 
           let i = 0;
           let idx = (seed + domainIndex) % validDomainChars.length;
@@ -28,7 +28,7 @@ class RandomDomainGen(CodeGenerator):
             }}
             const ch = validDomainChars.charAt(idx);
             domain += ch;
-            idx = ch.charCodeAt(0) + i;
+            idx = ch.charCodeAt(0) + domainIndex + i;
             
             idx = idx % validDomainChars.length;
 
@@ -58,7 +58,7 @@ class RandomDomainGen(CodeGenerator):
                 ch = valid_domain_chars[idx]
                 domain += ch
 
-                idx = ord(ch) + i
+                idx = ord(ch) + domain_index + i
                 idx = idx % len(valid_domain_chars)
                 i = i + 1
               
