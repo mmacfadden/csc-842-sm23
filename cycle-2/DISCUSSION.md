@@ -23,7 +23,7 @@ The three main ideas for the project are as follows:
 Given only about a week to work on the tool, there are a lot of opportunities for improvement.  In general documentation, error handling, and testing could be improved.  However, in terms of future functionality there are five main areas of improvement:
 
   * **Additional Languages**: Currently only JavaScript and Python are supported as output languages.  Adding VBA and other language support would be useful.
-  * **Additional Seed Plugins**:  Additional methods to generate obtain seed values should be added over time.
+  * **Additional Seed Plugins**:  Additional methods to obtain seed values should be added over time.
   * **Additional Domain Plugins**: Additional methods to generate domain names from the seed value should be added over time.
   * **Pseudorandom Utilities**: Currently, each domain code generation plugin implements its own way to randomly generate a domain from it's corpus of characters, words, etc.  There are several deterministic pseudorandom algorithms that will provide better performance and reduce redundant code.  The leading candidate is an xorshift approach (https://en.wikipedia.org/wiki/Xorshift).  There is a UtilsCodeGenerator module already in the DGA Builder that can add helper methods such as this.
   * **Obfuscation Automation**: While the tool itself does not provide obfuscation of generated code, most languages have tools for obfuscation. It would be great if the DGA Builder could automate using the language-specific tools to optionally obfuscate the code.
