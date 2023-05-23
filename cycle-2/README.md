@@ -28,7 +28,7 @@ A [configuration file](#config-file) is fed to the main script ([dga-builder.py]
 ## Video
 A demonstration video can be found on YouTube here:
 
-http://youtube.com
+[https://youtu.be/ExZYc_JnFGM](https://youtu.be/ExZYc_JnFGM)
 
 
 ## Dependencies and Setup

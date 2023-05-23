@@ -37,4 +37,4 @@ https://github.com/mmacfadden/csc-842-sm23/tree/master/cycle-2/
 # Video
 A demonstration / walkthrough video has been posted to YouTube here:
 
-https://youtube.com
+https://youtu.be/ExZYc_JnFGM
