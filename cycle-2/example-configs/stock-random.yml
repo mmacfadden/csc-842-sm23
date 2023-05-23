@@ -1,10 +1,9 @@
 top-level-domains:
-  - re
-  - ru
-  - xyz
-  - za
+  - ac
+  - cc
+  - dj
 
-domains-per-tld: 2
+domains-per-tld: 3
 
 frequency: month
 
