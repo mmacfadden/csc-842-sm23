@@ -1,0 +1,4 @@
+kernel_version: 6.3.5
+
+root_filesystem: 
+  busy_box: 1.36.1
