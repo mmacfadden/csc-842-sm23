@@ -67,7 +67,7 @@ def extract_kernel(version: str, download_file) -> str:
         print("Extracting kernel to: " + extract_dir)
         os.makedirs(extract_dir, exist_ok=True)
         with tarfile.open(download_file) as f:
-            f.extractall("kernels")
+            f.extractall("build/kernels")
     else:
         print("Kernel already extracted")
 
