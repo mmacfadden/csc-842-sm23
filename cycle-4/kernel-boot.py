@@ -13,7 +13,7 @@ config_manager = ConfigManager()
 config = config_manager.parse()
 
 
-def boot(kernel_config, initrd):
+def boot(kernel_config: dict, initrd: str, remote_debug: bool) -> None:
     print("Booting Virtual Machine\n")
 
     kernel_version = kernel_config["version"]
@@ -38,6 +38,11 @@ def boot(kernel_config, initrd):
     if "boot_args" in kernel_config:
         kernel_options.append(kernel_config["boot_args"])
 
+    if remote_debug:
+        debug_args = "-s -S"
+    else:
+        debug_args = ""
+
     qemu_command = textwrap.dedent(
         f"""qemu-system-aarch64 \\
         -M virt -m 1024 -cpu cortex-a53 \\
@@ -47,7 +52,8 @@ def boot(kernel_config, initrd):
         -device virtio-net-pci,netdev=mynet \\
         -nographic \\
         -no-reboot \\
-        -append "panic=-1 {" ".join(kernel_options)}"
+        -append "panic=-1 {" ".join(kernel_options)}" \\
+        {debug_args}
         """
     )
 
@@ -88,4 +94,4 @@ elif config.root_fs_type == "dir":
 else:
     die(f"Unexpected root fs type: {config.root_fs_type}")
 
-boot(config.kernel, initrd)
+boot(config.kernel, initrd, config.remote_debug)

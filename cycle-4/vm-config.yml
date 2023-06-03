@@ -2,6 +2,8 @@ namespace: test
 
 architecture: x64
 
+remote_debug: false
+
 kernel: 
   version: 6.3.5
   disable_kaslr: true

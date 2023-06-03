@@ -44,13 +44,19 @@ class ConfigManager:
                 else:
                     print(f"Invalid root_fs type: {root_fs[0]}")
 
+                remote_debug = False
+
+                if config.get("remote_debug"):
+                    remote_debug = True
+
                 return Configuration(
                     command,
                     config["kernel"],
                     config["architecture"],
                     config["namespace"],
                     root_fs_type,
-                    root_fs
+                    root_fs,
+                    remote_debug
                 )
 
             except yaml.YAMLError as exc:
@@ -59,13 +65,14 @@ class ConfigManager:
 
 class Configuration:
 
-    def __init__(self, command, kernel, architecture, namespace, root_fs_type, root_fs) -> None:
+    def __init__(self, command, kernel, architecture, namespace, root_fs_type, root_fs, remote_debug) -> None:
         self.command = command
         self.kernel = kernel
         self.architecture = architecture
         self.namespace = namespace
         self.root_fs_type = root_fs_type
         self.root_fs = root_fs
+        self.remote_debug = remote_debug
 
         
         
