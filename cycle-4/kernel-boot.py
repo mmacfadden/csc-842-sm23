@@ -169,7 +169,7 @@ def write_init(uid: int, root_fs_build_dir) -> str:
     with open(os.path.join(root_fs_build_dir, "init"), "w") as init_file:
         init_file.write(init)
 
-def build_root_fs(root_fs_dir):
+def build_root_fs(root_fs_dir, busybox_source_dir):
 
     root_fs_build_dir = os.path.join("build", root_fs_dir)
 
@@ -211,6 +211,7 @@ kernel_version = config["kernel_version"]
 downloaded_kernel_file = download_kernel(kernel_version)
 kernel_dir = extract_kernel(kernel_version, downloaded_kernel_file)
 
+
 make_config(kernel_dir, "Kernel")
 
 make_kernel(kernel_dir)
@@ -228,5 +229,5 @@ make_busybox(busybox_source_dir)
 
 root_fs_dir = "root_fs"
 
-build_root_fs(root_fs_dir)
+build_root_fs(root_fs_dir, busybox_source_dir)
 boot(kernel_version)
