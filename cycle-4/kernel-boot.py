@@ -110,7 +110,7 @@ def extract_busy_box(version: str, download_file) -> str:
     if not os.path.exists(extract_dir):
         print("Extracting Busy Box to: " + extract_dir)
         with tarfile.open(download_file) as f:
-            f.extractall("busybox")
+            f.extractall("build/busybox")
     else:
         print("Kernel already extracted")
 
