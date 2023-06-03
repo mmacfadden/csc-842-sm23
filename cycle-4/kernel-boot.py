@@ -13,8 +13,30 @@ config_manager = ConfigManager()
 config = config_manager.parse()
 
 
-def boot(kernel_version, initrd):
-    print("Booting Kernel")
+def boot(kernel_config, initrd):
+    print("Booting Virtual Machine\n")
+
+    kernel_version = kernel_config["version"]
+
+    kernel_options = []
+
+    if kernel_config.get("disable_kaslr"):
+        kernel_options.append("nokaslr")
+
+    if kernel_config.get("disable_smap"):
+        kernel_options.append("nosmap")
+
+    if kernel_config.get("disable_smep"):
+        kernel_options.append("nosmep")
+
+    if kernel_config.get("disable_pti"):
+        kernel_options.append("pti=off")
+
+    if kernel_config.get("quiet"):
+        kernel_options.append("quiet")
+    
+    if "boot_args" in kernel_config:
+        kernel_options.append(kernel_config["boot_args"])
 
     qemu_command = textwrap.dedent(
         f"""qemu-system-aarch64 \\
@@ -25,7 +47,7 @@ def boot(kernel_version, initrd):
         -device virtio-net-pci,netdev=mynet \\
         -nographic \\
         -no-reboot \\
-        -append "panic=-1"
+        -append "panic=-1 {" ".join(kernel_options)}"
         """
     )
 
@@ -66,4 +88,4 @@ elif config.root_fs_type == "dir":
 else:
     die(f"Unexpected root fs type: {config.root_fs_type}")
 
-boot(kernel_version, initrd)
+boot(config.kernel, initrd)

@@ -4,6 +4,13 @@ architecture: x64
 
 kernel: 
   version: 6.3.5
+  disable_kaslr: true
+  disable_smap: true
+  disable_smep: true
+  disable_pti: true
+  quiet: true
+  boot_args: ""
+  
   
 
 root_filesystem: 

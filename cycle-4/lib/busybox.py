@@ -80,12 +80,12 @@ class BusyBoxManager:
 
         os.makedirs(root_fs_build_dir, exist_ok=True)
         
-        exec(f"cp -av {self._source_dir}/_install/* {root_fs_build_dir}")
+        exec(f"cp -a {self._source_dir}/_install/* {root_fs_build_dir}")
         exec("rm linuxrc", root_fs_build_dir)
         exec("mkdir proc sys dev tmp", root_fs_build_dir)
         self.write_init(1000, root_fs_build_dir)
         exec(f"chmod +x {root_fs_build_dir}/init")
 
-        exec(f"find . | cpio -ov --format=newc > ../initramfs.cpio", root_fs_build_dir)
+        exec(f"find . | cpio -ov --format=newc > ../initramfs.cpio 2>/dev/null", root_fs_build_dir)
 
         return "build/initramfs.cpio"
