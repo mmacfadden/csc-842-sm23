@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomerCap>
+		<DeviceCap1>
+			<Path>/MWare/Network/DDNS/Mode</Path>  
+			<Value>0,1,2,3</Value>
+		</DeviceCap1>
+</CustomerCap>

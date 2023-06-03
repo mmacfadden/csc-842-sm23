@@ -1,0 +1,9 @@
+namespace: ip-cam
+
+architecture: amd64
+
+kernel:
+  version: 4.9.84
+
+root_filesystem: 
+  dir: squashfs-root

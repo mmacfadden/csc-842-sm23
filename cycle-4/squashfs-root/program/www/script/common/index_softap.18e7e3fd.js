@@ -1,0 +1,1 @@
+Utils.$package("indexSoftap"),indexSoftap=function(){var t={SSID:"",Key:""};return new(Class.extend({init:function(){},initPage:function(){},initData:function(){},initEvent:function(){},submitF:function(){Utils.LAPI_FormToCfg("frmSetup",t),Utils.LAPI_SetCfgData(LAPI_URL.SoftAp,t,!1)},release:function(){}}))}(jQuery);
