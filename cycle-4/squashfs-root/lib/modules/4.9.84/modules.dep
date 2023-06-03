@@ -1,9 +1,0 @@
-extra/kmanuparse.ko:
-extra/kmotor.ko: extra/kgpio.ko extra/kmanuparse.ko
-extra/NetUserDrv.ko:
-extra/kmultisend.ko:
-extra/kgpio.ko: extra/kmanuparse.ko
-extra/NetDbgDrv.ko:
-extra/kruntime.ko:
-extra/kmotorcm.ko: extra/kgpio.ko extra/kmanuparse.ko
-extra/kmotorpt.ko:

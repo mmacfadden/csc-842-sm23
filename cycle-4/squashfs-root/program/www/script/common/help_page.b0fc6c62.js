@@ -1,1 +1,0 @@
-Utils.$package("helpPage"),helpPage=(jQuery,new(Class.extend({init:function(){Utils.beforeDataLoad(),Utils.initLang(),Utils.afterDataLoad()}})));

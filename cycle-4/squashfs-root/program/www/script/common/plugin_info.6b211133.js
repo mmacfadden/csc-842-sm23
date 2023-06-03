@@ -1,1 +1,0 @@
-var isOldPlugin=!1;
