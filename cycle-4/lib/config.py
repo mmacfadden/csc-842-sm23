@@ -38,7 +38,7 @@ class ConfigManager:
                     die("root_fs must have exactly one of: [busybox, dir]")
                     
                 if "busy_box" in root_fs:
-                    root_fs_type = "busybox"
+                    root_fs_type = "busy_box"
                 elif "dir" in root_fs:
                    root_fs_type = "dir"
                 else:

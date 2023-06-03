@@ -4,7 +4,7 @@ import re
 import textwrap
 import shutil
 
-from .util import download_file, make, make_config
+from .util import download_file, make, make_config, exec
 
 
 class BusyBoxManager:
@@ -36,7 +36,7 @@ class BusyBoxManager:
             print(f"Busy Boxy {self._version} already extracted")
 
     def make_busybox_config(self) -> None:
-        make_config(self._source_dir)
+        make_config(self._source_dir, f"BusyBox {self._version}")
     
         config_path = os.path.join(self._source_dir, ".config")
         with open(config_path, "r") as config:
@@ -46,17 +46,17 @@ class BusyBoxManager:
             for line in lines:
                 sources.write(re.sub(r'^# CONFIG_STATIC is not set$', 'CONFIG_STATIC=y', line))
 
-    def make_busybox(busybox_source_dir):
-        busy_box_build = os.path.join(busybox_source_dir, "_install")
+    def make_busybox(self):
+        busy_box_build = os.path.join(self._source_dir, "_install")
         if not os.path.exists(busy_box_build):
             print("building busy box")
-            make(busybox_source_dir)
-            exec("make install", busybox_source_dir)
+            make(self._source_dir)
+            exec("make install", self._source_dir)
         else:
             print("Busy Box already built")
 
 
-    def write_init(uid: int, root_fs_build_dir) -> str:
+    def write_init(self, uid: int, root_fs_build_dir) -> str:
         init = textwrap.dedent(
             f"""
             #!/bin/sh
