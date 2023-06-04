@@ -12,7 +12,7 @@ class ConfigManager:
                             description='What the program does',
                             epilog='Text at the bottom of help')
 
-        self._parser.add_argument('command', default="boot")          
+        self._parser.add_argument('command', nargs="?", default="boot", choices=['config', 'build-kernel', "build-fs", 'boot'])          
         self._parser.add_argument('-c', '--config', help="The configure file to use.", default="vm-config.yml")  
 
     def parse(self): 
