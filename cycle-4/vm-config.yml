@@ -12,8 +12,6 @@ kernel:
   disable_pti: true
   quiet: true
   boot_args: ""
-  
-  
 
 root_filesystem: 
   busy_box: 1.36.1

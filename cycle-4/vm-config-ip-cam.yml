@@ -4,6 +4,7 @@ architecture: amd64
 
 kernel:
   version: 4.9.84
+  quiet: true
 
 root_filesystem: 
   dir: ipc/squashfs-root
