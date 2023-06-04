@@ -52,8 +52,9 @@ if config.command == "boot" or config.command == "build-fs":
     elif config.root_fs_type == "dir":
         root_dir = config.root_fs["dir"]
         working_dir = os.getcwd()
-        exec(f"find . | cpio -ov --format=newc > {working_dir}/build/initramfs.cpio", root_dir)
-        initrd = "build/initramfs.cpio"
+        initramfs = os.path.join(working_dir, namespace_dir, "initramfs.cpio")
+        exec(f"find . | cpio -ov --format=newc > {initramfs} 2>/dev/null", root_dir)
+        initrd = initramfs
     else:
         die(f"Unexpected root fs type: {config.root_fs_type}")
 

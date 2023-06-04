@@ -6,4 +6,4 @@ kernel:
   version: 4.9.84
 
 root_filesystem: 
-  dir: squashfs-root
+  dir: ipc/squashfs-root
