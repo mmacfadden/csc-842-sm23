@@ -3,4 +3,4 @@ node_modules
 __pycache__
 cycle-2/out
 cycle-4/.build
-cycle-4/ipc
+cycle-4/examples
