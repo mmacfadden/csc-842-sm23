@@ -14,4 +14,11 @@ kernel:
   boot_args: ""
 
 root_filesystem: 
-  busy_box: 1.36.1
+  busy_box: 
+    uid: 1000
+    version: 1.36.1
+    includes:
+      - from: examples/test/module/kmod.ko
+        to: /
+    init_extra: "insmod /kmod.ko"
+  

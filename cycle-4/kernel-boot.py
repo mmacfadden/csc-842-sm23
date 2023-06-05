@@ -38,9 +38,9 @@ if config.command == "boot" or config.command == "build-fs":
     rebuild_fs = config.command == "build-fs"
 
     if config.root_fs_type == "busy_box":
-        busy_box_version = config.root_fs["busy_box"]
+        busy_box_config = config.root_fs["busy_box"]
 
-        busy_box_manager = BusyBoxManager(busy_box_version, BUILD_DIR, namespace_dir)
+        busy_box_manager = BusyBoxManager(busy_box_config, BUILD_DIR, namespace_dir)
         
         busy_box_manager.download_busybox()
         busy_box_manager.extract_busy_box()
