@@ -67,8 +67,21 @@ kernel:
 #    * dir
 root_filesystem: 
   # Specifies that the root filesystem should be populated using
-  # the specified busybox version.
-  busy_box: 1.36.1
+  # Busy Box.
+  busy_box:
+    # The version of BusyBox to us.
+    version: 1.36.1
+
+    # The UID to run the root shell as.
+    uid: 1000
+    
+    # Additional files to include.
+    includes:
+      - from: examples/test/module/kmod.ko
+        to: /
+    
+    # Extra command to run in the init process.
+    init_extra: "insmod /kmod.ko"
 
   # Specifies the root files system should be build using the
   # supplied directory.

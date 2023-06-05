@@ -7,4 +7,4 @@ kernel:
   quiet: true
 
 root_filesystem: 
-  dir: ipc/squashfs-root
+  dir: examples/ipc/squashfs-root
