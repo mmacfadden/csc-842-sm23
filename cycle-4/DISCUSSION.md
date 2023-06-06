@@ -17,11 +17,11 @@ The three main ideas for the project are as follows:
 
 
 # Future Directions
-TBD:
+This project lent itself to starting small and continually adding functionality as I tried to boot different systems, firmware, etc.  The code is organized in a way that makes extending over time pretty easy. The main future features I see based on where the project is today are:
 
-  * **Support Different Compilers**: TBD.
-  * **Support Different CPU Architectures**: TBD.
-  * **Additional Filesystem Modules**: TBD.
+  * **Support Different Compilers**: At the moment, only the default compiler for the system is supported.  On my current Kali Linux box that is GCC 12.  Some Linux Kernels (such as 4.x) were intended to be compiled with something like GCC 9.x.  I'd like to extend the Kernel configuration to specify what compilers to use.
+  * **Support Different CPU Architectures**: There is a placeholder in the configuration for the CPU architecture to build for.  Right now, this configuration is ignored and the Kernel is built for whatever architecture you are on.  Ideally the Kernel could be cross compiled to the target Architecture and then QEMU would boot the appropriate type of virtual machine.  This is completely doable, just not within the time frame of the project.
+  * **Additional Filesystem Modules**: Right now the tool supports building the root filesystem from BusyBox (with additional files), or using a directory.  There are lots of other common use cases including a disk image like SquashFS, or a raw DD image.  This can be easily added in the future, and would help support more firmware reverse engineering scenarios.
   
 
 # Source Code
