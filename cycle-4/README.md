@@ -21,6 +21,8 @@ The project has the following dependencies:
 * [Python 3](https://www.python.org/): >= 3.11.x
 * [Pip](https://pip.pypa.io/en/stable/): >= 23.0
 * [QEMU](https://www.qemu.org/): >= 7.2
+* [GCC](https://gcc.gnu.org/): >= 12.x
+* [Make](https://www.gnu.org/software/make/): >= 4.x
 
 ### Python Dependencies
 Install the Python dependencies using the following command:
