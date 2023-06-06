@@ -8,6 +8,7 @@ The main requirements of the project that influenced the functionality and desig
 
 ## Design
 
+![Architecture](assets/architecture.pngD)
 
 ## Video
 A demonstration video can be found on YouTube here:
