@@ -1,28 +1,33 @@
 # Cycle 4: Auto-Emulate
-Introduction TBD
+The Auto Emulate tool automates booting a specified Linux Kernel along with a configured root filesystem.  The motivation for the tool was to increase the efficiency of Linux-based firmware reverse engineering, as well as Linux Kernel / Kernel module exploitation.  In both cases, it is common to need to compile a Linux Kernel, build a root file system, boot a virtual machine with those, and then remote debug.
+
+For those new to the task, this actually requires quite a few complicated and knowledge of several tools.  Even for those who know how to do this, it requires a bunch manual work.  It is also often quite cumbersome to iterate fast.  So the goal of this tool was to provide the minimum viable product (MVP) of a tool that automates all the sets you need to get a specific kernel and root files system up and running.  The tool also supports easy configuration of anti-exploitation kernel features like KASLR, SMEP/SMAP, Page Table Isolation, etc. which are handy to turn on and off when first reversing/exploiting something.
+
+Auto-Emulate uses a declarative configuration file that specifies how the VM should be configured, in the spirit of Infrastructure as Code.
+
 
 ## Requirements
 The main requirements of the project that influenced the functionality and design are as follows:
 
-  * The abillity to select whatever Linux Kernel version is relevant to the system you are attacking or reverse engineering.
+  * The ability to select whatever Linux Kernel version is relevant to the system you are attacking or reverse engineering.
   * The tool must support booting a root file system extracted from device firmware.
   * The tool must be able to support creating a basic file system and allow for specific kernel modules and/or code to attack those modules to be loaded.
-  * The tool must support remote debuging via GDB.
-  * The entire process must be automated from end-to-end, while also allowing the ability to rapidly rebuild portions of the system during interation.
-  * The tools should be configuration file driven, as to follow an "Infrastrucure as Code" approach, rather than support dozens of options.
-  * The archtiecture should allow for easily adding options and configurations over time, as it is likely that edge cases will be encountered for different firmware.
+  * The tool must support remote debugging via GDB.
+  * The entire process must be automated from end-to-end, while also allowing the ability to rapidly rebuild portions of the system during iteration.
+  * The tools should be configuration file driven, as to follow an "Infrastructure as Code" approach, rather than support dozens of options.
+  * The architecture should allow for easily adding options and configurations over time, as it is likely that edge cases will be encountered for different firmware.
 
 ## Design
-The project was developed in Python. However, the Python code targely orchestrates several other tools like GCC, make, and QEMU. Which must be installed on the system.  The tool is roughly grouped into four modules.  
+The project was developed in Python. However, the Python code largely orchestrates several other tools like GCC, make, and QEMU. Which must be installed on the system.  The tool is roughly grouped into four modules.  
 
   1. The first module is responsible for downloading and building the Linux Kernel.  
   2. The second module is set up to build a file system based on Busy Box, in the case where a firmware image has not been provided.  This is largely useful for Kernel / Kernel Module hacking.
   3. The third module builds a bootable root file system image from Busy Box, a supplied firmware image, etc.
-  4. The fourth module is responsible for the booting the the virtual machine.
+  4. The fourth module is responsible for booting the virtual machine.
 
 ![Architecture](assets/architecture.png)
 
-A goal of the project was to automate and accelerate iteration on reverse engineering. As such, the tool will detect what steps have alredy been accomplished. For example, once the kernel source has been downloaded, it doesn't need to be downloaded again.  Once the kernel has been extracted and configured (e.g. make config), then it need not be configured again.  Once the kernel has been compiled, it need not be compiled again... etc.  The same applies to the root filesystem.  However, if the user needs to change the configruaiton of the kernel, the tool does allow manual rebuilding of particular steps in the process.  This allows for flexibility, while greatly speeding up the happy path.
+A goal of the project was to automate and accelerate iteration on reverse engineering. As such, the tool will detect what steps have already been accomplished. For example, once the kernel source has been downloaded, it doesn't need to be downloaded again.  Once the kernel has been extracted and configured (e.g. make config), then it need not be configured again.  Once the kernel has been compiled, it need not be compiled again... etc.  The same applies to the root filesystem.  However, if the user needs to change the configuration of the kernel, the tool does allow manual rebuilding of particular steps in the process.  This allows for flexibility, while greatly speeding up the happy path.
 
 
 ## Video
@@ -48,6 +53,7 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+This section shows the usage of the tool:
 
 ### Help
 The program help can be shown using the `-h` flag.
@@ -82,8 +88,8 @@ The tool allows the user to specify a command to execute.  For example,
 
 The available commands are:
 
-  * **boot**: This is the default option and will perform all necessary steps to boot the VM.  However, boot will not redo any previous work. For example, if the Kernel is already built, it will not be rebuilt.
-  * **config**: Config will cause all configuration files (e.g. make config) to be generated, so that they can be modified before the build.
+  * **boot**: This is the default option and will perform all necessary steps to boot the VM.  However, the boot command will not redo any previous work. For example, if the Kernel is already built, it will not be rebuilt.
+  * **config**: Config will cause all configuration files (e.g. make config) to be generated so that they can be modified before the build.
   * **build-kernel**: Will rebuild the Linux Kernel with the current configuration.
   * **build-fs**: Will rebuild the root filesystem with the current configuration.
 
