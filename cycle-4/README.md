@@ -4,7 +4,13 @@ Introduction TBD
 ## Requirements
 The main requirements of the project that influenced the functionality and design are as follows:
 
-  * TBD
+  * The abillity to select whatever Linux Kernel version is relevant to the system you are attacking or reverse engineering.
+  * The tool must support booting a root file system extracted from device firmware.
+  * The tool must be able to support creating a basic file system and allow for specific kernel modules and/or code to attack those modules to be loaded.
+  * The tool must support remote debuging via GDB.
+  * The entire process must be automated from end-to-end, while also allowing the ability to rapidly rebuild portions of the system during interation.
+  * The tools should be configuration file driven, as to follow an "Infrastrucure as Code" approach, rather than support dozens of options.
+  * The archtiecture should allow for easily adding options and configurations over time, as it is likely that edge cases will be encountered for different firmware.
 
 ## Design
 The project was developed in Python. However, the Python code targely orchestrates several other tools like GCC, make, and QEMU. Which must be installed on the system.  The tool is roughly grouped into four modules.  
