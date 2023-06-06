@@ -56,7 +56,13 @@ By default, the tool will look for the `vm-config.yml` file in the current direc
 ```
 
 ### Commands
-The tool allows the user to specify a command to execute.  The available commands are:
+The tool allows the user to specify a command to execute.  For example,
+
+```bash
+./auto-emulate.py boot
+```
+
+The available commands are:
 
   * **boot**: This is the default option and will perform all necessary steps to boot the VM.  However, boot will not redo any previous work. For example, if the Kernel is already built, it will not be rebuilt.
   * **config**: Config will cause all configuration files (e.g. make config) to be generated, so that they can be modified before the build.
