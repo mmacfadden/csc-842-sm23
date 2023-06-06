@@ -44,9 +44,14 @@ namespace: test
 # Currently supported: amd64, x64
 architecture: x64
 
-# Whether to enable remote debugging when the virtual machine boots.
-# Defaults to false.
-remote_debug: false
+# Configures options for the virtual machine.
+virtual_machine:
+  # How much memory (in MB) to give the VM.
+  memory: 1024
+  
+  # Whether to enable remote debugging when the virtual machine boots.
+  # Defaults to false.
+  remote_debug: false
 
 # Configures the linux kernel to use and various boot parameters to pass
 # to the kernel when booting the virtual machine.
@@ -87,6 +92,3 @@ root_filesystem:
   # supplied directory.
   dir: "root_fs"
 ```
-
-TODOs
-  - handle architecture
