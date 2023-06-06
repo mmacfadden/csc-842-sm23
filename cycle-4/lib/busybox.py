@@ -30,7 +30,7 @@ class BusyBoxManager:
             print(f"Downloading Busy Box {self._version} from {self._download_url}")
             download_file(self._download_url, self._download_file)
         else:
-            print("Busy box already downloaded")
+            print(f"Busy Box {self._version} already downloaded")
         
 
     def extract_busy_box(self) -> None:
@@ -39,10 +39,10 @@ class BusyBoxManager:
             with tarfile.open(download_file) as f:
                 f.extractall(self._namespace_dir)
         else:
-            print(f"Busy Boxy {self._version} already extracted")
+            print(f"Busy Box {self._version} already extracted")
 
     def make_busybox_config(self) -> None:
-        make_config(self._source_dir, f"BusyBox {self._version}")
+        make_config(self._source_dir, f"Busy Box {self._version}")
     
         config_path = os.path.join(self._source_dir, ".config")
         with open(config_path, "r") as config:
@@ -55,11 +55,11 @@ class BusyBoxManager:
     def make_busybox(self, rebuild):
         busy_box_build = os.path.join(self._source_dir, "_install")
         if not os.path.exists(busy_box_build) or rebuild:
-            print("building busy box")
+            print("Building Busy Box")
             make(self._source_dir)
             exec("make install", self._source_dir)
         else:
-            print("Busy Box already built")
+            print(f"Busy Box {self._version} already built")
 
 
     def write_init(self, root_fs_build_dir: str) -> None:
