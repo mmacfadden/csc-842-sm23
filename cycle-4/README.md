@@ -95,13 +95,26 @@ virtual_machine:
 
 # Configures the linux kernel to use and various boot parameters to pass
 # to the kernel when booting the virtual machine.
-kernel: 
+kernel:
+  # Specifies the version of the Linux Kernel to use.
   version: 6.3.5
+  
+  # When set to true, disables Kernal Adress Space Layout Randomization.
   disable_kaslr: true
+  
+  # When set to true, disables Supervisor Mode Access Prevention.
   disable_smap: true
+  
+  # When set to true, disables Supervisor Mode Execution Protection.
   disable_smep: true
+  
+  # When set to true, disables Page Table Isolation.
   disable_pti: true
+  
+  # When set to true, suppresses kernel output on boot.
   quiet: true
+  
+  # Additional arguments that can be passed to the kernel on boot.
   boot_args: ""
 
 # Configures how the root file system will be built out.
