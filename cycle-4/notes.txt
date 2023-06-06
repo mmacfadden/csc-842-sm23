@@ -1,1 +1,0 @@
-/usr/bin/qemu-system-arm -M versatilepb -kernel toolchain/etc/plx49/zImage-4.2.8 -initrd fs.squashfs -append 'root=/dev/ram0 init=/bin/sh'

@@ -8,9 +8,9 @@ class ConfigManager:
 
     def __init__(self) -> None:
         self._parser = argparse.ArgumentParser(
-                            prog='kernel-booter',
-                            description='What the program does',
-                            epilog='Text at the bottom of help')
+          prog='auto-emulate',
+          description='A simply utility to automate building Linux VMs for kernel hacking and firmware reversing',
+        )
 
         self._parser.add_argument('command', nargs="?", default="boot", choices=['config', 'build-kernel', "build-fs", 'boot'])          
         self._parser.add_argument('-c', '--config', help="The configure file to use.", default="vm-config.yml")  

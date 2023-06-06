@@ -31,9 +31,40 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Help
+The program help can be shown using the `-h` flag.
+
+```bash
+usage: auto-emulate [-h] [-c CONFIG] [{config,build-kernel,build-fs,boot}]
+
+A simply utility to automate building Linux VMs for kernel hacking and firmware reversing
+
+positional arguments:
+  {config,build-kernel,build-fs,boot}
+
+options:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        The configure file to use.
+```
+
+### Config file
+By default, the tool will look for the `vm-config.yml` file in the current directory.  Alternatively, a configuration file can be specified with the `-c` command.
+
+```bash
+./auto-extract.py -c myconfig.yml
+```
+
+### Commands
+The tool allows the user to specify a command to execute.  The available commands are:
+
+  * **boot**: This is the default option and will perform all necessary steps to boot the VM.  However, boot will not redo any previous work. For example, if the Kernel is already built, it will not be rebuilt.
+  * **config**: Config will cause all configuration files (e.g. make config) to be generated, so that they can be modified before the build.
+  * **build-kernel**: Will rebuild the Linux Kernel with the current configuration.
+  * **build-fs**: Will rebuild the root filesystem with the current configuration.
 
 ## Configuration
-The tool is configured via a yaml file.  The syntax for the configuration file is shown below:
+The tool is configured via a YAML file.  The syntax for the configuration file is shown below:
 
 ```yaml
 # Provides a namespace for the project in the build directory so that multiple
