@@ -6,15 +6,14 @@ This project came out of my experiences in CSC 848 (Advanced Software Exploitati
 
 Thus this project focused on simplifying that work flow so that I could more quickly get to the firmware analysis or kernel hacking.  Now, I can get a system up and running with only a few minutes of active work.
 
-
 # Three Main Ideas
 The three main ideas for the project are as follows:
 
-1. **Automation**: TBD. 
+1. **Automation**: The main objective of the project was to automate repetitive tasks that have many steps. Several tasks like building a Linux kernel can take quite some time, which requires the user to wait and/or monitor the task to know when to go on to the next task. With this tool, you can basically fire and forget.  When the process is done, you will have a booted virtual machine.  The tool combines operations ranging from compiling kernels, compiling busybox, making file systems, booting VMs with QEMU, etc.
 
-2. **Declarative Configuration**: TBD.
+2. **Declarative Configuration**: It of course would be possible to write a simple shell script to automate some of the work. However, this would lead to mixing the logic of the system with the configuration and/or copying and pasting the shell script for different projects w/ different kernels.  The goal of this project was to provide a configuration file that declaratively specifies what the configuration of the system should be and the tool takes care of the rest.  This means you can effectively throw away the build system, and recreate it.  The configuration files can be easily checked into version control independently of the tool
 
-3. **Firmware Emulation and Kernel Hacking**: TBD.
+3. **Firmware Emulation and Kernel Hacking**: When I chose this project, I was aware that the tool itself was a little outside the traditional security tool set.  It doesn't deal with network analysis, or exploits, etc.  However, for me, this tool will significantly improve my firmware reverse engineering and kernel module exploitation workflow.  Both activities involve a lot of trial and error, and being able to quickly iterate without tedious, repetitive tasks will increase the speed of the entire process.
 
 
 # Future Directions
