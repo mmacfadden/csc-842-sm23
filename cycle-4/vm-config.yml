@@ -2,7 +2,9 @@ namespace: test
 
 architecture: x64
 
-remote_debug: false
+virtual_machine:
+  memory: 1024
+  remote_debug: false
 
 kernel: 
   version: 6.3.5

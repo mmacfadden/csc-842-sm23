@@ -51,12 +51,12 @@ class ConfigManager:
 
                 return Configuration(
                     command,
-                    config["kernel"],
-                    config["architecture"],
                     config["namespace"],
+                    config["architecture"],
+                    config["virtual_machine"],
+                    config["kernel"],
                     root_fs_type,
-                    root_fs,
-                    remote_debug
+                    root_fs
                 )
 
             except yaml.YAMLError as exc:
@@ -65,14 +65,14 @@ class ConfigManager:
 
 class Configuration:
 
-    def __init__(self, command, kernel, architecture, namespace, root_fs_type, root_fs, remote_debug) -> None:
+    def __init__(self, command, namespace, architecture, virtual_machine, kernel, root_fs_type, root_fs) -> None:
         self.command = command
         self.kernel = kernel
         self.architecture = architecture
         self.namespace = namespace
         self.root_fs_type = root_fs_type
         self.root_fs = root_fs
-        self.remote_debug = remote_debug
+        self.virtual_machine = virtual_machine
 
         
         

@@ -2,7 +2,7 @@ import textwrap
 
 from .util import exec
 
-def boot(namespace_dir: str, kernel_config: dict, initrd: str, remote_debug: bool) -> None:
+def boot(namespace_dir: str, kernel_config: dict, vm_config: dict, initrd: str) -> None:
     print("Booting Virtual Machine\n")
 
     kernel_version = kernel_config["version"]
@@ -27,14 +27,16 @@ def boot(namespace_dir: str, kernel_config: dict, initrd: str, remote_debug: boo
     if "boot_args" in kernel_config:
         kernel_options.append(kernel_config["boot_args"])
 
-    if remote_debug:
+    if vm_config.get("remote_debug", False):
         debug_args = "-s -S"
     else:
         debug_args = ""
 
+    memory = vm_config.get("memory", 1024)
+
     qemu_command = textwrap.dedent(
         f"""qemu-system-aarch64 \\
-        -M virt -m 1024 -cpu cortex-a53 \\
+        -M virt -m {memory} -cpu cortex-a53 \\
         -kernel {namespace_dir}/linux-{kernel_version}/arch/arm64/boot/Image.gz \\
         -initrd {initrd} \\
         -netdev user,id=mynet \\

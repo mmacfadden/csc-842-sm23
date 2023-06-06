@@ -62,4 +62,4 @@ if config.command == "boot" or config.command == "build-fs":
 ## Boot
 ##
 if (config.command == "boot"):
-    boot(namespace_dir, config.kernel, initrd, config.remote_debug)
+    boot(namespace_dir, config.kernel, config.virtual_machine, initrd)
