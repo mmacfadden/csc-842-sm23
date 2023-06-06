@@ -1,4 +1,4 @@
-# Cycle 4: TBD
+# Cycle 4: Auto-Emulate
 Introduction TBD
 
 ## Requirements
@@ -7,8 +7,17 @@ The main requirements of the project that influenced the functionality and desig
   * TBD
 
 ## Design
+The project was developed in Python. However, the Python code targely orchestrates several other tools like GCC, make, and QEMU. Which must be installed on the system.  The tool is roughly grouped into four modules.  
+
+  1. The first module is responsible for downloading and building the Linux Kernel.  
+  2. The second module is set up to build a file system based on Busy Box, in the case where a firmware image has not been provided.  This is largely useful for Kernel / Kernel Module hacking.
+  3. The third module builds a bootable root file system image from Busy Box, a supplied firmware image, etc.
+  4. The fourth module is responsible for the booting the the virtual machine.
 
 ![Architecture](assets/architecture.png)
+
+A goal of the project was to automate and accelerate iteration on reverse engineering. As such, the tool will detect what steps have alredy been accomplished. For example, once the kernel source has been downloaded, it doesn't need to be downloaded again.  Once the kernel has been extracted and configured (e.g. make config), then it need not be configured again.  Once the kernel has been compiled, it need not be compiled again... etc.  The same applies to the root filesystem.  However, if the user needs to change the configruaiton of the kernel, the tool does allow manual rebuilding of particular steps in the process.  This allows for flexibility, while greatly speeding up the happy path.
+
 
 ## Video
 A demonstration video can be found on YouTube here:
