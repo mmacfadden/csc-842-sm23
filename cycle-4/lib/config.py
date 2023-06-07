@@ -4,7 +4,35 @@ import yaml
 
 from .util import die
 
+
+class Configuration:
+    """
+    Configuration is a simple data class that holds the configuration
+    information for the tool
+    """
+
+    def __init__(self, 
+                 command: str, 
+                 namespace: str, 
+                 architecture:str, 
+                 virtual_machine: dict, 
+                 kernel: dict, 
+                 root_fs_type: str, 
+                 root_fs: dict) -> None:
+        self.command = command
+        self.kernel = kernel
+        self.architecture = architecture
+        self.namespace = namespace
+        self.root_fs_type = root_fs_type
+        self.root_fs = root_fs
+        self.virtual_machine = virtual_machine
+
+
 class ConfigManager:
+    """
+    The ConfigManager class deals with both parsing command line arguments as
+    well as loading the configuration file.
+    """
 
     def __init__(self) -> None:
         self._parser = argparse.ArgumentParser(
@@ -15,7 +43,12 @@ class ConfigManager:
         self._parser.add_argument('command', nargs="?", default="boot", choices=['config', 'build-kernel', "build-fs", 'boot'])          
         self._parser.add_argument('-c', '--config', help="The configure file to use.", default="vm-config.yml")  
 
-    def parse(self): 
+
+    def parse(self) -> Configuration:
+        """
+        Parses the command line arguments and configuration file and returns
+        a configuration object.
+        """
         args = self._parser.parse_args()
 
         command = args.command
@@ -62,17 +95,6 @@ class ConfigManager:
             except yaml.YAMLError as exc:
                 die(exc)
 
-
-class Configuration:
-
-    def __init__(self, command, namespace, architecture, virtual_machine, kernel, root_fs_type, root_fs) -> None:
-        self.command = command
-        self.kernel = kernel
-        self.architecture = architecture
-        self.namespace = namespace
-        self.root_fs_type = root_fs_type
-        self.root_fs = root_fs
-        self.virtual_machine = virtual_machine
 
         
         

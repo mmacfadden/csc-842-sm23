@@ -4,7 +4,7 @@ architecture: x64
 
 virtual_machine:
   memory: 1024
-  remote_debug: false
+  remote_debug: true
 
 kernel: 
   version: 6.3.5
@@ -17,8 +17,9 @@ kernel:
 
 root_filesystem: 
   busy_box: 
-    uid: 1000
     version: 1.36.1
+    uid: 1000
+    
     includes:
       - from: examples/test/module/kmod.ko
         to: /

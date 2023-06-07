@@ -1,8 +1,15 @@
 import textwrap
-
 from .util import exec
 
+
 def boot(namespace_dir: str, kernel_config: dict, vm_config: dict, initrd: str) -> None:
+    """
+    This method boots the virtual machine using QEMU.  It parses the various
+    configurations and translates them into the appropriate options for QEMU.
+    The method attempts to use reasonable defaults when options are not
+    supplied.
+    """
+
     print("Booting Virtual Machine\n")
 
     kernel_version = kernel_config["version"]

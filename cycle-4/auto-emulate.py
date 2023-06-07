@@ -8,6 +8,9 @@ from lib.util import exec, die
 from lib.config import ConfigManager
 from lib.qemu import boot
 
+##
+## Constants
+##
 BUILD_DIR = ".build"
 NAMESPACES_DIR = "namespaces"
 
@@ -19,8 +22,9 @@ config = config_manager.parse()
 
 namespace_dir = os.path.join(BUILD_DIR, NAMESPACES_DIR, config.namespace)
 
+
 ##
-## Kernel
+## Kernel Download and build
 ##
 if config.command == "boot" or config.command == "build-kernel":
     kernel_version = config.kernel["version"]
@@ -32,7 +36,7 @@ if config.command == "boot" or config.command == "build-kernel":
 
 
 ##
-## Root Filesystem
+## Root Filesystem Handling
 ##
 if config.command == "boot" or config.command == "build-fs":
     rebuild_fs = config.command == "build-fs"
@@ -58,8 +62,9 @@ if config.command == "boot" or config.command == "build-fs":
     else:
         die(f"Unexpected root fs type: {config.root_fs_type}")
 
+
 ##
-## Boot
+## VM Boot
 ##
 if (config.command == "boot"):
     boot(namespace_dir, config.kernel, config.virtual_machine, initrd)
