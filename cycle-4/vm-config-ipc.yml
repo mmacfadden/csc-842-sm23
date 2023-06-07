@@ -2,9 +2,19 @@ namespace: ipc
 
 architecture: amd64
 
+virtual_machine:
+  memory: 1024
+  remote_debug: false
+
 kernel:
   version: 4.9.84
   quiet: true
+  disable_kaslr: true
+  disable_smap: false
+  disable_smep: false
+  disable_pti: false
+  quiet: true
+  boot_args: ""
 
 root_filesystem: 
   dir: examples/ipc/squashfs-root

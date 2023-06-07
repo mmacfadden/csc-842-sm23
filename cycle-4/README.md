@@ -120,7 +120,7 @@ kernel:
   # Specifies the version of the Linux Kernel to use.
   version: 6.3.5
   
-  # When set to true, disables Kernal Adress Space Layout Randomization.
+  # When set to true, disables Kernel Address Space Layout Randomization.
   disable_kaslr: true
   
   # When set to true, disables Supervisor Mode Access Prevention.
@@ -148,7 +148,7 @@ root_filesystem:
   # Specifies that the root filesystem should be populated using
   # Busy Box.
   busy_box:
-    # The version of BusyBox to us.
+    # The version of BusyBox to use.
     version: 1.36.1
 
     # The UID to run the root shell as.
