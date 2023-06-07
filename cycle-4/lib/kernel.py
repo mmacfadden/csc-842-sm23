@@ -3,7 +3,12 @@ import tarfile
 
 from .util import download_file, make, make_config
 
-class LinuxKernelManager:
+class LinuxKernelBuilder:
+    """
+    The LinuxKernelBuilder class handles operations around building a specific
+    Linux Kernel from scratch.
+    """
+
 
     def __init__(self, version: str, build_dir: str, namespace_dir: str) -> None:
         self._version = version
@@ -15,7 +20,12 @@ class LinuxKernelManager:
         
         self._source_dir = os.path.join(self._namespace_dir, f"linux-{self._version}")
 
+
     def download_kernel(self) -> None:
+        """
+        This method downloads the Linux source from kernel.org if it has not
+        been downloaded yet.
+        """
         os.makedirs(self._download_dir, exist_ok=True)
 
         if not os.path.exists(self._download_file ):
@@ -26,6 +36,9 @@ class LinuxKernelManager:
 
 
     def extract_kernel(self) -> str:
+        """
+        Extracts he kernel source if it hasn't already been extracted.
+        """
         if not os.path.exists(self._source_dir):
             print(f"Extracting Linux Kernel {self._version} to: " + self._source_dir) 
             with tarfile.open(self._download_file) as f:
@@ -35,9 +48,18 @@ class LinuxKernelManager:
 
     
     def make_kernel_config(self):
+        """
+        Uses 'make defconfig' to generate a default configuration for the kernel
+        if a config has not already been generated.
+        """
         make_config(self._source_dir, f"Linux Kernel {self._version}")
 
+
     def make_kernel(self, rebuild: bool):
+        """
+        Builds the kernel if it hasn't already been built, or if a rebuild is
+        requested.
+        """
         kernel_build = os.path.join(self._source_dir, "arch/arm64/boot/Image.gz")
         if not os.path.exists(kernel_build) or rebuild:
             print(f"Building Linux Kernel {self._version}")

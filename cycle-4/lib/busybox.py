@@ -7,7 +7,11 @@ import shutil
 from .util import download_file, make, make_config, exec
 
 
-class BusyBoxManager:
+class BusyBoxFileSystemBuilder:
+    """
+    The BusyBoxFileSystemBuilder class handles operations around building a root
+    filesystem using BusyBox (plus additionally specified files).
+    """
 
     def __init__(self, busy_box_config: dict, builds_dir: str, namespace_dir: str) -> None:
         self._version = busy_box_config["version"]
@@ -22,8 +26,10 @@ class BusyBoxManager:
         self._download_file = os.path.join(self._download_dir, filename)
        
         self._source_dir = os.path.join(self._namespace_dir, f"busybox-{self._version}")
-        
+     
+    
     def download_busybox(self) -> None:
+        """Downloads BusyBox if it has not already been downloaded."""
         os.makedirs(self._download_dir, exist_ok=True)
 
         if not os.path.exists(self._download_file):
@@ -34,6 +40,10 @@ class BusyBoxManager:
         
 
     def extract_busy_box(self) -> None:
+        """
+        Extracts BusyBox from the downloaded archive, if it has not already
+        been extracted.
+        """
         if not os.path.exists(self._source_dir):
             print(f"Extracting Busy Box {self._version} to: {self._source_dir}")
             with tarfile.open(download_file) as f:
@@ -41,7 +51,13 @@ class BusyBoxManager:
         else:
             print(f"Busy Box {self._version} already extracted")
 
+
     def make_busybox_config(self) -> None:
+        """
+        Runs a 'make defconfig' in the source directory, if the .config file
+        does not already exist.  The function also, updates the configuration
+        to ensure that BusyBox is statically linked.
+        """
         make_config(self._source_dir, f"Busy Box {self._version}")
     
         config_path = os.path.join(self._source_dir, ".config")
@@ -52,7 +68,12 @@ class BusyBoxManager:
             for line in lines:
                 sources.write(re.sub(r'^# CONFIG_STATIC is not set$', 'CONFIG_STATIC=y', line))
 
+
     def make_busybox(self, rebuild):
+        """
+        Compiles BusyBox and makes a BusyBox file system directory layout using
+        'make' and 'make install'.
+        """
         busy_box_build = os.path.join(self._source_dir, "_install")
         if not os.path.exists(busy_box_build) or rebuild:
             print("Building Busy Box")
@@ -62,7 +83,11 @@ class BusyBoxManager:
             print(f"Busy Box {self._version} already built")
 
 
-    def write_init(self, root_fs_build_dir: str) -> None:
+    def create_init_script(self, root_fs_build_dir: str) -> None:
+        """
+        Creates the /init script for booting the system.
+        """
+
         init_extra = self._busy_box_config.get("init_extra", "")
         uid = self._busy_box_config.get("uid", 1000)
 
@@ -83,7 +108,13 @@ class BusyBoxManager:
         with open(os.path.join(root_fs_build_dir, "init"), "w") as init_file:
             init_file.write(init)
 
+
     def build_root_fs(self, root_fs_dir, rebuild) -> str:
+        """
+        Builds the root file system by copying the BusyBox file layout,
+        creating the init script, adding any additional user specified files,
+        and creating a disk image file using cpio.
+        """
 
         root_fs_build_dir = os.path.join(self._namespace_dir, root_fs_dir)
 
@@ -105,7 +136,7 @@ class BusyBoxManager:
             exec("rm linuxrc", root_fs_build_dir)
             exec("mkdir proc sys dev tmp", root_fs_build_dir)
             
-            self.write_init(root_fs_build_dir)
+            self.create_init_script(root_fs_build_dir)
             
             exec(f"chmod +x {root_fs_build_dir}/init")
 

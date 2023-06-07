@@ -2,8 +2,8 @@
 
 import os
 
-from lib.kernel import LinuxKernelManager
-from lib.busybox import BusyBoxManager
+from lib.kernel import LinuxKernelBuilder
+from lib.busybox import BusyBoxFileSystemBuilder
 from lib.util import exec, die
 from lib.config import ConfigManager
 from lib.qemu import boot
@@ -28,11 +28,11 @@ namespace_dir = os.path.join(BUILD_DIR, NAMESPACES_DIR, config.namespace)
 ##
 if config.command == "boot" or config.command == "build-kernel":
     kernel_version = config.kernel["version"]
-    kernel_manager = LinuxKernelManager(kernel_version, BUILD_DIR, namespace_dir)
-    kernel_manager.download_kernel()
-    kernel_manager.extract_kernel()
-    kernel_manager.make_kernel_config()
-    kernel_manager.make_kernel(config.command == "build-kernel")
+    kernel_builder = LinuxKernelBuilder(kernel_version, BUILD_DIR, namespace_dir)
+    kernel_builder.download_kernel()
+    kernel_builder.extract_kernel()
+    kernel_builder.make_kernel_config()
+    kernel_builder.make_kernel(config.command == "build-kernel")
 
 
 ##
@@ -44,7 +44,7 @@ if config.command == "boot" or config.command == "build-fs":
     if config.root_fs_type == "busy_box":
         busy_box_config = config.root_fs["busy_box"]
 
-        busy_box_manager = BusyBoxManager(busy_box_config, BUILD_DIR, namespace_dir)
+        busy_box_manager = BusyBoxFileSystemBuilder(busy_box_config, BUILD_DIR, namespace_dir)
         
         busy_box_manager.download_busybox()
         busy_box_manager.extract_busy_box()
