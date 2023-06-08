@@ -48,7 +48,7 @@ def exec(command: str, working_dir: str =".") -> None:
     p.wait()
 
 
-def die(message) -> None:
+def die(message: str) -> None:
     """
     A helper method to print a message and exit with an error code.
     """

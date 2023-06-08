@@ -69,7 +69,7 @@ class BusyBoxFileSystemBuilder:
                 sources.write(re.sub(r'^# CONFIG_STATIC is not set$', 'CONFIG_STATIC=y', line))
 
 
-    def make_busybox(self, rebuild):
+    def make_busybox(self, rebuild: bool):
         """
         Compiles BusyBox and makes a BusyBox file system directory layout using
         'make' and 'make install'.
@@ -109,7 +109,7 @@ class BusyBoxFileSystemBuilder:
             init_file.write(init)
 
 
-    def build_root_fs(self, root_fs_dir, rebuild) -> str:
+    def build_root_fs(self, root_fs_dir: str, rebuild: bool) -> str:
         """
         Builds the root file system by copying the BusyBox file layout,
         creating the init script, adding any additional user specified files,

@@ -8,11 +8,13 @@ from lib.util import exec, die
 from lib.config import ConfigManager
 from lib.qemu import boot
 
+
 ##
 ## Constants
 ##
 BUILD_DIR = ".build"
 NAMESPACES_DIR = "namespaces"
+
 
 ##
 ## Config Parsing
@@ -59,6 +61,7 @@ if config.command == "boot" or config.command == "build-fs":
         initramfs = os.path.join(working_dir, namespace_dir, "initramfs.cpio")
         exec(f"find . | cpio -ov --format=newc > {initramfs} 2>/dev/null", root_dir)
         initrd = initramfs
+
     else:
         die(f"Unexpected root fs type: {config.root_fs_type}")
 

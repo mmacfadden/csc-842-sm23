@@ -47,7 +47,7 @@ class LinuxKernelBuilder:
             print(f"Linux Kernel {self._version} already extracted")
 
     
-    def make_kernel_config(self):
+    def make_kernel_config(self) -> None:
         """
         Uses 'make defconfig' to generate a default configuration for the kernel
         if a config has not already been generated.
@@ -55,7 +55,7 @@ class LinuxKernelBuilder:
         make_config(self._source_dir, f"Linux Kernel {self._version}")
 
 
-    def make_kernel(self, rebuild: bool):
+    def make_kernel(self, rebuild: bool) -> None:
         """
         Builds the kernel if it hasn't already been built, or if a rebuild is
         requested.
