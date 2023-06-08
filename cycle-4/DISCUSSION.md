@@ -1,12 +1,12 @@
 # Introduction
-This project automates the process of creating a lightweight virtual machine using a specific Linux Kernel and supplied root file system.  The tool allows the user to declaratively specify what version of the Linux Kernel is required and how to build the root filesystem.  The tool will download and build the necesary artificats and boot a virtual machine.  The tool also allows the user to customize the kernel and root file system as needed.
+This project automates the process of creating a lightweight virtual machine using a specific Linux Kernel and supplied root file system.  The tool allows the user to declaratively specify what version of the Linux Kernel is required and how to build the root filesystem.  The tool will download and build the necessary artifacts and boot a virtual machine.  The tool also allows the user to customize the kernel and root file system as needed.
 
 When reverse engineering IoT firmware, it is common to get ahold of a root disk image. May of these IoT devices use a MIPS or ARM based Linux OS. When getting ahold of the Firmware, you can often determine the Linux Kernel version.  The ability to supply the firmware's root file system, combine it with the correct Linux Kernel, and boot a virtual machine to emulate the firmware is a very useful tool in the reverse engineering process.
 
 # Interest / Motivation
 This project came out of my experiences in CSC 848 (Advanced Software Exploitation) and CSC-844 (Advanced Reverse Engineering). These classes got me into reverse engineering and kernel hacking.  In both classes, and since then, I have had to routinely virtualize or emulate firmware from device vendors. It always seemed more painful that it needed to be to firmware virtualized.  There were a series of routine steps that I had to do over and over again each time.  Not to mention never quite remembering all the commands for QEMU. Each time I would do this, there was a lot of googling to remember exactly how to compile the kernel for a target architecture, create a root filesystem, etc.
 
-Thus this project focused on simplifying that work flow so that I could more quickly get to the firmware analysis or kernel hacking.  Now, I can get a system up and running with only a few minutes of active work.
+While the project may seem a bit like generic infrastructure and less security focused, it's goal was simplifying the reverse engineering workflow so that engineers can be more efficient in firmware analysis or kernel hacking. Thus, it really fits within the cyber operations pipeline. During the course of this project, I did go out an got a new piece of firmware from the Internet and was able to get it emulated much, much faster than without this tool, which lead to finding a vulnerability very quickly.
 
 # Three Main Ideas
 The three main ideas for the project are as follows:
