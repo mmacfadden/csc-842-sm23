@@ -3,7 +3,9 @@
 from colorama import Fore, Style
 
 from lib.args import process_args
-from lib.embed import embed, extract
+from lib.embed import PdfFileEmbedder
+from lib.extract import extract
+from lib.files import compute_files
 
 
 def main():
@@ -14,7 +16,9 @@ def main():
   print(Style.RESET_ALL)
 
   if args.command == "embed":
-     embed(args.pdf, args.cloak, args.key, args.files, args.output)
+     files = compute_files(args.files, args.dirs)
+     embedder = PdfFileEmbedder(args.pdf)
+     embedder.embed_files_in_pdf(files, args.output, args.cloak, True, args.key, )
 
   elif args.command == "extract":
      extract(args.pdf, args.key, args.output)
@@ -25,4 +29,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

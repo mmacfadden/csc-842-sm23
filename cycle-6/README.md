@@ -1,5 +1,5 @@
 # Cycle 6: PDF-Embed
-TBD
+
 
 ## Requirements
 The main requirements of the project that influenced the functionality and design are as follows:
@@ -67,6 +67,15 @@ options:
   -c
 ```
 
+```bash
+./pdf-embed.py embed \
+  -p examples/pdfs/f1040.pdf \
+  -o work/out.pdf \
+  -d examples/files/ \
+  -k "my key" \
+  -c
+```
+
 ## Extract
 ```bash
 ./pdf-embed.py extract \
@@ -74,3 +83,10 @@ options:
   -k "my key" \
   -o work/extracted
 ```
+
+./pdf-embed.py embed \
+  -p examples/pdfs/f1040.pdf \
+  -o work/out.pdf \
+  -d examples/files/ \
+  -k "my key" \
+  -c
