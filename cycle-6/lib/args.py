@@ -13,8 +13,9 @@ def process_args():
                       description='This program embeds hidden files within a PDF in support of data exfiltration.'
                       )
 
-  parser.add_argument('-p', 
-                      '--pdf', 
+  parser.add_argument('-i', 
+                      '--input',
+                      dest="input",
                       required=True, 
                       help="The PDF file to read from")
 
@@ -39,12 +40,20 @@ def process_args():
                       default=[],
                       help="Selects a directory of files (non-recursive) to embed in the PDF")  
 
-  parser.add_argument('-c', 
-                      '--cloak', 
+  parser.add_argument('--no-hide', 
                       required=False, 
-                      default=False, 
-                      action='store_true',
-                      help="Hides the embedded files, such that they will not show up in a PDF viewer."
+                      default=True,
+                      dest="hide",
+                      action='store_false',
+                      help="Disables hiding the embedded files, such that they will show up in a PDF viewer."
+                      )
+  
+  parser.add_argument('--no-compression', 
+                      required=False, 
+                      default=True,
+                      dest="compress",
+                      action='store_false',
+                      help="Disables compressing the embedded files."
                       )
 
   parser.add_argument('-k', '--key', 
@@ -72,8 +81,8 @@ def process_args():
   if isinstance(args.output, str) and len(args.output) < 1:
     fatal_error("The --output argument must be a string of length 1 or greater.")
 
-  if isinstance(args.pdf, str) and len(args.pdf) < 1:
-    fatal_error("The --pdf argument must be a string of length 1 or greater.")
+  if isinstance(args.input, str) and len(args.input) < 1:
+    fatal_error("The --input argument must be a string of length 1 or greater.")
 
   for dir in args.dirs:
     if isinstance(dir, str) and len(dir) < 1:

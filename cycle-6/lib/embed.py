@@ -55,7 +55,7 @@ class PdfFileEmbedder:
     if not isinstance(output_file, str) or len(output_file) < 1:
       raise Exception("The output_file param must be a string of length 1 or greater.")
      
-    print(f"Source: {self.__source_pdf}\n")
+    print(f"Source PDF: {self.__source_pdf}\n")
 
     if encryption_key != None:
        print(Fore.CYAN + f"Embedding and encrypting files into PDF:")
@@ -71,7 +71,7 @@ class PdfFileEmbedder:
     if hide_files:
       pdf_bytes = self.__hide_embedded_files(pdf_bytes)
     
-    print(Fore.CYAN + f"Writing Output File " + Style.RESET_ALL)
+    print(Fore.CYAN + f"\nWriting Output File " + Style.RESET_ALL)
     print(f"  ∟ Filename:   {output_file}")
     print(f"  ∟ Total Size: {len(pdf_bytes):,} Bytes \n")
     
@@ -196,8 +196,9 @@ class PdfFileEmbedder:
       The updated pdf bytes.
     """
 
-    print(Fore.CYAN + f"\nHiding Embedded Files")
-    print(Style.RESET_ALL)
+    print(Fore.CYAN + f"\nHiding Embedded Files" + Style.RESET_ALL)
     hidden_bytes = pdf_bytes.replace(b"/EmbeddedFiles", b"/StyleObjects")
+    print(f"  ∟ Done")
+
 
     return hidden_bytes

@@ -9,10 +9,12 @@ TBD
 ## Design
 TBD
 
+![Architecture](assets/architecture.png)
+
 ## Video
 A demonstration video can be found on YouTube here:
 
-[https://youtu.be/TBD](https://youtu.be/bNNDqdyTBDa3Sw)
+[https://youtu.be/TBD](https://youtu.be/TBD)
 
 
 ## Dependencies and Setup
@@ -36,7 +38,7 @@ This section shows the usage of the tool:
 The program help can be shown using the `-h` flag.
 
 ```bash
-usage: pdf-smuggler.py [-h] -p PDF [-f FILES] [-d DIRS] [-c] [-k KEY] -o OUTPUT {embed,extract}
+usage: pdf-smuggler.py [-h] -p PDF [-f FILES] [-d DIRS] [--no-hide] [--no-compression] [-k KEY] -o OUTPUT {embed,extract}
 
 This program embeds hidden files within a PDF in support of data exfiltration.
 
@@ -49,44 +51,55 @@ options:
   -f FILES, --file FILES
                         Selects a file to embed in the PDF
   -d DIRS, --dir DIRS   Selects a directory of files (non-recursive) to embed in the PDF
-  -c, --cloak           Hides the embedded files, such that they will not show up in a PDF viewer.
+  --no-hide             Disables hiding the embedded files, such that they will show up in a PDF viewer.
+  --no-compression      Disables compressing the embedded files.
   -k KEY, --key KEY     Provides an encryption key to encrypt the embedded files and their file names.
   -o OUTPUT, --output OUTPUT
                         Where to write output to. When embedding, the output PDF. When extracting, the directory to extract files to.
 ```
 
 
-### Embed
+### Embedding Files
+You can embed files into a source PDF using these examples.
+
+**Embedding File**
 ```bash
 ./pdf-smuggler.py embed \
-  -p examples/pdfs/f1040.pdf \
-  -o work/out.pdf \
-  -f examples/files/file_to_embed.txt \
-  -f examples/files/skull.png \
-  -k "my key" \
-  -c
+  --input examples/pdfs/f1040.pdf \
+  --file examples/files/file_to_embed.txt \
+  --file examples/files/skull.png \
+  --key "my key" \
+  --output work/out.pdf
 ```
+
+**Embedding A Director**
 
 ```bash
 ./pdf-smuggler.py embed \
-  -p examples/pdfs/f1040.pdf \
-  -o work/out.pdf \
-  -d examples/files/ \
-  -k "my key" \
-  -c
+  --input examples/pdfs/f1040.pdf \
+  --dir examples/files/ \
+  --key "my key" \
+  --output work/out.pdf
 ```
 
-## Extract
+**No Compression, Hiding of Files, or Encryption**
+```bash
+./pdf-smuggler.py embed \
+  --input examples/pdfs/f1040.pdf \
+  --dir examples/files/ \
+  --no-hide \
+  --no-compression \
+  --output work/out.pdf
+```
+
+
+
+## Extracting Files
+The following command will extract files from a PDF.
+
 ```bash
 ./pdf-smuggler.py extract \
-  -p work/out.pdf \
-  -k "my key" \
-  -o work/extracted
+  --input work/out.pdf \
+  --key "my key" \
+  --output work/extracted
 ```
-
-./pdf-embed.py embed \
-  -p examples/pdfs/f1040.pdf \
-  -o work/out.pdf \
-  -d examples/files/ \
-  -k "my key" \
-  -c

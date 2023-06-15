@@ -22,7 +22,9 @@ The three main ideas for the project are as follows:
 TBD. The main future features I see based on where the project is today are:
 
   * **DLP Testing**: I would like to test this against DLP tools to see how effective the approach is.  I've only tested against the Data Loss Prevention system built into Microsoft 365.  I was able to send prohibited files through a PDF. However, I'd like to test against a broader range of data protection tools.
-  * **Higher Order Automation**: TBD.
+  * **Higher Order Automation**: Currently the tool takes a specific set of files and embeds them in a specific PDF.  While this is a good start, many email/messaging systems have limits in the size of attachments.  I'd like the ability to do two things:
+    1. I'd like to be able to supply a set of PDFs to use to embed files in, along with a larger list of files. I would like the tool to then bin pack the files to embed across multiple PDFs in an automated way.
+    2. For large files, I would like the tool to be able to chunk the file into multiple compressed segments and then spread the chunks across multiple PDFs. The tool would need to be able to then reconstitute the file given the multiple PDFs on the other end.
   * **Golang Port**: I wanted to write the proof of concept in python since I know I could do it relatively quickly.  However, this is an exploitation tool that would need to be distributed into a target environment, and Python might not be the best choice, in retrospect.  First, its multiple files, which is somewhat of a pain to move across a network (yes it can be zipped).  It also requires the target system to have python, possibly pip, and requires permissions (and connectivity) to install python dependencies.  Porting this to Golang and producing a statically linked, single binary with no dependencies seem like a reasonable improvement for a tool of this kind.
   
 

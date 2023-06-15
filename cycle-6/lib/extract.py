@@ -56,7 +56,10 @@ def extract(source_pdf: str,
           compressed_file_bytes = enc.decrypt_data(compressed_file_bytes)
           name = enc.decrypt_filename(name)
 
-      file_bytes = zlib.decompress(compressed_file_bytes)
+      try:
+        file_bytes = zlib.decompress(compressed_file_bytes)
+      except zlib.error:
+        file_bytes = compressed_file_bytes
 
       print(f"+ Extracting file: {name}")
       with open(os.path.join(out_dir, f"{name}"), "wb") as fp:
