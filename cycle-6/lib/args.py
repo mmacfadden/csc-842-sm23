@@ -9,8 +9,8 @@ def process_args():
   """
 
   parser = argparse.ArgumentParser(
-                      prog='pdf-embed.py',
-                      description='What the program does'
+                      prog='pdf-smuggler.py',
+                      description='This program embeds hidden files within a PDF in support of data exfiltration.'
                       )
 
   parser.add_argument('-p', 

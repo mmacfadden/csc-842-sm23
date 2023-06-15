@@ -3,6 +3,6 @@ This repository hosts the security tools developed for the [Dakota State Univers
 
 * **[Cycle 2 - DGA Builder](./cycle-2)**: A framework that builds configurable domain generation algorithms for multiple languages.
 * **[Cycle 4 - Auto Emulate](./cycle-4)**: A tool to automate booting Linux Virtual Machines in support of emulating firmware extracted from devices and kernel hacking.
-* **[Cycle 6 - TBD](./cycle-6)**: TBD.
+* **[Cycle 6 - PDF Smuggler](./cycle-6)**: A tool to hide files within a PDF in support of data exfiltration/detection avoidance
 * **[Cycle 8 - TBD](./cycle-8)**: TBD.
 * **[Cycle 10 - TBD](./cycle-10)**: TBD.

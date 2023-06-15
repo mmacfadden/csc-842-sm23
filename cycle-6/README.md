@@ -1,4 +1,4 @@
-# Cycle 6: PDF-Embed
+# Cycle 6: PDF Smuggler
 
 
 ## Requirements
@@ -36,9 +36,9 @@ This section shows the usage of the tool:
 The program help can be shown using the `-h` flag.
 
 ```bash
-usage: pdf-embed.py [-h] -p PDF [-f FILES] [-d DIRS] [-c] [-k KEY] -o OUTPUT {embed,extract}
+usage: pdf-smuggler.py [-h] -p PDF [-f FILES] [-d DIRS] [-c] [-k KEY] -o OUTPUT {embed,extract}
 
-What the program does
+This program embeds hidden files within a PDF in support of data exfiltration.
 
 positional arguments:
   {embed,extract}       Specifies the action to perform.
@@ -58,7 +58,7 @@ options:
 
 ### Embed
 ```bash
-./pdf-embed.py embed \
+./pdf-smuggler.py embed \
   -p examples/pdfs/f1040.pdf \
   -o work/out.pdf \
   -f examples/files/file_to_embed.txt \
@@ -68,7 +68,7 @@ options:
 ```
 
 ```bash
-./pdf-embed.py embed \
+./pdf-smuggler.py embed \
   -p examples/pdfs/f1040.pdf \
   -o work/out.pdf \
   -d examples/files/ \
@@ -78,7 +78,7 @@ options:
 
 ## Extract
 ```bash
-./pdf-embed.py extract \
+./pdf-smuggler.py extract \
   -p work/out.pdf \
   -k "my key" \
   -o work/extracted

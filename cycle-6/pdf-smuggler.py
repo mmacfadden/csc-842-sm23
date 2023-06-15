@@ -12,7 +12,7 @@ def main():
 
   args = process_args()
 
-  print(Fore.YELLOW + f"PDF File Embedder")
+  print(Fore.YELLOW + f"\nPDF Smuggler")
   print(Style.RESET_ALL)
 
   if args.command == "embed":
