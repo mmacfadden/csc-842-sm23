@@ -69,11 +69,11 @@ class PdfFileEmbedder:
     pdf_bytes = self.__serialize_pdf(writer)
 
     if hide_files:
-      self.__hide_embedded_files(pdf_bytes)
+      pdf_bytes = self.__hide_embedded_files(pdf_bytes)
     
     print(Fore.CYAN + f"Writing Output File " + Style.RESET_ALL)
     print(f"  ∟ Filename:   {output_file}")
-    print(f"  ∟ Total size: {len(pdf_bytes):,} Bytes \n")
+    print(f"  ∟ Total Size: {len(pdf_bytes):,} Bytes \n")
     
     with open(output_file, "wb") as w:
         w.write(pdf_bytes)
