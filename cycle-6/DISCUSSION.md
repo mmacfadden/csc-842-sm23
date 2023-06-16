@@ -5,17 +5,19 @@ PDFs allow attaching files.  However, users can usually see that files are attac
 
 
 # Interest / Motivation
-TBD
+Compromising end user workstations through malware is a topic of interest to me.  In recent years I have seen a lot of host based security, firewalls, data loss prevention systems, etc. start to block several C2 channels.  Corporate HTTP Proxies and the like often even have started to block large file uploads. I am always looking to build multiple ways of getting data out of an target system.  Even if https uploads work, I find it convenient to use a multitude of methods.  For one, spreading large data exfiltration across multiple methods and protocols may make it harder to detect.  Also, if one method gets locked down, other methods may still persist as an incident response team is working through the attack.
+
+Thus, this tool just becomes one more tool in the tool belt, that would allow me to exfiltrate data through email, messaging apps (slack, teams, etc.), or file sharing sites.
 
 
 # Three Main Ideas
 The three main ideas for the project are as follows:
 
-1. **Embedding Files**: TBD
+1. **Embedding Files**: The overall objective was to embed fils into a PDF.  PDFs support file links and attachments. Links simply point to other files on the filesystem (or a URL), whereas attachments are embedded directly in the document.  Thus, the PDF can act as a container for other file.  The PDF can be sent via email or messaging application without looking like other files are being sent.  Other file containers such as a Zip file are obvious file containers, whereas PDFs are a bit more subversive.  Files can be attached to any existing valid / common PDF.  If a user was to simply open the PDF they would generally just see what looks like a normal PDF.
 
-2. **Obfuscation**: TBD
+2. **Obfuscation**: While, people might not even both to open the PDF, if they do they MAY not see the attachments.  However, most PDF viewers allow users to look at the attachments.  Thus, a goal of the tool was to hide the attachments from the user.  This is accomplished by editing the raw binary PDF file after the attachments are added.  The "tag" which identifies file attachments is modified in a way where a PDF view will essentially ignore the attached file.  This way if a user, or a data loss prevention system inspects the PDF to see if there are attachments, no attachments will be found.  This process is reversed on the receiving end to recover the files.  Additionally, the AES encryption will make it harder for an organization to detect what was exfiltrated, even after detection.
 
-3. **Encryption**: TBD
+3. **Encryption**: While the data structure that lists attachments is obfuscated, the files would otherwise still be in the file.  A savvy data loss prevention tool might still be able to find signatures within the PDF file and/or detect prohibited keywords, etc.  Thus the files that are embedded in the PDF can be encrypted with symmetric AES 256 encryption.
 
 
 # Future Directions

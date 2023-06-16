@@ -1,13 +1,21 @@
 # Cycle 6: PDF Smuggler
+PDF Smuggler is a data exfiltration tool that aims to avoid detection by embedding files in [PDF Documents](https://pdfa.org/resource/iso-32000-pdf/).  The tool leverage PDF Attachment to attach files, but then hides and obfuscates the files in a way that makes them mostly invisible to users and data loss prevention tools.
+
+PDF Smuggler is implemented in Python and is a command-line utility.  The tool has two modes **Embed** and **Extract**.  The embed function attaches and obfuscates files within an existing PDF that is to be sent out of an organization.  On the other end of the communication channel, the tool will extract the embedded files from the PDF.
 
 
 ## Requirements
 The main requirements of the project that influenced the functionality and design are as follows:
 
-TBD
+  * The tool must be able to embed arbitrary files in an existing PDF.
+  * The tool must, to the greatest extent possible, hide the embedded files within the PDF so that users and Data Loss Preventions systems won't be able to see that the PDF has attachments.
+  * Embedded files should be encrypted to avoid signature detection and to make forensics harder (e.g. the organization won't be able to tell what data was exfiltrated).
+  * Compression should be used to reduce the size of the resultant PDF.
+  * The composed PDF should essentially look and behave like the original PDF file.
+  * Given a PDF with embedded, obfuscated, compressed, and/or encrypted files, the tool must be able to extract the embedded files (with their original file names).
 
 ## Design
-TBD
+The tool was developed in Python for expediency's sake.
 
 ![Architecture](assets/architecture.png)
 
@@ -62,7 +70,9 @@ options:
 ### Embedding Files
 You can embed files into a source PDF using these examples.
 
-**Embedding File**
+**Embedding Files**
+This example shows embedding specific files in the source PDF:
+
 ```bash
 ./pdf-smuggler.py embed \
   --input examples/pdfs/f1040.pdf \
@@ -72,7 +82,8 @@ You can embed files into a source PDF using these examples.
   --output work/out.pdf
 ```
 
-**Embedding A Director**
+**Embedding A Directory**
+This example shows embedding all files in a directory into the source PDF:
 
 ```bash
 ./pdf-smuggler.py embed \
@@ -83,6 +94,8 @@ You can embed files into a source PDF using these examples.
 ```
 
 **No Compression, Hiding of Files, or Encryption**
+To aid in debugging its possible to turn off hiding the files, disable compression, and skip encryption.
+
 ```bash
 ./pdf-smuggler.py embed \
   --input examples/pdfs/f1040.pdf \
@@ -91,7 +104,6 @@ You can embed files into a source PDF using these examples.
   --no-compression \
   --output work/out.pdf
 ```
-
 
 
 ## Extracting Files
