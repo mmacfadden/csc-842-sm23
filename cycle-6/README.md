@@ -46,7 +46,8 @@ This section shows the usage of the tool:
 The program help can be shown using the `-h` flag.
 
 ```bash
-usage: pdf-smuggler.py [-h] -p PDF [-f FILES] [-d DIRS] [--no-hide] [--no-compression] [-k KEY] -o OUTPUT {embed,extract}
+./pdf-smuggler.py -h                                                                                                                                                                                          2 ⨯
+usage: pdf-smuggler.py [-h] -i INPUT [-f FILES] [-d DIRS] [--no-hide] [--no-compression] [-k KEY] -o OUTPUT {embed,extract}
 
 This program embeds hidden files within a PDF in support of data exfiltration.
 
@@ -55,7 +56,8 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  -p PDF, --pdf PDF     The PDF file to read from
+  -i INPUT, --input INPUT
+                        The PDF file to read from
   -f FILES, --file FILES
                         Selects a file to embed in the PDF
   -d DIRS, --dir DIRS   Selects a directory of files (non-recursive) to embed in the PDF
