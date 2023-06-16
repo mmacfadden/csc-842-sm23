@@ -73,6 +73,7 @@ options:
 You can embed files into a source PDF using these examples.
 
 **Embedding Files**
+
 This example shows embedding specific files in the source PDF:
 
 ```bash
@@ -85,6 +86,7 @@ This example shows embedding specific files in the source PDF:
 ```
 
 **Embedding A Directory**
+
 This example shows embedding all files in a directory into the source PDF:
 
 ```bash
@@ -96,6 +98,7 @@ This example shows embedding all files in a directory into the source PDF:
 ```
 
 **No Compression, Hiding of Files, or Encryption**
+
 To aid in debugging its possible to turn off hiding the files, disable compression, and skip encryption.
 
 ```bash
