@@ -22,7 +22,7 @@ The tool was developed in Python for expediency's sake.
 ## Video
 A demonstration video can be found on YouTube here:
 
-[https://youtu.be/TBD](https://youtu.be/TBD)
+[https://youtu.be/141rIjcKiB4](https://youtu.be/141rIjcKiB4)
 
 
 ## Dependencies and Setup
@@ -99,7 +99,7 @@ This example shows embedding all files in a directory into the source PDF:
 
 **No Compression, Hiding of Files, or Encryption**
 
-To aid in debugging its possible to turn off hiding the files, disable compression, and skip encryption.
+To aid in debugging it's possible to turn off hiding the files, disable compression, and skip encryption.
 
 ```bash
 ./pdf-smuggler.py embed \

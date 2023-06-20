@@ -9,6 +9,9 @@ from lib.files import compute_files
 
 
 def main():
+  """
+  This is the main entrypoint for the PDF Smuggler Script.
+  """
 
   args = process_args()
 
@@ -24,7 +27,7 @@ def main():
      extract(args.input, args.key, args.output)
 
   else:
-     raise(f"Command must be either embed or extract: {args.command}")
+     raise(f"Command must be either 'embed' or 'extract': {args.command}")
 
 
 if __name__ == "__main__":
