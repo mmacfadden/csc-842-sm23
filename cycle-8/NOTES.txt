@@ -1,0 +1,1 @@
+https://github.com/wbond/certvalidator/blob/master/docs/usage.md
