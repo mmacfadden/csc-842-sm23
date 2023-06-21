@@ -1,3 +1,4 @@
+from typing import Union
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 
@@ -37,7 +38,7 @@ class CertificateChain:
   def intermediate_certs(self) -> list[Certificate]:
      return self.__intermediates
   
-  def validate(self):
+  def validate(self) -> Union[str, None]:
     end_cert = self.__end_entity_cert.bytes()
     intermediates = []
     for i in self.__intermediates:
@@ -46,9 +47,8 @@ class CertificateChain:
     validator = CertificateValidator(end_cert, intermediates)
     try:
       validator.validate_usage(set(['digital_signature']))
-      return True
+      return None
     except InvalidCertificateError as err:
-       print(str(err))
-       return False
+      return str(err)
       
    

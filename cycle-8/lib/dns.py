@@ -1,6 +1,6 @@
 import socket
 
-def get_ipv4_by_hostname(hostname) -> list[str]:
+def get_ipv4_addresses_for_hostname(hostname: str) -> list[str]:
   ips = set()
   entries = socket.getaddrinfo(hostname, 0)
   for e in entries:
@@ -9,9 +9,3 @@ def get_ipv4_by_hostname(hostname) -> list[str]:
       ips.add(ip)
   
   return list(ips)
-
-
-def validate_ip_address_for_domain(ip_address: str, hostname: str) -> bool:
-    valid_ips = get_ipv4_by_hostname(hostname)
-    valid = ip_address in valid_ips
-    return valid
