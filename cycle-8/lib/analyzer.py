@@ -1,4 +1,5 @@
 import pyshark
+import uuid
 from dataclasses import dataclass
 from typing import Union
 
@@ -8,6 +9,7 @@ from .threat_intel import fetch_crowd_sec_ip_record, fetch_virus_total_record
 
 @dataclass
 class TlsRequestRecord:
+  uuid: str
   request_ip: str
   valid_ips_for_hostname: list[str]
   hostname: str
@@ -107,6 +109,7 @@ class CertificateAnalyzer:
       virus_total_ip_record = None
 
     record = TlsRequestRecord(
+      uuid.uuid4(),
       source_ip, 
       valid_ip_for_domain,
       hostname,

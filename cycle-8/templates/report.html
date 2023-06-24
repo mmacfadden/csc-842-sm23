@@ -2,6 +2,15 @@
   <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <style>
+      tr[aria-expanded="true"] td.toggle span:after {
+        content: "-";
+      }
+
+      tr:not([aria-expanded="true"]) td.toggle span:after {
+        content: "+";
+      }
+    </style>
   </head>
   <body data-bs-theme="dark">
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -34,43 +43,73 @@
 
     <section class="container">
       <h1 class="mt-4">Suspicious TLS Requests</h1>
-      #foreach ($request in $bad_requests)
+      
       <table class="table table-bordered w-auto">
-        <tr><td class="fw-bold">Hostname:</td><td>$request.hostname</td></tr>
-        <tr><td class="fw-bold">IP Address:</td><td>$request.request_ip</td></tr>
-        <tr>
-          <td class="fw-bold">Valid IP Addresses:</td>
-          <td>
-            <ul>
-            #foreach ($ip in $request.valid_ips_for_hostname)
-              <li>$ip</li>
-            #end
-            </ul>
-          </td>
-        </tr>
-        <tr><td class="fw-bold">Valid IP for Hostname:</td><td>$request.valid_ip_for_hostname</td></tr>
-        <tr><td class="fw-bold">Cert Validation Error:</td><td>$request.cert_error</td></tr>
-        <tr>
-          <td class="fw-bold">Certificate Chain:</td>
-          <td>
-            #foreach ($cert in $request.cert_chain.all_certs)
-            <table class="table table-bordered">
-              <tr><td>Subject</td><td>$cert.subject()</td></tr>
-              <tr><td>Issuer</td><td>$cert.issuer()</td></tr>
-              <tr><td>Not Before</td><td>$cert.not_valid_before()</td></tr>
-              <tr><td>Not After</td><td>$cert.not_valid_after()</td></tr>
-              <tr>
-                <td class="fw-bold">Certificate PEM:</td>
-                <td>
-                  <pre>$cert.pem()</pre>
-                </td>
-              </tr>
-            </table>  
-            #end
-            
-          </td>
-        </tr>
+        <thead>
+          <th scope="col">#</th>
+          <th>Hostname</th>
+          <th>IP Address</th>
+          <th>Subject</th>
+          <th>Issues</th>
+        </thead>
+        <tbody>
+          #foreach ($request in $tls_requests)
+          #set( $H = '#' )
+          <tr data-bs-toggle="collapse" data-bs-target="$H$request.uuid">
+            <td class="toggle"><span></span></td>
+            <td>$request.hostname</td>
+            <td>$request.request_ip</td>
+            <td>$request.cert_chain.end_entity_cert().subject()</td>
+            <td>$request.has_errors()</td>
+          </tr>
+          <tr class="collapse accordion-collapse" id="$request.uuid" data-bs-parent=".table">
+            <td colspan="5" class="p-4">
+              <table class="table table-bordered w-auto">
+                <tr><td class="fw-bold">Hostname:</td><td>$request.hostname</td></tr>
+                <tr><td class="fw-bold">IP Address:</td><td>$request.request_ip</td></tr>
+                <tr>
+                  <td class="fw-bold">Valid IP Addresses:</td>
+                  <td>
+                    <ul>
+                    #foreach ($ip in $request.valid_ips_for_hostname)
+                      <li>$ip</li>
+                    #end
+                    </ul>
+                  </td>
+                </tr>
+                <tr><td class="fw-bold">Valid IP for Hostname:</td><td>$request.valid_ip_for_hostname</td></tr>
+                <tr><td class="fw-bold">Cert Validation Error:</td><td>$request.cert_error</td></tr>
+                <tr>
+                  <td class="fw-bold">Certificate Chain:</td>
+                  <td>
+                    #foreach ($cert in $request.cert_chain.all_certs)
+                    <table class="table table-bordered">
+                      <tr><td>Subject</td><td>$cert.subject()</td></tr>
+                      <tr><td>Issuer</td><td>$cert.issuer()</td></tr>
+                      <tr><td>Not Before</td><td>$cert.not_valid_before()</td></tr>
+                      <tr><td>Not After</td><td>$cert.not_valid_after()</td></tr>
+                      <tr>
+                        <td class="fw-bold">Certificate PEM:</td>
+                        <td>
+                          <pre>$cert.pem()</pre>
+                        </td>
+                      </tr>
+                    </table>  
+                    #end
+                    
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          #end
+        </tbody>
+        
       </table>
+       
+
+      #foreach ($request in $bad_requests)
+      
       #end
       
     </section>

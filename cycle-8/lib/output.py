@@ -67,13 +67,8 @@ class HtmlResultFormatter(ResultFormatter):
       report_time =  datetime.now().strftime("%m/%d/%Y @ %H:%M:%S")
       total_request_count = len(result.tls_requests)
 
-      good_requests = list(filter(lambda r: not r.has_errors(), result.tls_requests))
-      bad_requests = list(filter(lambda r: r.has_errors(), result.tls_requests))
-
-
       value = template.merge({
-        "good_requests": good_requests,
-        "bad_requests": bad_requests,
+        "tls_requests": result.tls_requests,
         "report_time": report_time,
         "total_requests": total_request_count
       })
