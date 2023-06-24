@@ -1,4 +1,4 @@
 cryptography
-certifi
 certvalidator
 colorama
+requests

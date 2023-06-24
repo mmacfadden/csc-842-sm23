@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </head>
+  <body data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">TLS PCAP Analyzer Report</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </div>
+      </div>
+    </nav>
+    
+    <section class="container">
+      <h1 class="mt-4">Report Info</h1>
+      <table class="table table-bordered w-auto">
+        <tr>
+          <td class="fw-bold">PCAP File:</td><td>$result.pcap_file</td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Report Generated:</td><td>$report_time</td>
+        </tr>
+        <tr>
+          <td class="fw-bold">TLS Requests Analyzed:</td><td>$total_requests</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="container">
+      <h1 class="mt-4">Suspicious TLS Requests</h1>
+      #foreach ($request in $bad_requests)
+      <table class="table table-bordered w-auto">
+        <tr><td class="fw-bold">Hostname:</td><td>$request.hostname</td></tr>
+        <tr><td class="fw-bold">IP Address:</td><td>$request.request_ip</td></tr>
+        <tr>
+          <td class="fw-bold">Valid IP Addresses:</td>
+          <td>
+            <ul>
+            #foreach ($ip in $request.valid_ips_for_hostname)
+              <li>$ip</li>
+            #end
+            </ul>
+          </td>
+        </tr>
+        <tr><td class="fw-bold">Valid IP for Hostname:</td><td>$request.valid_ip_for_hostname</td></tr>
+        <tr><td class="fw-bold">Cert Validation Error:</td><td>$request.cert_error</td></tr>
+        <tr>
+          <td class="fw-bold">Certificate Chain:</td>
+          <td>
+            #foreach ($cert in $request.cert_chain.all_certs)
+            <table class="table table-bordered">
+              <tr><td>Subject</td><td>$cert.subject()</td></tr>
+              <tr><td>Issuer</td><td>$cert.issuer()</td></tr>
+              <tr><td>Not Before</td><td>$cert.not_valid_before()</td></tr>
+              <tr><td>Not After</td><td>$cert.not_valid_after()</td></tr>
+              <tr>
+                <td class="fw-bold">Certificate PEM:</td>
+                <td>
+                  <pre>$cert.pem()</pre>
+                </td>
+              </tr>
+            </table>  
+            #end
+            
+          </td>
+        </tr>
+      </table>
+      #end
+      
+    </section>
+
+  </body>
+</html>

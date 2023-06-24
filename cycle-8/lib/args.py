@@ -27,10 +27,12 @@ def process_args():
                       default=False,
                       help="triggers verbose output")  
 
-  parser.add_argument('-j', 
-                      '--json', 
-                      required=False, 
-                      help="Output as JSON"
+  parser.add_argument('-o', 
+                      '--output', 
+                      required=False,
+                      default="text",
+                      choices=["text", "json", "html"],
+                      help="Specifies the output format"
                       )
 
   args = parser.parse_args()
