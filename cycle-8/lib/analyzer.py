@@ -105,8 +105,8 @@ class CertificateAnalyzer:
 
     virus_total_api_key = self.__config.get("virus_total_api_key", None)
     if virus_total_api_key != None:
-      #virus_total_ip_record = fetch_virus_total_record(source_ip, virus_total_api_key)
-      virus_total_ip_record = None
+      virus_total_ip_record = fetch_virus_total_record(source_ip, virus_total_api_key)
+     
 
     record = TlsRequestRecord(
       uuid.uuid4(),

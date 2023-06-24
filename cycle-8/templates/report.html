@@ -42,7 +42,7 @@
     </section>
 
     <section class="container">
-      <h1 class="mt-4">Suspicious TLS Requests</h1>
+      <h1 class="mt-4">TLS Requests</h1>
       
       <table class="table table-bordered w-auto">
         <thead>
@@ -71,14 +71,30 @@
                   <td class="fw-bold">Valid IP Addresses:</td>
                   <td>
                     <ul>
-                    #foreach ($ip in $request.valid_ips_for_hostname)
+                      #foreach ($ip in $request.valid_ips_for_hostname)
                       <li>$ip</li>
-                    #end
+                      #end
                     </ul>
                   </td>
                 </tr>
                 <tr><td class="fw-bold">Valid IP for Hostname:</td><td>$request.valid_ip_for_hostname</td></tr>
+                #if($request.cert_error)
                 <tr><td class="fw-bold">Cert Validation Error:</td><td>$request.cert_error</td></tr>
+                #end
+
+                #if ($request.virus_total_ip_record)
+                <tr><td class="fw-bold">Virus Total Results:</td>
+                  <td>
+                    <ul>
+                    #set($vt_stats = $request.virus_total_ip_record.data.attributes.last_analysis_stats)
+                    #foreach ($key in $vt_stats.keys())
+                    <li>$key: $vt_stats.get($key)</li>
+                    #end
+                    </ul>
+                    <a href="https://www.virustotal.com/gui/url/$request.virus_total_ip_record.data.id/detection" target="_blank">Virus Total Report</a>
+                  </td>
+                </tr>
+                #end
                 <tr>
                   <td class="fw-bold">Certificate Chain:</td>
                   <td>
@@ -96,7 +112,6 @@
                       </tr>
                     </table>  
                     #end
-                    
                   </td>
                 </tr>
               </table>
@@ -104,15 +119,7 @@
           </tr>
           #end
         </tbody>
-        
       </table>
-       
-
-      #foreach ($request in $bad_requests)
-      
-      #end
-      
     </section>
-
   </body>
 </html>
