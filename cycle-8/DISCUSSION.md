@@ -19,9 +19,9 @@ The three main ideas for the project are as follows:
 # Future Directions
 TBD. The main future features I see based on where the project is today are:
 
-  * **TBD**: TBD.
-  * **TBD**: TBD.
-  * **TBD**: TBD.
+  * **Moment In Time Validation**: TBD.
+  * **Live Capture**: TDB.
+  * **Usability and Stability**: TBD.
   
 
 # Source Code

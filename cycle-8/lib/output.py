@@ -68,6 +68,7 @@ class HtmlResultFormatter(ResultFormatter):
       total_request_count = len(result.tls_requests)
 
       value = template.merge({
+        "pcap_file": result.pcap_file,
         "tls_requests": result.tls_requests,
         "report_time": report_time,
         "total_requests": total_request_count

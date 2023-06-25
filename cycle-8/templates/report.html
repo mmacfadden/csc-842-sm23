@@ -5,6 +5,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
+      tr td.toggle {
+        cursor: pointer;
+      }
+
       tr[aria-expanded="true"] td.toggle span:after {
         content: "-";
       }
@@ -12,9 +16,23 @@
       tr:not([aria-expanded="true"]) td.toggle span:after {
         content: "+";
       }
+
+      td.details {
+        background-color: lightgray;
+      }
+
+      td.details td.detail-label {
+        font-weight: bold;
+        background-color: lightblue;
+      }
+
+      td.details td.nested-label {
+        font-weight: bold;
+      }
+
     </style>
   </head>
-  <body data-bs-theme="dark">
+  <body data-bs-theme="light">
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">TLS PCAP Analyzer Report</a>
@@ -32,7 +50,7 @@
       <h1 class="mt-4">Report Info</h1>
       <table class="table table-bordered w-auto">
         <tr>
-          <td class="fw-bold">PCAP File:</td><td>$result.pcap_file</td>
+          <td class="fw-bold">PCAP File:</td><td>$pcap_file</td>
         </tr>
         <tr>
           <td class="fw-bold">Report Generated:</td><td>$report_time</td>
@@ -48,7 +66,7 @@
       
       <table class="table table-bordered w-auto">
         <thead>
-          <th scope="col">#</th>
+          <th scope="col"></th>
           <th>Hostname</th>
           <th>IP Address</th>
           <th>Subject</th>
@@ -64,17 +82,17 @@
             <td>$request.cert_chain.end_entity_cert().subject()</td>
             <td>
               #if($request.cert_error.code)
-              $request.cert_error.code
+              <span class="badge bg-danger">$request.cert_error.code</span>
               #end
             </td>
           </tr>
           <tr class="collapse accordion-collapse" id="$request.uuid" data-bs-parent=".table">
-            <td colspan="5" class="p-4">
+            <td colspan="5" class="p-4 details">
               <table class="table table-bordered w-auto">
-                <tr><td class="fw-bold">Hostname:</td><td>$request.hostname</td></tr>
-                <tr><td class="fw-bold">IP Address:</td><td>$request.request_ip</td></tr>
+                <tr><td class="detail-label">Hostname:</td><td>$request.hostname</td></tr>
+                <tr><td class="detail-label">IP Address:</td><td>$request.request_ip</td></tr>
                 <tr>
-                  <td class="fw-bold">Valid IP Addresses:</td>
+                  <td class="detail-label">Valid IP Addresses:</td>
                   <td>
                     <ul>
                       #foreach ($ip in $request.valid_ips_for_hostname)
@@ -83,13 +101,13 @@
                     </ul>
                   </td>
                 </tr>
-                <tr><td class="fw-bold">Valid IP for Hostname:</td><td>$request.valid_ip_for_hostname</td></tr>
+                <tr><td class="detail-label">Valid IP for Hostname:</td><td>$request.valid_ip_for_hostname</td></tr>
                 #if($request.cert_error)
-                <tr><td class="fw-bold">Cert Validation Error:</td><td>$request.cert_error.msg</td></tr>
+                <tr><td class="detail-label">Cert Validation Error:</td><td>$request.cert_error.msg</td></tr>
                 #end
 
                 #if ($request.virus_total_ip_record)
-                <tr><td class="fw-bold">Virus Total Results:</td>
+                <tr><td class="detail-label">Virus Total Results:</td>
                   <td>
                     <ul>
                     #set($vt_stats = $request.virus_total_ip_record.data.attributes.last_analysis_stats)
@@ -102,16 +120,16 @@
                 </tr>
                 #end
                 <tr>
-                  <td class="fw-bold">Certificate Chain:</td>
+                  <td class="detail-label">Certificate Chain:</td>
                   <td>
                     #foreach ($cert in $request.cert_chain.all_certs)
                     <table class="table table-bordered">
-                      <tr><td>Subject</td><td>$cert.subject()</td></tr>
-                      <tr><td>Issuer</td><td>$cert.issuer()</td></tr>
-                      <tr><td>Not Before</td><td>$cert.not_valid_before()</td></tr>
-                      <tr><td>Not After</td><td>$cert.not_valid_after()</td></tr>
+                      <tr><td class="nested-label">Subject</td><td>$cert.subject()</td></tr>
+                      <tr><td class="nested-label">Issuer</td><td>$cert.issuer()</td></tr>
+                      <tr><td class="nested-label">Not Before</td><td>$cert.not_valid_before()</td></tr>
+                      <tr><td class="nested-label">Not After</td><td>$cert.not_valid_after()</td></tr>
                       <tr>
-                        <td class="fw-bold">Certificate PEM:</td>
+                        <td class="nested-label">Certificate PEM:</td>
                         <td>
                           <pre>$cert.pem()</pre>
                         </td>
