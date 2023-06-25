@@ -7,7 +7,7 @@ def process_args():
 
   parser = argparse.ArgumentParser(
                       prog='tls-analyzer',
-                      description='TBD.'
+                      description='A utility for finding anomalies in TLS within a PCAP file.'
                       )
 
   parser.add_argument('-p', 

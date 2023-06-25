@@ -1,12 +1,58 @@
-# Cycle 8: TBD
+# Cycle 8: TLS Certificate Analyzer
+TBD
+
+## Requirements
+The main requirements of the project that influenced the functionality and design are as follows:
+
+  * TBD
+
+## Design
+The tool was developed in Python for expediency's sake.
+
+![Architecture](assets/architecture.png)
+
+## Video
+A demonstration video can be found on YouTube here:
+
+[https://youtu.be/TBD](https://youtu.be/TBD)
 
 
-https://github.com/secdev/scapy/blob/92c18f9e60c0959b633589953ce0c53063185ff7/scapy/layers/tls/handshake.py#L84
-https://itecnote.com/tecnote/python-how-to-extract-an-ssl-tls-message-using-scapy-and-python/
-https://github.com/secdev/scapy/blob/master/doc/notebooks/tls/notebook2_tls_protected.ipynb
-https://github.com/tintinweb/scapy-ssl_tls/issues/116
-https://stackoverflow.com/questions/57502597/read-ssl-certificate-using-scapy-in-python-3
+## Dependencies and Setup
+The project has the following dependencies:
 
-https://security.stackexchange.com/questions/123851/how-can-i-extract-the-certificate-from-this-pcap-file
+* [Python 3](https://www.python.org/): >= 3.11.x
+* [Pip](https://pip.pypa.io/en/stable/): >= 23.0
 
-https://stackoverflow.com/questions/16899247/how-can-i-decode-a-ssl-certificate-using-python
+
+### Python Dependencies
+Install the Python dependencies using the following command:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+This section shows the usage of the tool:
+
+### Help
+The program help can be shown using the `-h` flag.
+
+```bash
+tls-analyzer.py -h
+usage: tls-analyzer [-h] -p PCAP [-c CONFIG] [-f {text,json,html}] [-o OUTPUT] [-v]
+
+A utility for finding anomalies in TLS within a PCAP file.
+
+options:
+  -h, --help            show this help message and exit
+  -p PCAP, --pcap PCAP  The pcap file to read from
+  -c CONFIG, --config CONFIG
+                        Overrides the default config file name
+  -f {text,json,html}, --format {text,json,html}
+                        Specifies the output format
+  -o OUTPUT, --output OUTPUT
+                        Saves output to a file instead of standard out
+  -v, --verbose         Triggers additional output while processing the pcap
+```
+
+TBD
