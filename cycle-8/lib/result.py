@@ -15,8 +15,8 @@ class TlsRequestRecord:
   hostname: str
   cert_chain: CertificateChain
   cert_error: Union[CertValidationError, None]
-  crowd_sec_ip_record: dict
-  virus_total_ip_record: dict
+  crowd_sec_record: dict
+  virus_total_record: dict
 
   def has_errors(self) -> bool:
     # TODO Virus Total Response "data": { "attributes": { "threat_names": [],
@@ -43,8 +43,8 @@ class TlsRequestRecord:
       "hostname": self.hostname,
       "cert_chain": self.cert_chain.to_data(),
       "cert_error": cert_error,
-      "crowd_sec_ip_record": self.crowd_sec_ip_record,
-      "virus_total_ip_record": self.virus_total_ip_record
+      "crowd_sec_record": self.crowd_sec_record,
+      "virus_total_record": self.virus_total_record
     }
 
 

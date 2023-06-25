@@ -84,7 +84,7 @@ def analyze_pcap():
 
   config = load_config(args.config)
 
-  analyzer = TlsStreamAnalyzer(args.pcap, config)
+  analyzer = TlsStreamAnalyzer(args.pcap, config, args.verbose)
   result = analyzer.analyze()
 
   output_results(result, args.format, args.output)

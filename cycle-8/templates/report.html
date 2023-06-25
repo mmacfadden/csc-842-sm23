@@ -115,13 +115,37 @@
                 <tr><td class="detail-label">Cert Validation Error:</td><td>$request.cert_error.msg</td></tr>
                 #end
 
-                #if ($request.virus_total_ip_record)
+                #if ($request.crowd_sec_record)
+                <tr><td class="detail-label">CrowdSec Results:</td>
+                  <td>
+                    <table class="table">
+                      <tr><td>AS</td><td>$request.crowd_sec_record.as_name ($request.crowd_sec_record.as_num)</td></tr>
+                      <tr><td>IP Range</td><td>$request.crowd_sec_record.ip_range</td></tr>
+                      <tr><td>Reverse DNS</td><td>$request.crowd_sec_record.reverse_dns</td></tr>
+                      <tr>
+                        <td>Scores</td>
+                        <td>
+                          
+                          <ul>
+                            #foreach ($key in $request.crowd_sec_record.scores.overall.keys())
+                            <li><strong>$key</strong>: $request.crowd_sec_record.scores.overall.get($key)</li>
+                            #end
+                          </ul>
+                        </td>
+                      </tr>
+                    </table>
+                    <a href="https://app.crowdsec.net/cti/$request.request_ip" target="_blank">CrowdSec IP Report</a>
+                  </td>
+                </tr>
+                #end
+
+                #if ($request.virus_total_record)
                 <tr><td class="detail-label">Virus Total Results:</td>
                   <td>
                     <ul>
-                    #set($vt_stats = $request.virus_total_ip_record.data.attributes.last_analysis_stats)
+                    #set($vt_stats = $request.virus_total_record.data.attributes.last_analysis_stats)
                     #foreach ($key in $vt_stats.keys())
-                    <li>$key: $vt_stats.get($key)</li>
+                    <li><strong>$key</strong>: $vt_stats.get($key)</li>
                     #end
                     </ul>
                     <a href="https://www.virustotal.com/gui/url/$request.virus_total_ip_record.data.id/detection" target="_blank">Virus Total Report</a>

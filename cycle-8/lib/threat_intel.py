@@ -16,8 +16,11 @@ def fetch_crowd_sec_ip_record(ip: str, api_key: str) -> dict[str, any]:
   headers = {"x-api-key": api_key}
   url = f"https://cti.api.crowdsec.net/v2/smoke/{ip}"
   response = requests.get(url, headers=headers)
-  
-  return response.json()
+  json_response = response.json()
+  if json_response.get("message") != None:
+    return None
+  else:
+    return response.json()
 
 
 def fetch_virus_total_record(hostname: str, api_key: str) -> dict[str, any]:

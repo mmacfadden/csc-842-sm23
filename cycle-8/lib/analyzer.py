@@ -14,7 +14,7 @@ class TlsStreamAnalyzer:
   on PCAP files using the PyShark / tshark library.
   """
   
-  def __init__(self, pcap_file: str, config: dict[str, any]) -> None:
+  def __init__(self, pcap_file: str, config: dict[str, any], verbose: bool) -> None:
     """
     Creates a new TlsStreamAnalyzer.
 
@@ -24,6 +24,7 @@ class TlsStreamAnalyzer:
     """
     self.__pcap_file = pcap_file
     self.__result = None
+    self.__verbose = verbose
     self.__config = config
     self.__client_hellos = {}
    
@@ -38,6 +39,9 @@ class TlsStreamAnalyzer:
       constructor.
     """
     
+    if self.__verbose:
+      print(f"Reading pcap: {self.__pcap_file}\n")
+    
     self.__result = AnalysisResult(self.__pcap_file, [])
     
     data = pyshark.FileCapture(self.__pcap_file)
@@ -45,6 +49,9 @@ class TlsStreamAnalyzer:
     for pkt in data:
       if "TLS" in pkt:
         self.__process_tls_packet(pkt, pkt["TLS"])
+
+    if self.__verbose:
+      print(f"\nFinished processing pcap file.")
     
     return self.__result
 
@@ -116,8 +123,10 @@ class TlsStreamAnalyzer:
     if client_hello != None:
       server_hostname = client_hello.get("server_hostname")
     else:
-      # Try to get it from the cert itself.
-      server_hostname = cert_chain.hostname()
+      server_hostname = server_ip
+
+    if self.__verbose:
+      print(f"Processing certificate for: {client_hello_key} ({server_hostname})")
     
     entity_cert_bytes = bytes.fromhex(certs_attr.raw_value)
 
@@ -134,15 +143,23 @@ class TlsStreamAnalyzer:
 
     crowd_sec_api_key = self.__config.get("crowd_sec_api_key", None)
     if crowd_sec_api_key != None:
-      crowd_sec_ip_record = fetch_crowd_sec_ip_record(server_ip, crowd_sec_api_key)
+      if self.__verbose:
+        print(f"  Fetching CrowdSec results for '{server_ip}'...", end="")
+      crowd_sec_record = fetch_crowd_sec_ip_record(server_ip, crowd_sec_api_key)
+      if self.__verbose:
+        print("Done.")
     else:
-      crowd_sec_ip_record = None
+      crowd_sec_record = None
 
     virus_total_api_key = self.__config.get("virus_total_api_key", None)
     if virus_total_api_key != None:
-      virus_total_ip_record = fetch_virus_total_record(server_ip, virus_total_api_key)
+      if self.__verbose:
+        print(f"  Fetching Virus Total results for '{server_hostname}'...", end="")
+      virus_total_record = fetch_virus_total_record(server_hostname, virus_total_api_key)
+      if self.__verbose:
+        print("Done.")
     else:
-      virus_total_ip_record = None
+      virus_total_record = None
 
     record = TlsRequestRecord(
       uuid.uuid4(),
@@ -151,8 +168,11 @@ class TlsStreamAnalyzer:
       server_hostname,
       cert_chain,
       error,
-      crowd_sec_ip_record,
-      virus_total_ip_record
+      crowd_sec_record,
+      virus_total_record
     )
 
     self.__result.tls_requests.append(record)
+
+    if self.__verbose:
+        print("")
