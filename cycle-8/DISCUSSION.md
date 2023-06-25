@@ -9,11 +9,11 @@ TBD
 # Three Main Ideas
 The three main ideas for the project are as follows:
 
-1. **TBD**: TBD
+1. **SSL Validation**: TBD
 
-2. **TBD**: TBD
+2. **pyshark / tshark**: TBD
 
-3. **TBD**: TBD
+3. **Report Generation**: TBD
 
 
 # Future Directions

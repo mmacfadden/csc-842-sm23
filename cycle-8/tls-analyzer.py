@@ -34,18 +34,22 @@ def main():
   analyzer = CertificateAnalyzer(args.pcap, config)
   result = analyzer.analyze()
 
-  if args.output == "text":
+  if args.format == "text":
     formatter = TextResultFormatter()
-  elif args.output == "json":
+  elif args.format == "json":
     formatter = JsonResultFormatter()
-  elif args.output == "html":
+  elif args.format == "html":
     formatter = HtmlResultFormatter()
   else:
-    fatal_error(f"Invalid output option: {args.output}")
+    fatal_error(f"Invalid output option: {args.format}")
     
   formatter.generate_output(result)
 
-  print(formatter.result())
+  if args.output != None:
+    with open(args.output, "w") as f:
+      f.write(formatter.result())
+  else:
+    print(formatter.result())
 
 if __name__ == "__main__":  
   main()

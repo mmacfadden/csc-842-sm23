@@ -27,12 +27,19 @@ def process_args():
                       default=False,
                       help="triggers verbose output")  
 
-  parser.add_argument('-o', 
-                      '--output', 
+  parser.add_argument('-f', 
+                      '--format', 
                       required=False,
                       default="text",
                       choices=["text", "json", "html"],
                       help="Specifies the output format"
+                      )
+  
+  parser.add_argument('-o', 
+                      '--output', 
+                      required=False,
+                      default=None,
+                      help="Saves output to a file instead of standard out"
                       )
 
   args = parser.parse_args()

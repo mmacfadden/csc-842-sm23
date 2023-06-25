@@ -1,5 +1,8 @@
 from typing import Union
 from dataclasses import dataclass
+
+from asn1crypto.x509 import Certificate as Cert
+
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import serialization
@@ -11,6 +14,12 @@ from certvalidator.errors import InvalidCertificateError, PathValidationError, P
 class CertValidationError:
   code: str
   msg: str
+
+  def to_data(self): 
+    return {
+      "msg": self.msg,
+      "code": self.code
+    }
 
 class Certificate:    
   def __init__(self, cert_der_bytes) -> None:
@@ -76,7 +85,7 @@ class CertificateChain:
      return list(map(lambda x: x.to_data(), self.all_certs))
      
   
-  def validate(self) -> Union[CertValidationError, None]:
+  def validate(self, hostname: str) -> Union[CertValidationError, None]:
     end_cert = self.__end_entity_cert.bytes()
     intermediates = []
     for i in self.__intermediates:
@@ -84,6 +93,7 @@ class CertificateChain:
 
     validator = CertificateValidator(end_cert, intermediates)
     try:
+      validator.validate_tls(hostname)
       validator.validate_usage(set(['digital_signature']))
       return None
     except InvalidCertificateError as err:
@@ -94,6 +104,10 @@ class CertificateChain:
         code = "self-signed"
       elif "weak" in e_string:
         code = "weak-algo"
+      elif "valid hostnames include" in e_string:
+        code = "invalid-hostname"
+      elif "securing TLS" in e_string:
+        code = "invalid-usage"  
 
       return CertValidationError(code, str(err))
     
@@ -118,5 +132,10 @@ class CertificateChain:
     except err:
       return str(err)
 
-      
+  def validate_cert(self) -> list[CertValidationError]:
+    # end_entity_cert = Cert.load(self.__end_entity_cert.bytes())
+    # validation_context = ValidationContext()
+    # print(end_entity_cert)
+
+    return []
    
