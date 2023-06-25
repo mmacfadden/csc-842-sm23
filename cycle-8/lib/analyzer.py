@@ -102,11 +102,14 @@ class CertificateAnalyzer:
     crowd_sec_api_key = self.__config.get("crowd_sec_api_key", None)
     if crowd_sec_api_key != None:
       crowd_sec_ip_record = fetch_crowd_sec_ip_record(source_ip, crowd_sec_api_key)
+    else:
+      crowd_sec_ip_record = None
 
     virus_total_api_key = self.__config.get("virus_total_api_key", None)
     if virus_total_api_key != None:
       virus_total_ip_record = fetch_virus_total_record(source_ip, virus_total_api_key)
-     
+    else:
+      virus_total_ip_record = None
 
     record = TlsRequestRecord(
       uuid.uuid4(),

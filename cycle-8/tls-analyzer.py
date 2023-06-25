@@ -28,6 +28,9 @@ def main():
 
   config = load_config()
 
+  if config == None:
+    config = {}
+
   analyzer = CertificateAnalyzer(args.pcap, config)
   result = analyzer.analyze()
 
@@ -38,7 +41,7 @@ def main():
   elif args.output == "html":
     formatter = HtmlResultFormatter()
   else:
-    fatal_error(f"Invalid output option: {args.outpu}")
+    fatal_error(f"Invalid output option: {args.output}")
     
   formatter.generate_output(result)
 

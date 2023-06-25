@@ -1,11 +1,16 @@
 from typing import Union
+from dataclasses import dataclass
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import serialization
 
 from certvalidator import CertificateValidator
-from certvalidator.errors import InvalidCertificateError
+from certvalidator.errors import InvalidCertificateError, PathValidationError, PathBuildingError
 
+@dataclass
+class CertValidationError:
+  code: str
+  msg: str
 
 class Certificate:    
   def __init__(self, cert_der_bytes) -> None:
@@ -71,7 +76,7 @@ class CertificateChain:
      return list(map(lambda x: x.to_data(), self.all_certs))
      
   
-  def validate(self) -> Union[str, None]:
+  def validate(self) -> Union[CertValidationError, None]:
     end_cert = self.__end_entity_cert.bytes()
     intermediates = []
     for i in self.__intermediates:
@@ -82,6 +87,36 @@ class CertificateChain:
       validator.validate_usage(set(['digital_signature']))
       return None
     except InvalidCertificateError as err:
+      e_string = str(err).lower()
+      code = "invalid-cert"
+
+      if "self-signed" in e_string:
+        code = "self-signed"
+      elif "weak" in e_string:
+        code = "weak-algo"
+
+      return CertValidationError(code, str(err))
+    
+    except PathValidationError as err:
+      e_string = str(err).lower()
+      code = "path-validation"
+
+      if "expired" in e_string:
+        code = "expired"
+
+      return CertValidationError(code, str(err))
+      
+    except PathBuildingError as err:
+      e_string = str(err).lower()
+      code = "path-build"
+
+      if "no issuer matching" in e_string:
+        code = "untrusted-root"
+      
+      return CertValidationError(code, str(err))
+    
+    except err:
       return str(err)
+
       
    
