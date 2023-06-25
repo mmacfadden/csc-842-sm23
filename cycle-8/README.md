@@ -56,3 +56,16 @@ options:
 ```
 
 TBD
+
+## Config Files
+The tool will accept a config file that allows setting credentials for the various threat intelligence services that can be queried.  By default, The tool looks for the `config.yml` file in the current directory.  The `--config` option can be used to specify an alternate filename.
+
+The config file is structured as follows:
+
+```yaml
+# An API Key for CrowdSec (https://www.crowdsec.net/)
+crowd_sec_api_key: "<insert-api-key-here>"
+
+# An API Key for Virus Total (https://www.virustotal.com/)
+virus_total_api_key: "<insert-api-key-here>"
+```
