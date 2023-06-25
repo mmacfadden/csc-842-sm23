@@ -22,6 +22,7 @@ TBD. The main future features I see based on where the project is today are:
   * **Moment In Time Validation**: TBD.
   * **Live Capture**: TDB.
   * **Usability and Stability**: TBD.
+  * **Improved Validation Logic**: TBD.
   
 
 # Source Code

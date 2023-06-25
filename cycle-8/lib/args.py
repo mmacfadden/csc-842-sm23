@@ -1,11 +1,8 @@
 import argparse
-from .util import fatal_error
 
 def process_args():
   """
-  This method sets up the command line parser using argparse.  After argparse
-  parses the command line args, this method then performs some additional
-  sanity checking to make sure the arguments passed in are valid.
+  This method sets up the command line parser using argparse.
   """
 
   parser = argparse.ArgumentParser(
@@ -19,13 +16,12 @@ def process_args():
                       required=True, 
                       help="The pcap file to read from")
 
-  parser.add_argument('-v', 
-                      '--verbose', 
+  parser.add_argument('-c', 
+                      '--config', 
                       required=False, 
-                      action='store_true', 
-                      dest="verbose", 
-                      default=False,
-                      help="triggers verbose output")  
+                      dest="config", 
+                      default=None,
+                      help="Overrides the default config file name")  
 
   parser.add_argument('-f', 
                       '--format', 

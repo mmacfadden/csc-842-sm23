@@ -1,8 +1,6 @@
 from typing import Union
 from dataclasses import dataclass
 
-from asn1crypto.x509 import Certificate as Cert
-
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import serialization
@@ -10,8 +8,14 @@ from cryptography.hazmat.primitives import serialization
 from certvalidator import CertificateValidator
 from certvalidator.errors import InvalidCertificateError, PathValidationError, PathBuildingError
 
+
 @dataclass
 class CertValidationError:
+  """
+  The CertValidationError represents an issue with validating a certificate.
+  It contains both a machine readable code, as well as a human readable message.
+  """
+
   code: str
   msg: str
 
@@ -56,13 +60,33 @@ class Certificate:
 
 
 class CertificateChain:
+  """
+  The CertificateChain class represents an SSL Certificate Chain that starts
+  with the end_entity (e.g. the server), and then a set of intermediate certs
+  that represent a signing chain from that entity cert to the root.
+  """
+
   def __init__(self, end_cert_bytes: bytes, intermediate_cert_bytes: list[bytes]) -> None:
+    """
+    Creates s new CertificateChain.
+
+    Parameters:
+      end_cert_bytes:
+        The DER encoded bytes of the end entity certificate.
+
+      intermediate_cert_bytes:
+        A list of bytes objects representing the DER encoded intermediates
+        certs.
+    """
     self.__end_entity_cert = Certificate(end_cert_bytes)
     self.__intermediates = []
     for int_cert_bytes in intermediate_cert_bytes:
       self.__intermediates.append(Certificate(int_cert_bytes))
   
-  def hostname(self) -> str:
+  def entity_subject(self) -> str:
+      """
+      Returns the subject of the end entity certificate.
+      """
       attrs = self.__end_entity_cert.cert().subject.get_attributes_for_oid(NameOID.COMMON_NAME)
       if len(attrs) > 0:
          return attrs[0].value
@@ -70,22 +94,46 @@ class CertificateChain:
          return None
    
   def end_entity_cert(self) -> Certificate:
+     """
+     Returns the parsed end entity cert.
+     """
      return self.__end_entity_cert
   
   def intermediate_certs(self) -> list[Certificate]:
+     """
+     Returns a list of parsed intermediate certs.
+     """
      return self.__intermediates
   
   @property
   def all_certs(self) -> list[Certificate]:
+     """
+     Returns all certs in order, starting from the end entity cert, followed
+     by the intermediate certs.
+     """
      all = self.__intermediates.copy()
      all.insert(0, self.__end_entity_cert)
      return all
   
   def to_data(self) -> list[dict[str, any]]:
+     """
+     Returns a raw data (dict) representation of the cert chain.
+     """
      return list(map(lambda x: x.to_data(), self.all_certs))
-     
   
+
   def validate(self, hostname: str) -> Union[CertValidationError, None]:
+    """
+    Validates the SSL certificate.
+
+    Parameters:
+      hostname: The hostname that was requested by the client.  Used to
+                check if the certificate covers that hostname.
+
+    Returns:
+      None if there are no errors.  Otherwise, will return a 
+      CertValidationError describing the first issue found.
+    """
     end_cert = self.__end_entity_cert.bytes()
     intermediates = []
     for i in self.__intermediates:
@@ -131,11 +179,4 @@ class CertificateChain:
     
     except err:
       return str(err)
-
-  def validate_cert(self) -> list[CertValidationError]:
-    # end_entity_cert = Cert.load(self.__end_entity_cert.bytes())
-    # validation_context = ValidationContext()
-    # print(end_entity_cert)
-
-    return []
    
