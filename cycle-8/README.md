@@ -41,7 +41,9 @@ The tool was developed in Python for expediency's sake.  A PCAP file is specifie
 
 If the user has supplied API keys for external threat intelligence services, then those services are queried.  The results for all certificates are aggregated and the report formatter outputs the results, in the specified format, to either standard out or a file of the users choosing.
 
-![Architecture](assets/architecture.png)
+<div align="center">
+  <img src="assets/architecture.png" alt="Architecture" width="75%"/>
+</div>
 
 ## Video
 A demonstration video can be found on YouTube here:
