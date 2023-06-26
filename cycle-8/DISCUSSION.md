@@ -1,5 +1,5 @@
 # Introduction
-The TLS Certificate Analyzer looks through packet catpures looking for TLS handshakes.  When a handshake is found the server certificates are extracted an evaluated.  The tool provides information on all certificate exchanged in the packet capture and reports on any certificates with issues.  The tool will also reach out to other threat intelligence services to get information on the IPs and Hostnames for the servers involved in the TLS exchange.  The tool will provide output in a number of human readable and/or machine readable formats promoting integrations with other tools.
+The TLS Certificate Analyzer looks through packet captures looking for TLS handshakes.  When a handshake is found the server certificates are extracted an evaluated.  The tool provides information on all certificate exchanged in the packet capture and reports on any certificates with issues.  The tool will also reach out to other threat intelligence services to get information on the IPs and Hostnames for the servers involved in the TLS exchange.  The tool will provide output in a number of human readable and/or machine readable formats promoting integrations with other tools.
 
 
 # Interest / Motivation

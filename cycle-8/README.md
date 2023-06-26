@@ -24,11 +24,20 @@ The main requirements of the project that influenced the functionality and desig
   * Output formats should support both human-readable formats for presentation to the user, as well as machine-readable formats that can be ingested by other tools.
 
 ## Design
-The tool was developed in Python for expediency's sake.
+
+### TLS
+The TLS v1.2 Handshake process is shown below.  The two most relevant messages are the Client Hello and the Certificate (from the server).  
 
 <div align="center">
   <img src="assets/tls-handshake.png" alt="TLS Handshake" width="50%"/>
 </div>
+
+The Client Hello is important because it generally will contain the [Server Name Identification](https://en.wikipedia.org/wiki/Server_Name_Indication) (SNI) TLS Extension.  SNI adds the hostname that the client intends to communicate within the Client Hello message.  This is important since otherwise, proxies and firewalls might not know where to forward traffic to. For example, the hostname will typically be included in an HTTP Header. But this is application data, and would be encrypted once the TLS Session is established.  Thus SNI was added to TLS to communicate the intended hostname prior to standing up the encryption.  If we are to validate the requested hostname against the certificate, then we need to grab the hostname from the Client Hello Message.
+
+Between the Server Hello and Server Hello Done messages, the server will respond with a Certificate within the handshake.  It is from this message that we can extract the server's SSL Certificate.  An interesting facet of TLS, is that multiple messages might be embedded in the same TCP packet, or they may be spread across different packets.  So the message that carries the ServerHello, may sometimes contain the Certificate message as well, whereas in other circumstances it may be in a subsequent packet.
+
+### Architecture
+The tool was developed in Python for expediency's sake.
 
 ![Architecture](assets/architecture.png)
 
