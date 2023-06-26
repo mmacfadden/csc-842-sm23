@@ -37,7 +37,9 @@ The Client Hello is important because it generally will contain the [Server Name
 Between the Server Hello and Server Hello Done messages, the server will respond with a Certificate within the handshake.  It is from this message that we can extract the server's SSL Certificate.  An interesting facet of TLS, is that multiple messages might be embedded in the same TCP packet, or they may be spread across different packets.  So the message that carries the ServerHello, may sometimes contain the Certificate message as well, whereas in other circumstances it may be in a subsequent packet.
 
 ### Architecture
-The tool was developed in Python for expediency's sake.
+The tool was developed in Python for expediency's sake.  A PCAP file is specified on the command line.  TShark is then used to load and iterate of the packet capture.  The tool looks for any TLS Packets and identifies Client Hello packets. The hostname is extracted from the Client Hello and stored in a map that associates the source IP/Port and the Destination IP/Port with the hostname for that request.  The tool then scans for the corresponding server certificate response.  The Certificate is extracted and analyzed.
+
+If the user has supplied API keys for external threat intelligence services, then those services are queried.  The results for all certificates are aggregated and the report formatter outputs the results, in the specified format, to either standard out or a file of the users choosing.
 
 ![Architecture](assets/architecture.png)
 
