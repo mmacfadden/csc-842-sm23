@@ -88,7 +88,14 @@ options:
   -v, --verbose         Triggers additional output while processing the pcap
 ```
 
-TBD
+### example
+An example run of the tool might look like this:
+
+```bash
+./tls-analyzer.py -p pcaps/badssl.com.pcapng --format html --output report.html 
+```
+
+This will use the `pcaps/badssl.com.pcapng` as input, generate an HTML report, and save it to the `report.html` file.
 
 ## Config File
 The tool will accept a config file that allows setting credentials for the various threat intelligence services that can be queried.  By default, The tool looks for the `config.yml` file in the current directory.  The `--config` option can be used to specify an alternate filename.
