@@ -119,13 +119,12 @@
                 <tr><td class="detail-label">CrowdSec Results:</td>
                   <td>
                     <table class="table">
-                      <tr><td>AS</td><td>$request.crowd_sec_record.as_name ($request.crowd_sec_record.as_num)</td></tr>
-                      <tr><td>IP Range</td><td>$request.crowd_sec_record.ip_range</td></tr>
-                      <tr><td>Reverse DNS</td><td>$request.crowd_sec_record.reverse_dns</td></tr>
+                      <tr><td class="nested-label">AS</td><td>$request.crowd_sec_record.as_name ($request.crowd_sec_record.as_num)</td></tr>
+                      <tr><td class="nested-label">IP Range</td><td>$request.crowd_sec_record.ip_range</td></tr>
+                      <tr><td class="nested-label">Reverse DNS</td><td>$request.crowd_sec_record.reverse_dns</td></tr>
                       <tr>
-                        <td>Scores</td>
+                        <td class="nested-label">Scores</td>
                         <td>
-                          
                           <ul>
                             #foreach ($key in $request.crowd_sec_record.scores.overall.keys())
                             <li><strong>$key</strong>: $request.crowd_sec_record.scores.overall.get($key)</li>

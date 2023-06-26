@@ -9,6 +9,8 @@ The main requirements of the project that influenced the functionality and desig
 ## Design
 The tool was developed in Python for expediency's sake.
 
+![TLS Handshake](assets/tls-handshake.png)
+
 ![Architecture](assets/architecture.png)
 
 ## Video
@@ -57,7 +59,7 @@ options:
 
 TBD
 
-## Config Files
+## Config File
 The tool will accept a config file that allows setting credentials for the various threat intelligence services that can be queried.  By default, The tool looks for the `config.yml` file in the current directory.  The `--config` option can be used to specify an alternate filename.
 
 The config file is structured as follows:
