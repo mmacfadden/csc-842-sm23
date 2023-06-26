@@ -79,12 +79,20 @@ class TlsStreamAnalyzer:
     requested hostname. See:
       https://datatracker.ietf.org/doc/html/rfc6066#section-3
     """
+    
+    # There might be multiple TLS messages in the same packet.  So we need
+    # to get all of them and see if they are the ones we are looking for.
+    handshake_messages = list(map(
+      lambda x: x.get_default_value(), 
+      tls_layer.handshake_type.all_fields)
+    )
+
     # Client Hello
-    if tls_layer.handshake_type == "1":
+    if "1" in handshake_messages:
       self.__process_tls_handshake_client_hello_packet(pkt, tls_layer)
 
     # Server Hello
-    elif tls_layer.handshake_type == "2" or  tls_layer.handshake_type == "11":
+    elif "11" in handshake_messages:
       self.__process_tls_handshake_certificate_packet(pkt, tls_layer)
 
   def __process_tls_handshake_client_hello_packet(self, pkt, tls_layer):
