@@ -1,15 +1,34 @@
 # Cycle 8: TLS Certificate Analyzer
-TBD
+The **TLS Certificate Analyzer** is a command line tool developed in Python focused on locating certificates within a TLS exchange that have issues such as:
+
+* Self-signed certificates
+* Expired certificates
+* Certificates whose CN does not match the requested hostname
+* Certificates with weak algorithms
+* Certificates with an untrusted intermediate or root certificate
+* Etc.
+
+The tool operates on packet captures in the PACP / PACPNG format.  [tshark](https://www.wireshark.org/docs/man-pages/tshark.html) is used as the underlying packet parsing engine.  The [pyshark](https://github.com/KimiNewt/pyshark) Python bindings for tshark are used to work with tshark from Python.
+
+The tool will interrogate PCAP files looking for TLS traffic. Once a TLS stream is found, the certificates are extracted from the TLS Handshake.  The certificates are then inspected for issues, and a report is generated.  External threat intelligence services (like CrowdSec and VirusTotal) are queried to get additional information on the server the certificate came from.
 
 ## Requirements
 The main requirements of the project that influenced the functionality and design are as follows:
 
-  * TBD
+  * Accept a PCAP file as input.
+  * Locate TLS Handshake within the packet capture
+  * Extract server certificates from the TLS Handshake
+  * Examine the certificates and identify validation errors.
+  * Integrate with threat intelligence sites to gather additional information a hostnames / IP addresses to help judge if invalid certificates are associated with malicious intent.
+  * Generate reports to present the results to the user.
+  * Output formats should support both human-readable formats for presentation to the user, as well as machine-readable formats that can be ingested by other tools.
 
 ## Design
 The tool was developed in Python for expediency's sake.
 
-![TLS Handshake](assets/tls-handshake.png)
+<div align="center">
+  <img src="assets/tls-handshake.png" alt="TLS Handshake" width="50%"/>
+</div>
 
 ![Architecture](assets/architecture.png)
 
@@ -24,6 +43,7 @@ The project has the following dependencies:
 
 * [Python 3](https://www.python.org/): >= 3.11.x
 * [Pip](https://pip.pypa.io/en/stable/): >= 23.0
+* [pyshark](https://pypi.org/project/pyshark/): => 0.6
 
 
 ### Python Dependencies
