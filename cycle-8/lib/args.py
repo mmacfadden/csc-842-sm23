@@ -6,7 +6,7 @@ def process_args():
   """
 
   parser = argparse.ArgumentParser(
-                      prog='tls-analyzer',
+                      prog='tls-cert-analyzer',
                       description='A utility for finding anomalies in TLS within a PCAP file.'
                       )
 
