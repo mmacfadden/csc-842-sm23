@@ -16,4 +16,11 @@ scanner = MongoDbScanner(
     "admin"
 )
 
-scanner.scan()
+detections = scanner.scan()
+
+for detection in detections:
+  print(f"Secrets Detected in Table: {detection.table}")
+  for td in detection.detections:
+    print(f" - {td.name}")
+
+  print("")

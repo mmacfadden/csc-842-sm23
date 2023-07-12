@@ -1,7 +1,8 @@
 from pymongo import MongoClient
 
 from ..secret_detector import SecretDetector
-from ..db_scanner import DatabaseScanner
+from ..db_scanner import DatabaseScanner, TableDetections
+
 
 class MongoDbScanner(DatabaseScanner):
 
@@ -18,31 +19,44 @@ class MongoDbScanner(DatabaseScanner):
     self.username = username
     self.password = password
 
-  def scan(self):
+  def scan(self) -> list[TableDetections]:
+    detections = []
     client = MongoClient(self.url, username=self.username, password=self.password)
-    db = client[self.db_name]
-    self.iterateCollections(db)
-
-  def iterateCollections(self, database):
+    database = client[self.db_name]
     collections = database.list_collection_names()
     for collectionName in collections:
-      self.scanCollection(database[collectionName])
+      collection_detections = self.scanCollection(database[collectionName])
+      if collection_detections != None:
+        detections.append(collection_detections)
+    
+    return detections
 
 
-  def scanCollection(self, collection):
-    docs = collection.find()
+  def scanCollection(self, collection) -> TableDetections:
+    docs = collection.find().limit(self.sample_size)
     for doc in docs:
-      self.scanValues(doc)
-
+      detections = self.scanValues(doc)
+      ## TODO make it so that we actually aggregate these and de-duplicate
+      ## across samples
+      if len(detections) > 0:
+        return (TableDetections(collection.name, detections))
+      
+    return None
 
   def scanValues(self, x: any):
-     if isinstance(x, list):
-        for v in x:
-          self.scanValues(v)
+    detections = []
+    if isinstance(x, list):
+      for v in x:
+        detections.extend(self.scanValues(v))
+         
 
-     elif isinstance(x, dict):
-       for k, v in x.items():
-         self.scanValues(v)
+    elif isinstance(x, dict):
+      for _, v in x.items():
+        detections.extend(self.scanValues(v))
+      
 
-     elif isinstance(x, str):
-       return self.detectSecret(x)
+    elif isinstance(x, str):
+      detections.extend(self.detectSecret(x))
+
+
+    return detections
