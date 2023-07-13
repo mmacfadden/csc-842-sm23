@@ -35,6 +35,14 @@ pip install -r requirements.txt
 ## Usage
 This section shows the usage of the tool:
 
+```bash
+./db-secret-scanner.py -t mysql -s "localhost" -d csc842 -u admin -p admin -v
+```
+
+```bash
+./db-secret-scanner.py -t mongodb -s "localhost" -d csc842 -u admin -p admin -v
+```
+
 ### Help
 The program help can be shown using the `-h` flag.
 

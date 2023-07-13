@@ -18,19 +18,36 @@ class TableDetections:
 
 class DatabaseScanner:
 
-  def __init__(self, detectors: list[SecretDetector], sample_size: int) -> None:
+  def __init__(self, 
+               detectors: list[SecretDetector], 
+               sample_size: int,
+               url: str,
+               db_name: str,
+               username: str,
+               password: str,
+               verbose: bool) -> None:
      self.detectors = detectors
      self.sample_size = sample_size
+     self.url = url
+     self.db_name = db_name
+     self.username = username
+     self.password = password
+     self.verbose = verbose
     
+
   def scan(self) -> list[TableDetections]:
-      pass
+      raise Exception("The 'scan' method must be overridden by subclasses")
   
   
-  def detectSecret(self, value: str) -> list[Detection]:
+  def detect_secret(self, value: str) -> list[Detection]:
     detections = []
 
     for detector in self.detectors:
-      if detector.detectSecret(value):
+      if detector.detect_secret(value):
         detections.append(Detection(detector.name, value))
 
     return detections
+  
+  def _log(self, message: str) -> None:
+    if self.verbose:
+       print(message)

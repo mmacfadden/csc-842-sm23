@@ -7,6 +7,6 @@ class RexExSecretDetector(SecretDetector):
         super().__init__(name)
         self.regex = regex
 
-    def detectSecret(self, value: str) -> bool:
+    def detect_secret(self, value: str) -> bool:
         match = re.search(self.regex, value)
         return match != None

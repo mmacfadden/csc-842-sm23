@@ -1,7 +1,7 @@
 version: "3"
 services:
 
-  mongo:
+  mongodb:
     image: mongo:latest
     ports:
       - "27017-27019:27017-27019"
@@ -10,11 +10,25 @@ services:
       MONGO_INITDB_ROOT_USERNAME: "admin"
       MONGO_INITDB_ROOT_PASSWORD: "admin"
     volumes:
-      - ./docker/mongo-init:/docker-entrypoint-initdb.d/:ro
+      - ./docker/mongodb:/docker-entrypoint-initdb.d/:ro
       - type: volume
         source: mongodb
         target: /data
     command: mongod
  
+  mariadb:
+    image: mariadb
+    restart: always
+    ports: 
+      - 3306:3306
+
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpw
+      MARIADB_DATABASE: csc842
+      MARIADB_USER: admin
+      MARIADB_PASSWORD: admin
+    volumes:
+      - ./docker/mariadb:/docker-entrypoint-initdb.d/:ro
+
 volumes:
   mongodb:

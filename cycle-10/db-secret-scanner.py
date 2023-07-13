@@ -1,26 +1,33 @@
 #!/usr/bin/env python3
 
 
-from lib.core import get_all_secret_detectors
-
+from lib.core import get_scanner
 from lib.scanners.mongodb import MongoDbScanner
+from lib.args import process_args
 
-detectors = get_all_secret_detectors()
+from colorama import Fore, Style
 
-scanner = MongoDbScanner(
-    detectors,
-    5,
-    "localhost",
-    "csc842",
-    "admin",
-    "admin"
+args = process_args()
+
+
+
+scanner = get_scanner(
+  args.sample_size,
+  args.type,
+  args.server,
+  args.database,
+  args.username,
+  args.password,
+  args.verbose
 )
 
-detections = scanner.scan()
+table_detections = scanner.scan()
+print(f"\n{Fore.GREEN}{len(table_detections)} Tables Scanned{Style.RESET_ALL}\n")
 
-for detection in detections:
-  print(f"Secrets Detected in Table: {detection.table}")
-  for td in detection.detections:
-    print(f" - {td.name}")
+for table_detection in table_detections:
+  if len(table_detection.detections) > 0:
+    print(f"Secrets Detected in Table: {Fore.RED}{table_detection.table}{Style.RESET_ALL}")
+    for detection in table_detection.detections:
+      print(f" - {detection.name}")
 
-  print("")
+    print("")

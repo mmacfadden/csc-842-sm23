@@ -11,13 +11,47 @@ def process_args():
                       )
 
 
-  parser.add_argument('-c', 
-                      '--config', 
+  parser.add_argument('-t', 
+                      '--type', 
+                      required=True, 
+                      dest="type", 
+                      default=None,
+                      help="Specifies the configuration file") 
+  
+  parser.add_argument('-n', 
+                      '--sample-size', 
                       required=False, 
-                      dest="config", 
+                      dest="sample_size", 
+                      default=5,
+                      help="Specifies the configuration file") 
+
+  parser.add_argument('-s', 
+                      '--server', 
+                      required=True, 
+                      dest="server", 
                       default=None,
                       help="Specifies the configuration file")  
 
+  parser.add_argument('-d', 
+                      '--database', 
+                      required=True, 
+                      dest="database", 
+                      default=None,
+                      help="Specifies the configuration file")  
+
+  parser.add_argument('-u', 
+                      '--username', 
+                      required=True, 
+                      dest="username", 
+                      default=None,
+                      help="Specifies the configuration file")  
+  
+  parser.add_argument('-p', 
+                      '--password', 
+                      required=True, 
+                      dest="password", 
+                      default=None,
+                      help="Specifies the configuration file")  
   
   parser.add_argument('-e', 
                       '--extract', 
