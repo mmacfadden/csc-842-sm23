@@ -39,7 +39,7 @@ class DatabaseScanner:
       raise Exception("The 'scan' method must be overridden by subclasses")
   
   
-  def detect_secret(self, value: str) -> list[Detection]:
+  def _detect_secret(self, value: str) -> list[Detection]:
     detections = []
 
     for detector in self.detectors:
@@ -48,6 +48,21 @@ class DatabaseScanner:
 
     return detections
   
+  def _scan_value(self, x: any):
+    detections = []
+    if isinstance(x, list):
+      for v in x:
+        detections.extend(self._scan_value(v))
+
+    elif isinstance(x, dict):
+      for _, v in x.items():
+        detections.extend(self._scan_value(v))
+
+    elif isinstance(x, str):
+      detections.extend(self._detect_secret(x))
+
+    return detections
+
   def _log(self, message: str) -> None:
     if self.verbose:
        print(message)

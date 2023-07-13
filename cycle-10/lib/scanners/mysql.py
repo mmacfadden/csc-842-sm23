@@ -70,13 +70,11 @@ class MySqlDbScanner(DatabaseScanner):
       cursor.execute(select_query)
       for row in cursor:
         for value in row:
-          if isinstance(value, str):
-            new_detections = self.detect_secret(value)
-            for nd in new_detections:
-              if not nd.name in detections:
-                detections[nd.name] = nd
+          new_detections = self._scan_value(value)
+          for nd in new_detections:
+            if not nd.name in detections:
+              detections[nd.name] = nd
             
-      
     return TableDetections(table, detections.values())
   
 
