@@ -1,11 +1,11 @@
 from pymongo import MongoClient
 from colorama import Fore, Style
 from ..data_detector import DataDetector
-from ..db_scanner import DatabaseScanner, TableDetections
+from ..abstract_database_scanner import AbstractDatabaseScanner, TableDetections
 from ..util import fatal_error
 
 
-class MongoDbScanner(DatabaseScanner):
+class MongoDbScanner(AbstractDatabaseScanner):
 
   def __init__(self, 
                detectors: list[DataDetector],

@@ -5,17 +5,33 @@ from .data_detector import DataDetector
 
 @dataclass
 class Detection:
+   """
+   The Detection class signifies that a certain Data Detector
+   has found matching data in a table / collection.  The detection
+   identifies the name of the detector that matched the data and
+   an example of the data that was found.
+   """
+
    name: str
    example_value: str
 
 
 @dataclass
 class TableDetections:
+   """
+   The TableDetections records which detections (if any) were found
+   in a given table (or colleciton, etc.).
+   """
    table: str
    detections: list[Detection]
    
 
-class DatabaseScanner:
+class AbstractDatabaseScanner:
+  """
+  The AbstractDatabaseScanner is the base class of all database scanner
+  and provides the core logic for looking through a database to detect
+  data of interest.
+  """
 
   def __init__(self, 
                detectors: list[DataDetector], 

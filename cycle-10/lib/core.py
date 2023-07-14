@@ -2,7 +2,7 @@ import importlib
 import pkgutil
 
 from .data_detector import DataDetector
-from .db_scanner import DatabaseScanner
+from .abstract_database_scanner import AbstractDatabaseScanner
 
 
 dirname = "lib/detectors"
@@ -16,7 +16,7 @@ def get_all_secret_detectors() -> list[DataDetector]:
   return matchers
 
 
-def get_scanner(sample_size: int, db_type: str, url: str, db_name: str, username: str, password: str, verbose: bool) -> DatabaseScanner:
+def get_scanner(sample_size: int, db_type: str, url: str, db_name: str, username: str, password: str, verbose: bool) -> AbstractDatabaseScanner:
     detectors = get_all_secret_detectors()
 
     scanner_module = importlib.import_module(f'.scanners.{db_type}', package="lib")
