@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 from lib.core import get_scanner
 from lib.scanners.mongodb import MongoDbScanner
 from lib.args import process_args
@@ -8,8 +7,6 @@ from lib.args import process_args
 from colorama import Fore, Style
 
 args = process_args()
-
-
 
 scanner = get_scanner(
   args.sample_size,
@@ -22,6 +19,7 @@ scanner = get_scanner(
 )
 
 table_detections = scanner.scan()
+
 print(f"\n{Fore.GREEN}{len(table_detections)} Tables Scanned{Style.RESET_ALL}\n")
 
 for table_detection in table_detections:

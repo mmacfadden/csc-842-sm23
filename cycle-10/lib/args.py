@@ -6,7 +6,7 @@ def process_args():
   """
 
   parser = argparse.ArgumentParser(
-                      prog='db-secret-scanner',
+                      prog='db-scavenger',
                       description='A tool that searches a database for unencrypted secrets and password hashes, and supports extracting data of interest'
                       )
 
