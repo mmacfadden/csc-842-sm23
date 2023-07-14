@@ -2,14 +2,14 @@ from mysql.connector import connect, Error
 
 from colorama import Fore, Style
 
-from ..secret_detector import SecretDetector
+from ..data_detector import DataDetector
 from ..abstract_sql_scanner import AbstractSqlScanner
 from ..util import fatal_error
 
 class MySqlDbScanner(AbstractSqlScanner):
 
   def __init__(self, 
-               detectors: list[SecretDetector],
+               detectors: list[DataDetector],
                sample_size: int,
                url: str,
                db_name: str,
@@ -53,7 +53,7 @@ class MySqlDbScanner(AbstractSqlScanner):
     return table_names
   
 
-def create_scanner(detectors: list[SecretDetector],
+def create_scanner(detectors: list[DataDetector],
                   sample_size: int,
                   url: str, 
                   db_name: str, 

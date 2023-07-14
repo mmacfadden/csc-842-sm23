@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
-from .secret_detector import SecretDetector
-
+from .data_detector import DataDetector
 
 
 @dataclass
@@ -19,7 +18,7 @@ class TableDetections:
 class DatabaseScanner:
 
   def __init__(self, 
-               detectors: list[SecretDetector], 
+               detectors: list[DataDetector], 
                sample_size: int,
                url: str,
                db_name: str,
@@ -39,11 +38,11 @@ class DatabaseScanner:
       raise Exception("The 'scan' method must be overridden by subclasses")
   
   
-  def _detect_secret(self, value: str) -> list[Detection]:
+  def _detect_data(self, value: str) -> list[Detection]:
     detections = []
 
     for detector in self.detectors:
-      if detector.detect_secret(value):
+      if detector.detect(value):
         detections.append(Detection(detector.name, value))
 
     return detections
@@ -59,7 +58,7 @@ class DatabaseScanner:
         detections.extend(self._scan_value(v))
 
     elif isinstance(x, str):
-      detections.extend(self._detect_secret(x))
+      detections.extend(self._detect_data(x))
 
     return detections
 

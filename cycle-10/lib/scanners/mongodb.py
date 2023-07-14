@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from colorama import Fore, Style
-from ..secret_detector import SecretDetector
+from ..data_detector import DataDetector
 from ..db_scanner import DatabaseScanner, TableDetections
 from ..util import fatal_error
 
@@ -8,7 +8,7 @@ from ..util import fatal_error
 class MongoDbScanner(DatabaseScanner):
 
   def __init__(self, 
-               detectors: list[SecretDetector],
+               detectors: list[DataDetector],
                sample_size: int,
                url: str,
                db_name: str,
@@ -55,7 +55,7 @@ class MongoDbScanner(DatabaseScanner):
       
     return TableDetections(collection.name, detections.values())
 
-def create_scanner(detectors: list[SecretDetector],
+def create_scanner(detectors: list[DataDetector],
                   sample_size: int,
                   url: str, 
                   db_name: str, 

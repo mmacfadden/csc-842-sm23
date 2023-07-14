@@ -1,11 +1,11 @@
-from .secret_detector import SecretDetector
+from .data_detector import DataDetector
 from .db_scanner import DatabaseScanner, TableDetections
 
 
 class AbstractSqlScanner(DatabaseScanner):
 
   def __init__(self, 
-               detectors: list[SecretDetector],
+               detectors: list[DataDetector],
                sample_size: int,
                url: str,
                db_name: str,
