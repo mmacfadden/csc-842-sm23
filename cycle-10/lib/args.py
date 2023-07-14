@@ -6,10 +6,9 @@ def process_args():
   """
 
   parser = argparse.ArgumentParser(
-                      prog='db-secret-finder',
-                      description='TBD'
+                      prog='db-secret-scanner',
+                      description='A tool that searches a database for unencrypted secrets and password hashes, and supports extracting data of interest'
                       )
-
 
   parser.add_argument('-t', 
                       '--type', 
@@ -44,7 +43,7 @@ def process_args():
                       required=True, 
                       dest="username", 
                       default=None,
-                      help="Specifies the configuration file")  
+                      help="The username to log into the database with.")  
   
   parser.add_argument('-p', 
                       '--password', 

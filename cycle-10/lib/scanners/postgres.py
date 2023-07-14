@@ -1,4 +1,4 @@
-from mysql.connector import connect, Error
+import psycopg2
 
 from colorama import Fore, Style
 
@@ -6,7 +6,8 @@ from ..secret_detector import SecretDetector
 from ..abstract_sql_scanner import AbstractSqlScanner
 from ..util import fatal_error
 
-class MySqlDbScanner(AbstractSqlScanner):
+
+class PostgresDbScanner(AbstractSqlScanner):
 
   def __init__(self, 
                detectors: list[SecretDetector],
@@ -19,34 +20,38 @@ class MySqlDbScanner(AbstractSqlScanner):
     super().__init__(detectors, sample_size, url, db_name, username, password, verbose)
 
 
+  def _get_table_names(self, _) -> list[str]:
+    raise Exception("subclasses must override _get_table_names")
+  
   def _create_connection(self) -> any:
     if ":" in self.url:
       (host, port) = self.url.split(":")
     else:
       host = self.url
-      port = 3306
-    
+      port = 5432
+  
     try:
-      self._log(f"{Fore.YELLOW}Connecting to MySQL{Style.RESET_ALL}: {host}:{port}")
-      connection = connect(
+      self._log(f"{Fore.YELLOW}Connecting to PostgreSQL{Style.RESET_ALL}: {host}:{port}")
+
+      connection = psycopg2.connect(
         host=host,
         port=port,
         user=self.username,
         password=self.password,
-        database=self.db_name
-      )
+        database=self.db_name)
+      
       self._log(f"{Fore.GREEN}Successfully Connected.{Style.RESET_ALL}")
 
       return connection
-    
-    except Error as e:
-      fatal_error(f"Could not connect to MySQL: {e}")
+    except Exception as e:
+      fatal_error(f"Could not connect to PostgreSQL: {e}")
+  
 
   def _get_table_names(self, connection) -> list[str]:
     table_names = []
     with connection.cursor() as cursor:
-      cursor.execute("SHOW TABLES")
-      for table in cursor:
+      cursor.execute("SELECT relname FROM pg_class WHERE relkind='r' AND relname !~ '^(pg_|sql_)';")
+      for table in cursor.fetchall():
         table_name = table[0]
         table_names.append(table_name)
 
@@ -59,6 +64,6 @@ def create_scanner(detectors: list[SecretDetector],
                   db_name: str, 
                   username: str, 
                   password: str,
-                  verbose: bool) -> MySqlDbScanner:
+                  verbose: bool) -> PostgresDbScanner:
   
-  return MySqlDbScanner(detectors, sample_size, url, db_name, username, password, verbose)
+  return PostgresDbScanner(detectors, sample_size, url, db_name, username, password, verbose)
