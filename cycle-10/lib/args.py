@@ -7,7 +7,7 @@ def process_args():
 
   parser = argparse.ArgumentParser(
                       prog='db-scavenger',
-                      description='A tool that searches a database for unencrypted secrets and password hashes, and supports extracting data of interest'
+                      description='A tool that searches a database for sensitive data and supports extracting data of interest.'
                       )
 
   parser.add_argument('-t', 

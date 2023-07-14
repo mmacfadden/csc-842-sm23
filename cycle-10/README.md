@@ -35,19 +35,45 @@ pip install -r requirements.txt
 ## Usage
 This section shows the usage of the tool:
 
-```bash
-./db-secret-scanner.py -t mysql -s "localhost" -d csc842 -u admin -p admin -v
-```
-
-```bash
-./db-secret-scanner.py -t mongodb -s "localhost" -d csc842 -u admin -p admin -v
-```
 
 ### Help
 The program help can be shown using the `-h` flag.
 
 ```bash
+./db-scavenger.py -h
+usage: db-scavenger [-h] -t TYPE [-n SAMPLE_SIZE] -s SERVER -d DATABASE -u USERNAME -p PASSWORD [-e EXTRACT] [-v]
 
+A tool that searches a database for sensitive data and supports extracting data of interest.
+
+options:
+  -h, --help            show this help message and exit
+  -t TYPE, --type TYPE  Specifies the configuration file
+  -n SAMPLE_SIZE, --sample-size SAMPLE_SIZE
+                        Specifies the configuration file
+  -s SERVER, --server SERVER
+                        Specifies the configuration file
+  -d DATABASE, --database DATABASE
+                        Specifies the configuration file
+  -u USERNAME, --username USERNAME
+                        The username to log into the database with.
+  -p PASSWORD, --password PASSWORD
+                        Specifies the configuration file
+  -e EXTRACT, --extract EXTRACT
+                        Saves output to a file instead of standard out
+  -v, --verbose         Triggers additional output
 ```
 
-TBD
+### MySQL
+```bash
+./db-scavenger.py -t mysql -s "localhost" -d csc842 -u admin -p admin -v
+```
+
+### MongoDB
+```bash
+./db-scavenger.py -t mongodb -s "localhost" -d csc842 -u admin -p admin -v
+```
+
+### PostgreSQL
+```bash
+./db-scavenger.py -t postgres -s "localhost" -d csc842 -u admin -p admin -v
+```
