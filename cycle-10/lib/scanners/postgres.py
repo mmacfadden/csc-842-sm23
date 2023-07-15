@@ -19,9 +19,6 @@ class PostgresDbScanner(AbstractSqlScanner):
                verbose: bool) -> None:
     super().__init__(detectors, sample_size, url, db_name, username, password, verbose)
 
-
-  def _get_table_names(self, _) -> list[str]:
-    raise Exception("subclasses must override _get_table_names")
   
   def _create_connection(self) -> any:
     if ":" in self.url:
@@ -57,7 +54,15 @@ class PostgresDbScanner(AbstractSqlScanner):
 
     return table_names
   
+  def _get_column_names(self, connection, table) -> list[str]:
+    column_names = []
+    with connection.cursor() as cursor:
+      cursor.execute(f"SELECT column_name FROM information_schema.columns where table_name = '{table}';")
+      for column in cursor.fetchall():
+        column_names.append(column[0])
 
+    return column_names
+  
 def create_scanner(detectors: list[DataDetector],
                   sample_size: int,
                   url: str, 
