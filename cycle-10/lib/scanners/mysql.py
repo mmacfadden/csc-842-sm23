@@ -51,6 +51,17 @@ class MySqlDbScanner(AbstractSqlScanner):
         table_names.append(table_name)
 
     return table_names
+ 
+  
+  def _get_column_names(self, connection, table) -> list[str]:
+    column_names = []
+    with connection.cursor() as cursor:
+      cursor.execute(f"SHOW COLUMNS FROM {table}")
+      for column in cursor:
+        column_names.append(column[0])
+
+    return column_names
+  
   
 
 def create_scanner(detectors: list[DataDetector],

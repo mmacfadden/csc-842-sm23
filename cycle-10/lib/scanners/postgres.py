@@ -2,7 +2,7 @@ import psycopg2
 
 from colorama import Fore, Style
 
-from ..abstract_database_scanner import DataDetector
+from ..data_detector import DataDetector
 from ..abstract_sql_scanner import AbstractSqlScanner
 from ..util import fatal_error
 

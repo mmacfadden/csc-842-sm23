@@ -1,3 +1,4 @@
 pymongo
 mysqlclient
 colorama
+csv

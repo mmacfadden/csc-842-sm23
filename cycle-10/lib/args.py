@@ -15,48 +15,49 @@ def process_args():
                       required=True, 
                       dest="type", 
                       default=None,
-                      help="Specifies the configuration file") 
+                      help="Specifies the type of database you are connecting to") 
   
   parser.add_argument('-n', 
                       '--sample-size', 
                       required=False, 
                       dest="sample_size", 
                       default=5,
-                      help="Specifies the configuration file") 
+                      help="Specifies the number of records from each table to query to detect data") 
 
   parser.add_argument('-s', 
                       '--server', 
                       required=True, 
                       dest="server", 
                       default=None,
-                      help="Specifies the configuration file")  
+                      help="Specifies the database server to connect to")  
 
   parser.add_argument('-d', 
                       '--database', 
                       required=True, 
                       dest="database", 
                       default=None,
-                      help="Specifies the configuration file")  
+                      help="Specifies the database name to connect to")  
 
   parser.add_argument('-u', 
                       '--username', 
                       required=True, 
                       dest="username", 
                       default=None,
-                      help="The username to log into the database with.")  
+                      help="The username to log into the database with")  
   
   parser.add_argument('-p', 
                       '--password', 
                       required=True, 
                       dest="password", 
                       default=None,
-                      help="Specifies the configuration file")  
+                      help="The password to log into the database with")  
   
   parser.add_argument('-e', 
                       '--extract', 
                       required=False,
                       default=None,
-                      help="Saves output to a file instead of standard out"
+                      type=str,
+                      help="Extracts detected data from the database to a specified file"
                       )
   
   parser.add_argument('-v', 

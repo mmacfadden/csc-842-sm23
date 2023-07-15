@@ -18,7 +18,7 @@ scanner = get_scanner(
   args.verbose
 )
 
-table_detections = scanner.scan()
+table_detections = scanner.scan(args.extract)
 
 print(f"\n{Fore.GREEN}{len(table_detections)} Tables Scanned{Style.RESET_ALL}\n")
 

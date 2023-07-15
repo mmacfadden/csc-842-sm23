@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+from typing import Optional
 from .data_detector import DataDetector
 
 
@@ -50,7 +50,7 @@ class AbstractDatabaseScanner:
      self.verbose = verbose
     
 
-  def scan(self) -> list[TableDetections]:
+  def scan(self, extract_dir: Optional[str]) -> list[TableDetections]:
       raise Exception("The 'scan' method must be overridden by subclasses")
   
   

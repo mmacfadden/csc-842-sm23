@@ -1,8 +1,11 @@
+from typing import Optional
 from pymongo import MongoClient
 from colorama import Fore, Style
 from ..data_detector import DataDetector
 from ..abstract_database_scanner import AbstractDatabaseScanner, TableDetections
 from ..util import fatal_error
+import os
+import json
 
 
 class MongoDbScanner(AbstractDatabaseScanner):
@@ -18,7 +21,7 @@ class MongoDbScanner(AbstractDatabaseScanner):
     super().__init__(detectors, sample_size, url, db_name, username, password, verbose)
 
 
-  def scan(self) -> list[TableDetections]:
+  def scan(self, extract_dir: Optional[str]) -> list[TableDetections]:
     detections = []
 
     self._log(f"{Fore.YELLOW}Connecting to MySQL{Style.RESET_ALL}: {self.url}")
@@ -37,14 +40,18 @@ class MongoDbScanner(AbstractDatabaseScanner):
     database = client[self.db_name]
     collections = database.list_collection_names()
     for collectionName in collections:
-      collection_detections = self.scan_collection(database[collectionName])
+      collection = database[collectionName]
+      collection_detections = self._scan_collection(collection)
       if collection_detections != None:
         detections.append(collection_detections)
+
+        if extract_dir != None:
+          self._extract_collection(collection, extract_dir)
     
     return detections
 
 
-  def scan_collection(self, collection) -> TableDetections:
+  def _scan_collection(self, collection) -> TableDetections:
     detections = {}
     docs = collection.find().limit(self.sample_size)
     for doc in docs:
@@ -54,6 +61,29 @@ class MongoDbScanner(AbstractDatabaseScanner):
           detections[nd.name] = nd
       
     return TableDetections(collection.name, detections.values())
+  
+  def _extract_collection(self, collection, extract_dir: Optional[str]) -> None:
+    os.makedirs(extract_dir, exist_ok=True)
+    collection_file = os.path.join(extract_dir, f"{collection.name}.json")
+    
+    with open(collection_file, "w") as out:
+      out.write("[")
+      docs = collection.find()
+      
+      first = True
+      for doc in docs:
+        if not first:
+          out.write(",")
+        
+        first = False
+
+        out.write("\n  ")
+        del doc["_id"]
+        out.write(json.dumps(doc))
+        
+      out.write("\n]")
+  
+
 
 def create_scanner(detectors: list[DataDetector],
                   sample_size: int,
