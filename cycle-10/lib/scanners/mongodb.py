@@ -1,12 +1,13 @@
-from typing import Optional
-from pymongo import MongoClient
-from colorama import Fore, Style
-from ..data_detector import DataDetector
-from ..abstract_database_scanner import AbstractDatabaseScanner, TableDetections
-from ..util import fatal_error
 import os
 import json
 
+from pymongo import MongoClient
+from colorama import Fore, Style
+from typing import Optional
+
+from ..data_detector import DataDetector
+from ..abstract_database_scanner import AbstractDatabaseScanner, TableDetections
+from ..util import fatal_error
 
 class MongoDbScanner(AbstractDatabaseScanner):
 
@@ -61,6 +62,7 @@ class MongoDbScanner(AbstractDatabaseScanner):
           detections[nd.name] = nd
       
     return TableDetections(collection.name, detections.values())
+  
   
   def _extract_collection(self, collection, extract_dir: Optional[str]) -> None:
     os.makedirs(extract_dir, exist_ok=True)
