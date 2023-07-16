@@ -63,12 +63,5 @@ class PostgresDbScanner(AbstractSqlScanner):
 
     return column_names
   
-def create_scanner(detectors: list[DataDetector],
-                  sample_size: int,
-                  url: str, 
-                  db_name: str, 
-                  username: str, 
-                  password: str,
-                  verbose: bool) -> PostgresDbScanner:
-  
-  return PostgresDbScanner(detectors, sample_size, url, db_name, username, password, verbose)
+
+scanner = PostgresDbScanner

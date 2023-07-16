@@ -63,13 +63,4 @@ class MySqlDbScanner(AbstractSqlScanner):
     return column_names
   
   
-
-def create_scanner(detectors: list[DataDetector],
-                  sample_size: int,
-                  url: str, 
-                  db_name: str, 
-                  username: str, 
-                  password: str,
-                  verbose: bool) -> MySqlDbScanner:
-  
-  return MySqlDbScanner(detectors, sample_size, url, db_name, username, password, verbose)
+scanner = MySqlDbScanner

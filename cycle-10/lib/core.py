@@ -50,7 +50,7 @@ def get_scanner(sample_size: int,
 
     try:
       scanner_module = importlib.import_module(f'.scanners.{db_type}', package="lib")
-      scanner = scanner_module.create_scanner(detectors,
+      scanner = scanner_module.scanner(detectors,
                                              sample_size,
                                              url, 
                                              db_name, 
