@@ -47,19 +47,19 @@ A tool that searches a database for sensitive data and supports extracting data 
 
 options:
   -h, --help            show this help message and exit
-  -t TYPE, --type TYPE  Specifies the configuration file
+  -t TYPE, --type TYPE  Specifies the type of database you are connecting to
   -n SAMPLE_SIZE, --sample-size SAMPLE_SIZE
-                        Specifies the configuration file
+                        Specifies the number of records from each table to query to detect data
   -s SERVER, --server SERVER
-                        Specifies the configuration file
+                        Specifies the database server to connect to
   -d DATABASE, --database DATABASE
-                        Specifies the configuration file
+                        Specifies the database name to connect to
   -u USERNAME, --username USERNAME
-                        The username to log into the database with.
+                        The username to log into the database with
   -p PASSWORD, --password PASSWORD
-                        Specifies the configuration file
+                        The password to log into the database with
   -e EXTRACT, --extract EXTRACT
-                        Saves output to a file instead of standard out
+                        Extracts detected data from the database to a specified file
   -v, --verbose         Triggers additional output
 ```
 

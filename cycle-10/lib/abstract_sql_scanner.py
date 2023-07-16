@@ -5,6 +5,10 @@ import os
 from typing import Optional
 
 class AbstractSqlScanner(AbstractDatabaseScanner):
+  """
+  The AbstractSqlScanner is a common base class for SQL Database scanners
+  like MySQL and PostgreSQL.
+  """
 
   def __init__(self, 
                detectors: list[DataDetector],
@@ -14,6 +18,25 @@ class AbstractSqlScanner(AbstractDatabaseScanner):
                username: str,
                password: str,
                verbose: bool) -> None:
+    """
+    Creates a new SQL Based Database scanner.
+
+    Parameters:
+      detectors:
+        The set of data detectors to scan the database with.
+      sample_size:
+        The number of records to query from the database when detecting data.
+      url:
+        The url to connect to the database with (generally a host name and port)
+      db_name:
+        The name of the database / schema to connect to.
+      username:
+        The username of the user to authenticate with.
+      password:
+        The password of the user to connect with.
+      verbose:
+        Whether or not to output additional information.
+    """
     super().__init__(detectors, sample_size, url, db_name, username, password, verbose)
 
 
@@ -25,16 +48,16 @@ class AbstractSqlScanner(AbstractDatabaseScanner):
       table_names = self._get_table_names(connection)
 
       for table in table_names:
-        table_detections = self._scan_table(connection, table)
+        table_detections = self.__scan_table(connection, table)
         if table_detections != None:
           detections.append(table_detections)
           if extract_dir != None:
-            self._extract(connection, extract_dir, table_detections)
+            self.__extract(connection, extract_dir, table_detections)
     
     return detections
 
 
-  def _extract(self, connection, base_dir: str, detection: TableDetections) -> None:
+  def __extract(self, connection, base_dir: str, detection: TableDetections) -> None:
     extract_query = f"SELECT * FROM {detection.table}"
     column_names = self._get_column_names(connection, detection.table)
 
@@ -49,7 +72,7 @@ class AbstractSqlScanner(AbstractDatabaseScanner):
         for row in cursor:
           wr.writerow(row)
  
-  def _scan_table(self, connection , table) -> TableDetections:
+  def __scan_table(self, connection , table) -> TableDetections:
     detections = {}
     
     select_query = f"SELECT * FROM {table} LIMIT 5"
@@ -65,6 +88,10 @@ class AbstractSqlScanner(AbstractDatabaseScanner):
     return TableDetections(table, detections.values())
   
 
+  ##
+  ## Method to be overridden by subclasses.
+  ##
+  
   def _get_table_names(self, connection) -> list[str]:
     raise Exception("subclasses must override _get_table_names")
   

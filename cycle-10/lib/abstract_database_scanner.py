@@ -41,19 +41,54 @@ class AbstractDatabaseScanner:
                username: str,
                password: str,
                verbose: bool) -> None:
-     self.detectors = detectors
-     self.sample_size = sample_size
-     self.url = url
-     self.db_name = db_name
-     self.username = username
-     self.password = password
-     self.verbose = verbose
+    """
+    Creates a new SQL Based Database scanner.
+
+    Parameters:
+      detectors:
+        The set of data detectors to scan the database with.
+      sample_size:
+        The number of records to query from the database when detecting data.
+      url:
+        The url to connect to the database with (generally a host name and port)
+      db_name:
+        The name of the database / schema to connect to.
+      username:
+        The username of the user to authenticate with.
+      password:
+        The password of the user to connect with.
+      verbose:
+        Whether or not to output additional information.
+    """
+
+    self.detectors = detectors
+    self.sample_size = sample_size
+    self.url = url
+    self.db_name = db_name
+    self.username = username
+    self.password = password
+    self.verbose = verbose
     
 
   def scan(self, extract_dir: Optional[str]) -> list[TableDetections]:
-      raise Exception("The 'scan' method must be overridden by subclasses")
+    """
+    This is the main 'interface' method for the AbstractDatabaseScanner. This
+    method will scan the configured database for data of interest and return
+    the results.
+
+    Parameters:
+      extract_dir:
+        If set to a string value (instead of None), the the scan method
+        will also extract the interesting data it finds to the specified
+        directory.
+    """
+    raise Exception("The 'scan' method must be overridden by subclasses")
   
   
+  ##
+  ## Method intended to be used by subclasses.
+  ##
+
   def _detect_data(self, value: str) -> list[Detection]:
     detections = []
 
@@ -63,6 +98,7 @@ class AbstractDatabaseScanner:
 
     return detections
   
+
   def _scan_value(self, x: any):
     detections = []
     if isinstance(x, list):
