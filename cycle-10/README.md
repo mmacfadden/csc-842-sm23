@@ -20,9 +20,14 @@ The main requirements of the project that influenced the functionality and desig
   * The tool must allow the user to extract the data it finds from the database.
 
 ## Design
-The tool was developed in Python for expediency's sake.
+The tool was developed in Python as a command line interface (CLI).  The two major abstractions are the Database Scanners and the Data Detectors.
+
+  * **Database Scanner**: The Database Scanner interface abstracts the logic of connecting to the database and iterating over the data.  Most databases organize data into tables, collections, or some other logical grouping.  A subclass is created for each supported database.  Each subclass will connect to the database, figure out what tables/collections exist and then iterate over the rows, columns, documents, etc. When the specific database scanner has a row or document it then uses the data detectors to see if the table/document contains data of interest.
+  * **Data Detector**: The Data Detector is a simple functional interface that is given a single value extracted from the database and determines if that value represents data of interest.  Subclasses or instances of Data Detectors can be added to the system to look for different types of data.
 
 ![Architecture](assets/architecture.png)
+
+The separation of the Database Scanner and Data Detectors concepts means that the same set of Data Detectors will work for any database the system supports.  Both Data Detectors and Database Scanners are dynamically imported meaning that they can be added to the system without having to change any code in the core of the system.
 
 ## Video
 A demonstration video can be found on YouTube here:
