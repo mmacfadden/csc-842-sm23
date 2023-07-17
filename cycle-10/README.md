@@ -1,11 +1,23 @@
-# Cycle 10: TBD
+# Cycle 10: Databases Scavenger
+The Database Scavenger is tool / framework that searches Databases for data of interest.  Examples include AWS Access Keys, emails, Social Security numbers, etc.  The tool supports multiple databases and is easily extendable to search for various kinds of data.  The tool also has the ability to extract the data it identifies as interesting.
 
+The objective is to quickly identify and extract data from a database that is unfamiliar to you, either to understand if your database has sensitive data (defensive cyber) or to find an exfiltrate sensitive data (offensive cyber.).
+
+The currently supported databases include:
+
+  * MySQL
+  * PostgreSQL
+  * MongoDB
 
 
 ## Requirements
 The main requirements of the project that influenced the functionality and design are as follows:
 
-  * TBD
+  * The tool must support multiple SQL and NoSQL databases.
+  * The tool must be easily extendable to add support for additional databases over time.
+  * The tool must allow searching for all kinds of interesting data using a variety of mechanisms.
+  * The tool must support easily adding detectors for additional data over time.
+  * The tool must allow the user to extract the data it finds from the database.
 
 ## Design
 The tool was developed in Python for expediency's sake.
@@ -64,16 +76,25 @@ options:
 ```
 
 ### MySQL
+
+The example below shows connecting to a MySQL Database.
+
 ```bash
 ./db-scavenger.py -t mysql -s "localhost" -d csc842 -u admin -p admin -v
 ```
 
 ### MongoDB
+
+The example below shows connecting to a MySQL Database.
+
 ```bash
 ./db-scavenger.py -t mongodb -s "localhost" -d csc842 -u admin -p admin -v
 ```
 
 ### PostgreSQL
+
+The example below shows connecting to a PostgreSQL Database.
+
 ```bash
 ./db-scavenger.py -t postgres -s "localhost" -d csc842 -u admin -p admin -v
 ```

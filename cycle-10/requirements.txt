@@ -1,4 +1,6 @@
 pymongo
 mysqlclient
+psycopg2
 colorama
 csv
+PyJWT
