@@ -48,11 +48,10 @@ class AbstractSqlScanner(AbstractDatabaseScanner):
       table_names = self._get_table_names(connection)
 
       for table in table_names:
-        table_detections = self.__scan_table(connection, table)
-        if table_detections != None:
-          detections.append(table_detections)
-          if extract_dir != None:
-            self.__extract(connection, extract_dir, table_detections)
+        table_detections = self.__scan_table(connection, table)  
+        detections.append(table_detections)
+        if len(table_detections.detections) > 0 and extract_dir != None:
+          self.__extract(connection, extract_dir, table_detections)
     
     return detections
 

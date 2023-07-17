@@ -45,11 +45,10 @@ class MongoDbScanner(AbstractDatabaseScanner):
     for collectionName in collections:
       collection = database[collectionName]
       collection_detections = self._scan_collection(collection)
-      if collection_detections != None:
-        detections.append(collection_detections)
+      detections.append(collection_detections)
 
-        if extract_dir != None:
-          self._extract_collection(collection, extract_dir)
+      if len(collection_detections.detections) > 0 and extract_dir != None:
+        self._extract_collection(collection, extract_dir)
     
     return detections
 
