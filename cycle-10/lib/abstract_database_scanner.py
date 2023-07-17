@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import Optional
 from .data_detector import DataDetector
 
-
 @dataclass
 class Detection:
    """
@@ -20,7 +19,7 @@ class Detection:
 class TableDetections:
    """
    The TableDetections records which detections (if any) were found
-   in a given table (or colleciton, etc.).
+   in a given table (or collection, etc.).
    """
    table: str
    detections: list[Detection]

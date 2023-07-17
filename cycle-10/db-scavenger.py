@@ -7,6 +7,10 @@ from lib.args import process_args
 
 
 def main():
+  """
+  Ths main entry point for the Database Scavenger.
+  """
+
   args = process_args()
 
   scanner = get_scanner(
@@ -30,6 +34,8 @@ def main():
         print(f" - {detection.name}")
 
       print("")
+
+  print(f"\n{Fore.GREEN}Database Scan Completed!{Style.RESET_ALL}\n")
 
 
 if __name__ == "__main__":

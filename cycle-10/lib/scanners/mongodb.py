@@ -31,6 +31,8 @@ class MongoDbScanner(AbstractDatabaseScanner):
                          password=self.password,
                          serverSelectionTimeoutMS=5000)
 
+    # The MongoDB Client is pretty lazy about actually trying to connect.
+    # This forces the connection.
     try:
       client.server_info()
       self._log(f"{Fore.GREEN}Successfully Connected.{Style.RESET_ALL}")
