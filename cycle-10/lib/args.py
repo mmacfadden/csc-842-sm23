@@ -21,7 +21,7 @@ def process_args():
                       '--sample-size', 
                       required=False, 
                       dest="sample_size", 
-                      default=5,
+                      default=10,
                       help="Specifies the number of records from each table to query to detect data") 
 
   parser.add_argument('-s', 
