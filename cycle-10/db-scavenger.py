@@ -37,6 +37,9 @@ def main():
 
   print(f"\n{Fore.GREEN}Database Scan Completed!{Style.RESET_ALL}\n")
 
+  if args.extract:
+    print(f"\n{Fore.GREEN}Data extracted to '{args.extract}'{Style.RESET_ALL}.\n")
+
 
 if __name__ == "__main__":
     main()

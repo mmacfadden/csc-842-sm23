@@ -24,11 +24,11 @@ The three main ideas for the project are as follows:
 # Future Directions
 TBD. The main future features I see based on where the project is today are:
 
-  * **API Key Secrets**: API Keys are often just medium size strings of alpha numeric characters without a lot of other defining characteristics.  So if two different services have 25 digit alpha numeric API keys it would be hard to 1) detect them as interesting or 2) tell which service it is.  A secret detector could match a RegEx for a candidate API key, and then actually reach out to the service and try to authenticate to that service. If the authentication work, then we know its an API key for that service.
+  * **API Key Validation**: API Keys are often just medium size strings of alpha numeric characters without a lot of other defining characteristics.  So if two different services have 25 digit alpha numeric API keys it would be hard to 1) detect them as interesting or 2) tell which service it is.  A secret detector could match a RegEx for a candidate API key, and then actually reach out to the service and try to authenticate to that service. If the authentication work, then we know its an API key for that service.
   * **Search Profiles**: As the list of secrets that can be detected becomes larger, the tool will become more inefficient (especially if we are making HTTP requests).  I'd like to add an optional configuration option or file which specifies which secrets to look for.  If I know what secrets an app or services is using then I can narrow down the search space.
   * **Multi-Threading**: This tool is a good candidate for multi-threading.  Each table in the database could easily be search in a separate thread, or more likely by having a thread pool process the list of tables.  This could increase the search speed for large databases.
   * **RegEx Config File**: The ability to provide a simple YAML file that contains additional patterns to search for.
-  * **More Authentication Flexibility**: Right now the tool assumes username and password authentication for the databases.  Some databases can be configured for other types of authenticate methods, that I would like to support.
+  * **Authentication Flexibility**: Right now the tool assumes username and password authentication for the databases.  Some databases can be configured for other types of authenticate methods, that I would like to support.
   
 
 # Source Code
