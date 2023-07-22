@@ -15,7 +15,8 @@ services:
         source: mongodb
         target: /data
     command: mongod
- 
+
+
   mariadb:
     image: mariadb
     restart: always
@@ -29,6 +30,7 @@ services:
       MARIADB_PASSWORD: admin
     volumes:
       - ./docker/mariadb:/docker-entrypoint-initdb.d/:ro
+
 
   postgresdb:
     image: postgres

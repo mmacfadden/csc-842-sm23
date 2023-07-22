@@ -22,7 +22,7 @@ The three main ideas for the project are as follows:
 
 
 # Future Directions
-TBD. The main future features I see based on where the project is today are:
+The main future features I see based on where the project is today are:
 
   * **API Key Validation**: API Keys are often just medium size strings of alpha numeric characters without a lot of other defining characteristics.  So if two different services have 25 digit alpha numeric API keys it would be hard to 1) detect them as interesting or 2) tell which service it is.  A secret detector could match a RegEx for a candidate API key, and then actually reach out to the service and try to authenticate to that service. If the authentication work, then we know its an API key for that service.
   * **Search Profiles**: As the list of secrets that can be detected becomes larger, the tool will become more inefficient (especially if we are making HTTP requests).  I'd like to add an optional configuration option or file which specifies which secrets to look for.  If I know what secrets an app or services is using then I can narrow down the search space.
@@ -40,4 +40,4 @@ https://github.com/mmacfadden/csc-842-sm23/tree/master/cycle-10/
 # Video
 A demonstration / walkthrough video has been posted to YouTube here:
 
-https://youtu.be/TBD
+https://youtu.be/Ub7mYhkB3eE

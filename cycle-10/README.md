@@ -1,7 +1,7 @@
 # Cycle 10: Databases Scavenger
 The Database Scavenger is tool / framework that searches Databases for data of interest.  Examples include AWS Access Keys, emails, Social Security numbers, etc.  The tool supports multiple databases and is easily extendable to search for various kinds of data.  The tool also has the ability to extract the data it identifies as interesting.
 
-The objective is to quickly identify and extract data from a database that is unfamiliar to you, either to understand if your database has sensitive data (defensive cyber) or to find an exfiltrate sensitive data (offensive cyber.).
+The objective is to quickly identify and extract data from a database that is unfamiliar to you, either to understand if your database has sensitive data (defensive cyber) or to find an exfiltrate sensitive data (offensive cyber).
 
 The currently supported databases include:
 
@@ -30,12 +30,12 @@ The tool was developed in Python as a command line interface (CLI).  The two maj
 The separation of the Database Scanner and Data Detectors concepts means that the same set of Data Detectors will work for any database the system supports.  Both Data Detectors and Database Scanners are dynamically imported meaning that they can be added to the system without having to change any code in the core of the system.
 
 ### Sampling
-One other key concept is that databases can contain a lot of data.  For example, if a particular table has 10M rows, it may be impractical to iterate over every row to see if there is any data of interest.  In MOST database tables and documents are fairly homogenous.  Meaning that if a record in a table contains an AWS Access Key, it's likely that the other rows will as well.  So instead of looking at all rows / document we sample a specified number of them. The default value is 10, but this can be set using the `--sample-size` flag. 
+One other key concept is that databases can contain a lot of data.  For example, if a particular table has 10M rows, it may be impractical to iterate over every row to see if there is any data of interest.  In MOST databases tables and documents are fairly homogenous.  Meaning that if a record in a table contains an AWS Access Key, it's likely that the other rows will as well.  So instead of looking at all rows / document we sample a specified number of them. The default value is 10, but this can be set using the `--sample-size` flag. 
 
 ## Video
 A demonstration video can be found on YouTube here:
 
-[https://youtu.be/TBD](https://youtu.be/TBD)
+[https://youtu.be/Ub7mYhkB3eE](https://youtu.be/Ub7mYhkB3eE)
 
 
 ## Dependencies and Setup
@@ -105,4 +105,12 @@ The example below shows connecting to a PostgreSQL Database.
 
 ```bash
 ./db-scavenger.py -t postgres -s "localhost" -d csc842 -u admin -p admin -v
+```
+
+### Extraction Example
+
+The example below shows connecting to a PostgreSQL Database and then extracting the interesting data.
+
+```bash
+./db-scavenger.py -t postgres -s "localhost" -d csc842 -u admin -p admin -v -e /.extracted/postgres
 ```
